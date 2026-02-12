@@ -85,11 +85,7 @@ export const projectsApi = {
       formData.append('files', files[i])
     }
 
-    const response = await api.post(`/api/projects/${id}/files`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    const response = await api.post(`/api/projects/${id}/files`, formData)
     return response.data
   },
 
@@ -112,21 +108,13 @@ export const projectsApi = {
       }
     }
 
-    const response = await api.post(`/api/projects/${id}/files`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    const response = await api.post(`/api/projects/${id}/files`, formData)
     return response.data
   },
 
   // Upload FormData directly (used by upload component)
   uploadFormData: async (id: number, formData: FormData): Promise<UploadResponse> => {
-    const response = await api.post(`/api/projects/${id}/files`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    const response = await api.post(`/api/projects/${id}/files`, formData)
     return response.data
   },
 
