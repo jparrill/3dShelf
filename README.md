@@ -95,4 +95,11 @@ See [backend/README.md](backend/README.md) for detailed API documentation.
 
 ## License
 
-MIT License - see LICENSE file for details.
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+
+**Key Terms:**
+- ✅ You can share and adapt this project
+- ✅ Attribution is required
+- ❌ Commercial use is prohibited
+
+See the [LICENSE](LICENSE) file for full details.
