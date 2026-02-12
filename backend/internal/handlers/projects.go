@@ -260,19 +260,20 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 	}
 
 	// Parse conflict resolutions from form data
-	var resolutions map[string]ConflictResolution
-	resolutionsValue := form.Value["resolutions"]
-	if len(resolutionsValue) > 0 {
-		// Parse JSON string with resolutions
-		resolutions = make(map[string]ConflictResolution)
-		// For simplicity, we'll support individual resolution fields like "resolution_filename"
-		for key, values := range form.Value {
-			if strings.HasPrefix(key, "resolution_") && len(values) > 0 {
-				filename := strings.TrimPrefix(key, "resolution_")
-				resolutions[filename] = ConflictResolution(values[0])
-			}
+	resolutions := make(map[string]ConflictResolution)
+
+	fmt.Printf("DEBUG: All form values: %+v\n", form.Value)
+
+	// Look for individual resolution fields like "resolution_filename"
+	for key, values := range form.Value {
+		if strings.HasPrefix(key, "resolution_") && len(values) > 0 {
+			filename := strings.TrimPrefix(key, "resolution_")
+			fmt.Printf("DEBUG: Found resolution field %s -> filename: %s, value: %s\n", key, filename, values[0])
+			resolutions[filename] = ConflictResolution(values[0])
 		}
 	}
+
+	fmt.Printf("DEBUG: Final resolutions map: %+v\n", resolutions)
 
 	// Get existing files for conflict checking
 	var existingFiles []models.ProjectFile
