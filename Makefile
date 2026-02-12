@@ -267,8 +267,48 @@ dev-setup:
 	ZDOTDIR= go mod tidy -C backend && go mod download -C backend
 	@echo "Installing frontend dependencies..."
 	(cd frontend && ZDOTDIR= npm install --legacy-peer-deps)
+	@echo "Creating required directories..."
+	@mkdir -p projects data/projects data/db
+	@echo "Generating configuration files..."
+	@if [ ! -f .env ]; then \
+		echo "Generating .env from template..."; \
+		sed "s|/path/to/your/3d/projects|$$(pwd)/projects|g" .env.example > .env; \
+		echo "Generated .env file with local project path"; \
+	fi
+	@if [ ! -f backend/.env ]; then \
+		echo "Generating backend/.env from template..."; \
+		sed "s|/path/to/your/3d/projects|$$(pwd)/projects|g" .env.example > backend/.env; \
+		echo "Generated backend/.env file"; \
+	fi
 	@echo "✅ Development environment ready!"
+	@echo "   - Created directories: projects/, data/projects/, data/db/"
+	@echo "   - Generated .env files with local paths"
+	@echo "   - Installed all dependencies"
 	@echo "Run 'make dev' to start the development servers"
+
+# Validate development environment configuration
+validate-config:
+	@echo "🔍 Validating development environment configuration..."
+	@if [ ! -f .env ]; then \
+		echo "❌ Missing .env file. Run 'make dev-setup' first."; \
+		exit 1; \
+	fi
+	@if [ ! -f backend/.env ]; then \
+		echo "❌ Missing backend/.env file. Run 'make dev-setup' first."; \
+		exit 1; \
+	fi
+	@if [ ! -d projects ]; then \
+		echo "❌ Missing projects directory. Run 'make dev-setup' first."; \
+		exit 1; \
+	fi
+	@if [ ! -d data/projects ]; then \
+		echo "❌ Missing data/projects directory. Run 'make dev-setup' first."; \
+		exit 1; \
+	fi
+	@echo "✅ Configuration validation passed!"
+	@echo "   - .env files exist and are readable"
+	@echo "   - Required directories exist"
+	@echo "   - Environment is ready for development"
 
 # Start local development servers
 dev: dev-setup

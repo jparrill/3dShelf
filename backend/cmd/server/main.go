@@ -17,6 +17,16 @@ func main() {
 		log.Fatal("Failed to load configuration:", err)
 	}
 
+	// Validate configuration
+	if err := cfg.Validate(); err != nil {
+		log.Fatal("Configuration validation failed:", err)
+	}
+
+	log.Printf("Configuration validated successfully:")
+	log.Printf("  - Scan path: %s", cfg.ScanPath)
+	log.Printf("  - Database: %s", cfg.DatabasePath)
+	log.Printf("  - Port: %s", cfg.Port)
+
 	// Set Gin mode
 	gin.SetMode(cfg.GinMode)
 
