@@ -120,6 +120,16 @@ export const projectsApi = {
     return response.data
   },
 
+  // Upload FormData directly (used by upload component)
+  uploadFormData: async (id: number, formData: FormData): Promise<UploadResponse> => {
+    const response = await api.post(`/api/projects/${id}/files`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  },
+
   // Get project README
   getProjectREADME: async (id: number): Promise<READMEResponse> => {
     const response = await api.get(`/api/projects/${id}/readme`)

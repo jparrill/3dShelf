@@ -143,17 +143,22 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     setIsUploading(true)
 
     try {
-      // Convert File array to FileList
-      const dt = new DataTransfer()
-      selectedFiles.forEach(file => dt.items.add(file))
-      const fileList = dt.files
+      // Create FormData directly with selected files and resolutions
+      const formData = new FormData()
 
-      // Upload with resolutions
-      const response = await projectsApi.uploadProjectFilesWithResolution(
-        projectId,
-        fileList,
-        resolutions
-      )
+      selectedFiles.forEach(file => {
+        formData.append('files', file)
+      })
+
+      // Add conflict resolutions if provided
+      if (resolutions && Object.keys(resolutions).length > 0) {
+        for (const [filename, resolution] of Object.entries(resolutions)) {
+          formData.append(`resolution_${filename}`, resolution)
+        }
+      }
+
+      // Upload with resolutions using direct API call
+      const response = await projectsApi.uploadFormData(projectId, formData)
 
       // Update task statuses
       setUploadTasks(prev => prev.map(task => {
