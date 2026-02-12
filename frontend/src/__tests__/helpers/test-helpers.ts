@@ -318,12 +318,14 @@ export class ValidationHelpers {
   ): Promise<void> {
     // Try to submit without filling the field
     await page.getByRole('button', { name: new RegExp(submitButtonText, 'i') }).click()
-    await expect(page.getByText(new RegExp(expectedErrorText, 'i'))).toBeVisible()
+    // Use .first() to avoid strict mode violations when multiple toasts exist
+    await expect(page.getByText(new RegExp(expectedErrorText, 'i')).first()).toBeVisible()
 
     // Try with only spaces
     await page.getByPlaceholder(new RegExp(fieldPlaceholder, 'i')).fill('   ')
     await page.getByRole('button', { name: new RegExp(submitButtonText, 'i') }).click()
-    await expect(page.getByText(new RegExp(expectedErrorText, 'i'))).toBeVisible()
+    // Use .first() to avoid strict mode violations when multiple toasts exist
+    await expect(page.getByText(new RegExp(expectedErrorText, 'i')).first()).toBeVisible()
   }
 
   /**

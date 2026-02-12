@@ -78,7 +78,7 @@ test.describe('Project Creation', () => {
     await page.getByPlaceholder('Enter project name').fill(projectName)
     await page.getByPlaceholder('Enter project description (optional)').fill('A test project created with initial files')
 
-    // Upload files
+    // Upload files - use the button that triggers the hidden file input
     const fileInput = page.locator('input[type="file"]')
     await fileInput.setInputFiles([stlFile, gcodeFile, readmeFile])
 
@@ -161,7 +161,7 @@ test.describe('Project Creation', () => {
     // Fill project name
     await page.getByPlaceholder('Enter project name').fill(`File Test Project ${Date.now()}`)
 
-    // Upload files
+    // Upload files - use the hidden file input directly
     const fileInput = page.locator('input[type="file"]')
     await fileInput.setInputFiles([stlFile, gcodeFile])
 
@@ -222,7 +222,7 @@ test.describe('Project Creation', () => {
     // Fill project details
     await page.getByPlaceholder('Enter project name').fill(`Large File Project ${Date.now()}`)
 
-    // Upload large file
+    // Upload large file - use the hidden file input directly
     const fileInput = page.locator('input[type="file"]')
     await fileInput.setInputFiles([largeFile])
 
