@@ -25,6 +25,39 @@ type ProjectsHandler struct {
 	scanPath string
 }
 
+// ConflictResolution represents how to handle a file conflict
+type ConflictResolution string
+
+const (
+	ConflictOverwrite ConflictResolution = "overwrite"
+	ConflictSkip      ConflictResolution = "skip"
+	ConflictRename    ConflictResolution = "rename"
+)
+
+// FileConflict represents a file that conflicts with existing files
+type FileConflict struct {
+	Filename     string              `json:"filename"`
+	ExistingFile *models.ProjectFile `json:"existing_file,omitempty"`
+	NewSize      int64               `json:"new_size"`
+	Reason       string              `json:"reason"`
+}
+
+// UploadCheckRequest represents the request to check for conflicts before upload
+type UploadCheckRequest struct {
+	Filenames []string `json:"filenames"`
+}
+
+// UploadCheckResponse represents the response from upload conflict check
+type UploadCheckResponse struct {
+	Conflicts []FileConflict `json:"conflicts"`
+	Safe      []string       `json:"safe"`
+}
+
+// UploadWithResolutionRequest represents enhanced upload with conflict resolution
+type UploadWithResolutionRequest struct {
+	Resolutions map[string]ConflictResolution `json:"resolutions,omitempty"`
+}
+
 // CreateProjectRequest represents the request body for creating a new project
 type CreateProjectRequest struct {
 	Name        string `json:"name" binding:"required"`
@@ -120,7 +153,66 @@ func (h *ProjectsHandler) CreateProject(c *gin.Context) {
 	c.JSON(http.StatusCreated, project)
 }
 
-// UploadProjectFiles uploads files to an existing project
+// CheckUploadConflicts checks for potential conflicts before file upload
+func (h *ProjectsHandler) CheckUploadConflicts(c *gin.Context) {
+	projectID := c.Param("id")
+
+	var request UploadCheckRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	fmt.Printf("CheckUploadConflicts called for project %s with filenames: %v\n", projectID, request.Filenames)
+
+	// Verify project exists
+	var project models.Project
+	if err := database.GetDB().First(&project, projectID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Get existing files for this project
+	var existingFiles []models.ProjectFile
+	if err := database.GetDB().Where("project_id = ?", projectID).Find(&existingFiles).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing files"})
+		return
+	}
+
+	// Build map of existing filenames for quick lookup
+	existingFileMap := make(map[string]*models.ProjectFile)
+	for i := range existingFiles {
+		existingFileMap[existingFiles[i].Filename] = &existingFiles[i]
+	}
+
+	conflicts := make([]FileConflict, 0)
+	safe := make([]string, 0)
+
+	for _, filename := range request.Filenames {
+		if existingFile, exists := existingFileMap[filename]; exists {
+			conflicts = append(conflicts, FileConflict{
+				Filename:     filename,
+				ExistingFile: existingFile,
+				NewSize:      0, // Will be populated when actual file is processed
+				Reason:       "File already exists",
+			})
+		} else {
+			safe = append(safe, filename)
+		}
+	}
+
+	response := UploadCheckResponse{
+		Conflicts: conflicts,
+		Safe:      safe,
+	}
+
+	fmt.Printf("CheckUploadConflicts response: %d conflicts, %d safe files\n", len(conflicts), len(safe))
+	fmt.Printf("Conflicts: %+v\n", conflicts)
+
+	c.JSON(http.StatusOK, response)
+}
+
+// UploadProjectFiles uploads files to an existing project with conflict resolution
 func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 	projectID := c.Param("id")
 
@@ -131,29 +223,126 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		return
 	}
 
-	// Parse multipart form
-	form, err := c.MultipartForm()
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form"})
+	// Debug: Log request headers
+	fmt.Printf("Request Headers: %+v\n", c.Request.Header)
+	fmt.Printf("Content-Type: %s\n", c.GetHeader("Content-Type"))
+	fmt.Printf("Content-Length: %s\n", c.GetHeader("Content-Length"))
+
+	// Check content length
+	if c.Request.ContentLength > 1024<<20 { // 1GB limit
+		fmt.Printf("File too large: %d bytes (max 1GB)\n", c.Request.ContentLength)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "File too large", "max_size": "1GB", "received": c.Request.ContentLength})
 		return
 	}
 
+	// Parse multipart form
+	fmt.Printf("Attempting to parse multipart form...\n")
+	form, err := c.MultipartForm()
+	if err != nil {
+		fmt.Printf("Multipart form parse error: %v\n", err)
+		fmt.Printf("Error type: %T\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form", "details": err.Error(), "content_length": c.Request.ContentLength})
+		return
+	}
+	fmt.Printf("Successfully parsed multipart form with %d file fields\n", len(form.File))
+
 	files := form.File["files"]
+	fmt.Printf("Found %d files in multipart form\n", len(files))
 	if len(files) == 0 {
+		fmt.Printf("ERROR: No files found in multipart form\n")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "No files provided"})
 		return
 	}
 
+	// Debug: Print file information
+	for i, fileHeader := range files {
+		fmt.Printf("File %d: %s, Size: %d bytes\n", i, fileHeader.Filename, fileHeader.Size)
+	}
+
+	// Parse conflict resolutions from form data
+	resolutions := make(map[string]ConflictResolution)
+
+	fmt.Printf("DEBUG: All form values: %+v\n", form.Value)
+
+	// Look for individual resolution fields like "resolution_filename"
+	for key, values := range form.Value {
+		if strings.HasPrefix(key, "resolution_") && len(values) > 0 {
+			filename := strings.TrimPrefix(key, "resolution_")
+			fmt.Printf("DEBUG: Found resolution field %s -> filename: %s, value: %s\n", key, filename, values[0])
+			resolutions[filename] = ConflictResolution(values[0])
+		}
+	}
+
+	fmt.Printf("DEBUG: Final resolutions map: %+v\n", resolutions)
+
+	// Get existing files for conflict checking
+	var existingFiles []models.ProjectFile
+	if err := database.GetDB().Where("project_id = ?", projectID).Find(&existingFiles).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check existing files"})
+		return
+	}
+
+	// Build map of existing filenames for quick lookup
+	existingFileMap := make(map[string]*models.ProjectFile)
+	for i := range existingFiles {
+		existingFileMap[existingFiles[i].Filename] = &existingFiles[i]
+	}
+
 	var uploadedFiles []models.ProjectFile
+	var skippedFiles []string
 	var errors []string
 
 	// Process each file
-	for _, fileHeader := range files {
+	fmt.Printf("Starting to process %d files\n", len(files))
+	for i, fileHeader := range files {
+		fmt.Printf("Processing file %d: %s (size: %d)\n", i+1, fileHeader.Filename, fileHeader.Size)
+
 		// Validate file type
 		fileType := models.GetFileTypeFromExtension(fileHeader.Filename)
+		fmt.Printf("File type detected: %s\n", fileType)
 		if fileType == models.FileTypeOther && !strings.Contains(fileHeader.Filename, "README") {
+			fmt.Printf("ERROR: File type not supported: %s\n", fileHeader.Filename)
 			errors = append(errors, fmt.Sprintf("File type not supported: %s", fileHeader.Filename))
 			continue
+		}
+
+		// Check for conflicts and handle resolution
+		finalFilename := fileHeader.Filename
+		existingFile, hasConflict := existingFileMap[fileHeader.Filename]
+
+		fmt.Printf("Checking conflicts for: %s, hasConflict: %t\n", fileHeader.Filename, hasConflict)
+		if hasConflict {
+			fmt.Printf("Found existing file, checking resolutions map: %+v\n", resolutions)
+			resolution, hasResolution := resolutions[fileHeader.Filename]
+			fmt.Printf("Resolution for %s: %s, hasResolution: %t\n", fileHeader.Filename, resolution, hasResolution)
+
+			if !hasResolution {
+				// No resolution provided for conflict - default to skip
+				fmt.Printf("SKIPPING file due to no resolution: %s\n", fileHeader.Filename)
+				skippedFiles = append(skippedFiles, fileHeader.Filename)
+				continue
+			}
+
+			switch resolution {
+			case ConflictSkip:
+				skippedFiles = append(skippedFiles, fileHeader.Filename)
+				continue
+			case ConflictRename:
+				// Add timestamp to filename
+				ext := filepath.Ext(fileHeader.Filename)
+				name := strings.TrimSuffix(fileHeader.Filename, ext)
+				timestamp := time.Now().Format("20060102_150405")
+				finalFilename = fmt.Sprintf("%s_%s%s", name, timestamp, ext)
+			case ConflictOverwrite:
+				// Remove existing file record and file
+				if err := os.Remove(existingFile.Filepath); err != nil {
+					// Log but don't fail - file might not exist on disk
+				}
+				if err := database.GetDB().Delete(&existingFile).Error; err != nil {
+					errors = append(errors, fmt.Sprintf("Failed to remove existing file record %s: %v", fileHeader.Filename, err))
+					continue
+				}
+			}
 		}
 
 		// Open uploaded file
@@ -163,8 +352,8 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 			continue
 		}
 
-		// Create destination path
-		destPath := filepath.Join(project.Path, fileHeader.Filename)
+		// Create destination path with final filename
+		destPath := filepath.Join(project.Path, finalFilename)
 
 		// Create destination file
 		dest, err := os.Create(destPath)
@@ -192,7 +381,7 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		// Create file record in database
 		projectFile := models.ProjectFile{
 			ProjectID: project.ID,
-			Filename:  fileHeader.Filename,
+			Filename:  finalFilename,
 			Filepath:  destPath,
 			FileType:  fileType,
 			Size:      size,
@@ -221,14 +410,23 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		"uploaded_count": len(uploadedFiles),
 	}
 
+	if len(skippedFiles) > 0 {
+		response["skipped_files"] = skippedFiles
+		response["skipped_count"] = len(skippedFiles)
+	}
+
 	if len(errors) > 0 {
 		response["errors"] = errors
 		response["error_count"] = len(errors)
 	}
 
-	if len(uploadedFiles) > 0 {
+	fmt.Printf("Upload summary - Uploaded: %d, Skipped: %d, Errors: %d\n", len(uploadedFiles), len(skippedFiles), len(errors))
+
+	// Return 200 if any files were processed (uploaded or skipped), 400 only if nothing was processed
+	if len(uploadedFiles) > 0 || len(skippedFiles) > 0 {
 		c.JSON(http.StatusOK, response)
 	} else {
+		fmt.Printf("ERROR: No files were processed - returning 400\n")
 		c.JSON(http.StatusBadRequest, response)
 	}
 }

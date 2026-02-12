@@ -50,3 +50,39 @@ export interface READMEResponse {
   html: string
   raw: string
 }
+
+// File upload conflict handling
+export type ConflictResolution = 'overwrite' | 'skip' | 'rename'
+
+export interface FileConflict {
+  filename: string
+  existing_file?: ProjectFile
+  new_size: number
+  reason: string
+}
+
+export interface UploadCheckResponse {
+  conflicts: FileConflict[]
+  safe: string[]
+}
+
+export interface UploadTask {
+  id: string
+  filename: string
+  size: number
+  status: 'pending' | 'uploading' | 'completed' | 'failed' | 'skipped'
+  progress: number
+  error?: string
+  conflict?: FileConflict
+  resolution?: ConflictResolution
+}
+
+export interface UploadResponse {
+  message: string
+  uploaded_files: ProjectFile[]
+  uploaded_count: number
+  skipped_files?: string[]
+  skipped_count?: number
+  errors?: string[]
+  error_count?: number
+}
