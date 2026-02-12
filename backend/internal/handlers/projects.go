@@ -235,13 +235,31 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		return
 	}
 
+	// Log upload start info
+	fmt.Printf("[UPLOAD] Starting file upload processing - Content-Length: %d bytes (%.2f MB)\n",
+		c.Request.ContentLength, float64(c.Request.ContentLength)/(1024*1024))
+
 	// Parse multipart form
 	fmt.Printf("Attempting to parse multipart form...\n")
 	form, err := c.MultipartForm()
 	if err != nil {
 		fmt.Printf("Multipart form parse error: %v\n", err)
 		fmt.Printf("Error type: %T\n", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form", "details": err.Error(), "content_length": c.Request.ContentLength})
+
+		// Check for common timeout/EOF errors and provide helpful error messages
+		errMsg := "Failed to parse multipart form"
+		if strings.Contains(err.Error(), "unexpected EOF") {
+			errMsg = "Upload was interrupted - this often happens with large files due to timeouts. Please try again or check your connection."
+		} else if strings.Contains(err.Error(), "timeout") || strings.Contains(err.Error(), "deadline") {
+			errMsg = "Upload timed out - large files may require a stable connection and more time to process."
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":          errMsg,
+			"details":        err.Error(),
+			"content_length": c.Request.ContentLength,
+			"suggestions":    []string{"Ensure stable internet connection", "Try uploading smaller files", "Check file format is supported"},
+		})
 		return
 	}
 	fmt.Printf("Successfully parsed multipart form with %d file fields\n", len(form.File))
