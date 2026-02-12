@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2017",
     "lib": [
       "dom",
       "dom.iterable",
-      "es6"
+      "es2017"
     ],
+    "types": ["node", "@playwright/test", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -13,7 +14,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -49,6 +50,10 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/__tests__/e2e/**/*",
+    "playwright.config.ts",
+    "src/__tests__/global-setup.ts",
+    "src/__tests__/global-teardown.ts"
   ]
 }
