@@ -42,13 +42,7 @@ const customJestConfig = {
   coverageReporters: ['text', 'html', 'json-summary', 'lcov'],
   collectCoverage: false, // Only when explicitly requested
   verbose: true,
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['ts-jest', {
-      tsconfig: {
-        jsx: 'react-jsx',
-      },
-    }],
-  },
+  // Transform configuration is handled by next/jest, removing manual transform
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   projects: [
     {
