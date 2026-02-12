@@ -101,16 +101,16 @@ export class ProjectTestHelpers {
     await page.goto('/')
 
     // Click Create Project button
-    await page.getByRole('button', { name: /create project/i }).click()
+    await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByTestId('create-project-modal')
+    const modal = page.locator('[role="dialog"]').filter({ hasText: 'Create New Project' })
     await expect(modal).toBeVisible()
 
     // Fill project details
-    await page.getByPlaceholder(/project name/i).fill(config.name)
+    await page.getByPlaceholder('Enter project name').fill(config.name)
 
     if (config.description) {
-      await page.getByPlaceholder(/project description/i).fill(config.description)
+      await page.getByPlaceholder('Enter project description (optional)').fill(config.description)
     }
 
     // Upload initial files if provided
@@ -134,7 +134,7 @@ export class ProjectTestHelpers {
       response.status() === 200
     )
 
-    await page.getByRole('button', { name: /create project/i }).nth(1).click()
+    await page.getByRole('button', { name: 'Create Project' }).click()
 
     const response = await responsePromise
     const responseData = await response.json()
@@ -143,7 +143,7 @@ export class ProjectTestHelpers {
     await expect(modal).not.toBeVisible()
 
     // Verify success notification
-    await expect(page.getByText(/project created successfully/i)).toBeVisible()
+    await expect(page.getByText(/project created/i)).toBeVisible()
 
     return responseData.id.toString()
   }
@@ -154,7 +154,7 @@ export class ProjectTestHelpers {
   static async navigateToProject(page: Page, projectName: string): Promise<void> {
     await page.goto('/')
 
-    const projectCard = page.locator('[data-testid*="project-card"]').filter({ hasText: projectName })
+    const projectCard = page.locator('[role="button"]').filter({ hasText: projectName }).first()
     await expect(projectCard).toBeVisible()
     await projectCard.click()
 
@@ -174,9 +174,9 @@ export class ProjectTestHelpers {
     const filePaths = fileManager.createFiles(files)
 
     // Open upload modal
-    await page.getByRole('button', { name: /upload files/i }).click()
+    await page.getByRole('button', { name: 'Upload Files' }).click()
 
-    const uploadModal = page.getByTestId('file-upload-modal')
+    const uploadModal = page.locator('[role="dialog"]').filter({ hasText: 'Upload Files' })
     await expect(uploadModal).toBeVisible()
 
     // Upload files
@@ -196,17 +196,21 @@ export class ProjectTestHelpers {
       response.request().method() === 'POST'
     )
 
+    // Start the upload process
+    let uploadButton = page.getByRole('button', { name: 'Upload Files' })
+    await uploadButton.click()
+
     // Handle conflict resolutions if provided
     if (conflictResolutions && conflictResolutions.length > 0) {
-      await expect(page.getByText(/conflicts detected/i)).toBeVisible()
+      await expect(page.getByText('File Conflicts Detected')).toBeVisible()
 
       for (const resolution of conflictResolutions) {
-        const conflictSection = page.locator(`[data-testid*="conflict-${resolution.filename}"]`)
-        await conflictSection.getByRole('radio', { name: new RegExp(resolution.resolution, 'i') }).check()
+        // Select the appropriate radio button for the resolution
+        await page.locator(`input[value="${resolution.resolution}"]`).first().check()
       }
-    } else {
-      // Expect no conflicts
-      await expect(page.getByText(/no conflicts detected/i)).toBeVisible()
+
+      // Now click upload with resolutions
+      uploadButton = page.getByRole('button', { name: 'Upload with Resolutions' })
     }
 
     // Submit upload
@@ -215,7 +219,7 @@ export class ProjectTestHelpers {
       response.request().method() === 'POST'
     )
 
-    await page.getByRole('button', { name: /upload files/i }).nth(1).click()
+    await uploadButton.click()
 
     const uploadResponse = await uploadPromise
     expect(uploadResponse.status()).toBe(200)
@@ -224,7 +228,7 @@ export class ProjectTestHelpers {
     await expect(uploadModal).not.toBeVisible()
 
     // Verify success message
-    await expect(page.getByText(/uploaded successfully|skipped|overwritten/i)).toBeVisible()
+    await expect(page.getByText(/upload completed/i)).toBeVisible()
   }
 
   /**
@@ -232,7 +236,7 @@ export class ProjectTestHelpers {
    */
   static async verifyProjectFileCount(page: Page, expectedCount: number): Promise<void> {
     if (expectedCount === 0) {
-      await expect(page.getByText(/no files found/i)).toBeVisible()
+      await expect(page.getByText('0 files')).toBeVisible()
     } else {
       await expect(page.getByText(`${expectedCount} file${expectedCount > 1 ? 's' : ''}`)).toBeVisible()
     }

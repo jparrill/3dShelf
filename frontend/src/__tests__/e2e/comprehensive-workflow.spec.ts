@@ -23,7 +23,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
     await page.goto('/')
 
     // Wait for the application to load
-    await expect(page.getByTestId('header')).toBeVisible()
+    await expect(page.getByText('3DShelf')).toBeVisible()
   })
 
   test.afterEach(() => {
@@ -169,9 +169,8 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       // Verify both original and renamed file exist
       await ProjectTestHelpers.verifyFilesExist(page, ['design.step'])
 
-      // Check that there are now 2 files with similar names (original + timestamped)
-      const fileItems = page.locator('[data-testid*="file-item"]')
-      await expect(fileItems).toHaveCount(5)
+      // Check that we now have 5 total files
+      await expect(page.getByText('5 files')).toBeVisible()
     })
 
     // STEP 7: Test multiple files with mixed conflict resolutions
@@ -233,7 +232,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
     await test.step('Handle invalid project creation', async () => {
       // Test form validation
       await page.getByRole('button', { name: /create project/i }).click()
-      const modal = page.getByTestId('create-project-modal')
+      const modal = page.locator('[role="dialog"]')
       await expect(modal).toBeVisible()
 
       await ValidationHelpers.validateRequiredField(
@@ -253,7 +252,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       await page.goto('/')
 
       // Should not see upload button on homepage
-      await expect(page.getByRole('button', { name: /upload files/i })).not.toBeVisible()
+      await expect(page.getByRole('button', { name: 'Upload Files' })).not.toBeVisible()
     })
 
     await test.step('Handle large file uploads', async () => {
@@ -297,8 +296,8 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       // Simulate network offline (this might not work in all environments)
       // But we can at least test that the UI handles loading states properly
 
-      await page.getByRole('button', { name: /upload files/i }).click()
-      const uploadModal = page.getByTestId('file-upload-modal')
+      await page.getByRole('button', { name: 'Upload Files' }).click()
+      const uploadModal = page.locator('[role="dialog"]').filter({ hasText: 'Upload Files' })
       await expect(uploadModal).toBeVisible()
 
       // Create test file
@@ -321,19 +320,19 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       await page.keyboard.press('Tab')
 
       // Should be able to navigate to create project button
-      const createButton = page.getByRole('button', { name: /create project/i })
+      const createButton = page.getByRole('button', { name: 'Create Project' })
       await expect(createButton).toBeFocused()
 
       // Press Enter to open modal
       await page.keyboard.press('Enter')
 
-      const modal = page.getByTestId('create-project-modal')
+      const modal = page.locator('[role="dialog"]')
       await expect(modal).toBeVisible()
 
       // Should be able to navigate through modal with Tab
       await page.keyboard.press('Tab')
 
-      const nameField = page.getByPlaceholder(/project name/i)
+      const nameField = page.getByPlaceholder('Enter project name')
       await expect(nameField).toBeFocused()
 
       // Close modal with Escape
@@ -354,7 +353,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       await ProjectTestHelpers.navigateToProject(page, accessibilityProjectName)
 
       // Check upload button accessibility
-      const uploadButton = page.getByRole('button', { name: /upload files/i })
+      const uploadButton = page.getByRole('button', { name: 'Upload Files' })
       await expect(uploadButton).toBeVisible()
 
       const ariaLabel = await uploadButton.getAttribute('aria-label')
@@ -372,12 +371,12 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       await expect(page.getByTestId('header')).toBeVisible()
 
       // Create project button should be accessible
-      const createButton = page.getByRole('button', { name: /create project/i })
+      const createButton = page.getByRole('button', { name: 'Create Project' })
       await expect(createButton).toBeVisible()
 
       // Modal should work on mobile
       await createButton.click()
-      const modal = page.getByTestId('create-project-modal')
+      const modal = page.locator('[role="dialog"]')
       await expect(modal).toBeVisible()
 
       // Modal should be properly sized for mobile
@@ -392,7 +391,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
     await test.step('Test loading states during project creation', async () => {
       await page.getByRole('button', { name: /create project/i }).click()
 
-      const modal = page.getByTestId('create-project-modal')
+      const modal = page.locator('[role="dialog"]')
       await expect(modal).toBeVisible()
 
       await page.getByPlaceholder(/project name/i).fill(performanceProjectName)
@@ -428,7 +427,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       // Test upload loading states
       await page.getByRole('button', { name: /upload files/i }).click()
 
-      const uploadModal = page.getByTestId('file-upload-modal')
+      const uploadModal = page.locator('[role="dialog"]').filter({ hasText: 'Upload Files' })
       await expect(uploadModal).toBeVisible()
 
       const largeFile = {

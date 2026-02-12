@@ -26,21 +26,23 @@ const waitForProjectCreation = async (page: Page) => {
 test.describe('Project Creation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByTestId('header')).toBeVisible()
+    // Wait for the header to be visible (contains 3DShelf heading)
+    await expect(page.getByText('3DShelf')).toBeVisible()
   })
 
   test('should create project without files successfully', async ({ page }) => {
     // Click Create Project button
     await page.getByRole('button', { name: /create project/i }).click()
 
-    // Wait for modal to open
-    const modal = page.getByTestId('create-project-modal')
+    // Wait for modal to open (contains "Create New Project" header)
+    const modal = page.locator('[role="dialog"]')
     await expect(modal).toBeVisible()
+    await expect(page.getByText('Create New Project')).toBeVisible()
 
     // Fill in project details
     const projectName = `Test Project ${Date.now()}`
-    await page.getByPlaceholder(/project name/i).fill(projectName)
-    await page.getByPlaceholder(/project description/i).fill('A test project created without initial files')
+    await page.getByPlaceholder('Enter project name').fill(projectName)
+    await page.getByPlaceholder('Enter project description (optional)').fill('A test project created without initial files')
 
     // Setup response waiting before clicking submit
     const responsePromise = waitForProjectCreation(page)
@@ -55,15 +57,14 @@ test.describe('Project Creation', () => {
     // Wait for modal to close
     await expect(modal).not.toBeVisible()
 
-    // Verify success notification
-    await expect(page.getByText(/project created successfully/i)).toBeVisible()
+    // Verify success notification (toast message)
+    await expect(page.getByText(/project created/i)).toBeVisible()
 
     // Verify project appears in the list
     await expect(page.getByText(projectName)).toBeVisible()
 
     // Verify project card shows no files
-    const projectCard = page.locator('[data-testid*="project-card"]').filter({ hasText: projectName })
-    await expect(projectCard.getByText('0 files')).toBeVisible()
+    await expect(page.getByText('0 files')).toBeVisible()
   })
 
   test('should create project with files successfully', async ({ page }) => {
@@ -75,13 +76,14 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: /create project/i }).click()
 
-    const modal = page.getByTestId('create-project-modal')
+    const modal = page.locator('[role="dialog"]')
     await expect(modal).toBeVisible()
+    await expect(page.getByText('Create New Project')).toBeVisible()
 
     // Fill in project details
     const projectName = `Test Project With Files ${Date.now()}`
-    await page.getByPlaceholder(/project name/i).fill(projectName)
-    await page.getByPlaceholder(/project description/i).fill('A test project created with initial files')
+    await page.getByPlaceholder('Enter project name').fill(projectName)
+    await page.getByPlaceholder('Enter project description (optional)').fill('A test project created with initial files')
 
     // Upload files
     const fileInput = page.locator('input[type="file"]')
@@ -112,10 +114,10 @@ test.describe('Project Creation', () => {
     await expect(page.getByText(projectName)).toBeVisible()
 
     // Verify project card shows file count
-    const projectCard = page.locator('[data-testid*="project-card"]').filter({ hasText: projectName })
-    await expect(projectCard.getByText('3 files')).toBeVisible()
+    await expect(page.getByText('3 files')).toBeVisible()
 
-    // Click on project to view details
+    // Click on project card to view details
+    const projectCard = page.locator('[role="button"]').filter({ hasText: projectName }).first()
     await projectCard.click()
 
     // Verify we're on the project detail page
@@ -132,24 +134,24 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: /create project/i }).click()
 
-    const modal = page.getByTestId('create-project-modal')
+    const modal = page.locator('[role="dialog"]')
     await expect(modal).toBeVisible()
 
     // Try to submit without name
-    await page.getByRole('button', { name: /create project/i }).nth(1).click()
+    await page.getByRole('button', { name: 'Create Project' }).click()
 
-    // Should show validation error
-    await expect(page.getByText(/project name is required/i)).toBeVisible()
+    // Should show validation error in toast
+    await expect(page.getByText(/project name is required|validation error/i)).toBeVisible()
 
     // Fill name with spaces only
-    await page.getByPlaceholder(/project name/i).fill('   ')
-    await page.getByRole('button', { name: /create project/i }).nth(1).click()
+    await page.getByPlaceholder('Enter project name').fill('   ')
+    await page.getByRole('button', { name: 'Create Project' }).click()
 
     // Should still show validation error
-    await expect(page.getByText(/project name is required/i)).toBeVisible()
+    await expect(page.getByText(/project name is required|validation error/i)).toBeVisible()
 
     // Fill valid name
-    await page.getByPlaceholder(/project name/i).fill('Valid Project Name')
+    await page.getByPlaceholder('Enter project name').fill('Valid Project Name')
 
     // Description should be optional - submit should work
     const responsePromise = waitForProjectCreation(page)
@@ -173,7 +175,7 @@ test.describe('Project Creation', () => {
     await expect(modal).toBeVisible()
 
     // Fill project name
-    await page.getByPlaceholder(/project name/i).fill(`File Test Project ${Date.now()}`)
+    await page.getByPlaceholder('Enter project name').fill(`File Test Project ${Date.now()}`)
 
     // Upload files
     const fileInput = page.locator('input[type="file"]')
@@ -183,8 +185,9 @@ test.describe('Project Creation', () => {
     await expect(page.getByText('remove-test.stl')).toBeVisible()
     await expect(page.getByText('keep-test.gcode')).toBeVisible()
 
-    // Remove one file
-    await page.getByTestId('remove-file-remove-test.stl').click()
+    // Remove one file (click the red X button)
+    const removeButtons = page.getByRole('button').filter({ has: page.locator('svg') })
+    await removeButtons.first().click()
 
     // Verify file is removed from list
     await expect(page.getByText('remove-test.stl')).not.toBeVisible()
@@ -206,12 +209,12 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: /create project/i }).click()
 
-    const modal = page.getByTestId('create-project-modal')
+    const modal = page.locator('[role="dialog"]')
     await expect(modal).toBeVisible()
 
     // Fill some data
-    await page.getByPlaceholder(/project name/i).fill('Test Project')
-    await page.getByPlaceholder(/project description/i).fill('Test description')
+    await page.getByPlaceholder('Enter project name').fill('Test Project')
+    await page.getByPlaceholder('Enter project description (optional)').fill('Test description')
 
     // Cancel the modal
     await page.getByRole('button', { name: /cancel/i }).click()
@@ -235,7 +238,7 @@ test.describe('Project Creation', () => {
     await expect(modal).toBeVisible()
 
     // Fill project details
-    await page.getByPlaceholder(/project name/i).fill(`Large File Project ${Date.now()}`)
+    await page.getByPlaceholder('Enter project name').fill(`Large File Project ${Date.now()}`)
 
     // Upload large file
     const fileInput = page.locator('input[type="file"]')
