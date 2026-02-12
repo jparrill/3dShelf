@@ -1,4 +1,4 @@
-.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all
+.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all kill
 
 # Default target
 help:
@@ -15,6 +15,7 @@ help:
 	@echo "  dev          - Start local development servers (backend + frontend)"
 	@echo "  dev-setup    - Install dependencies for local development"
 	@echo "  dev-all      - Light verification, build everything, and start local servers"
+	@echo "  kill         - Stop all development servers and free up ports"
 	@echo ""
 	@echo "Testing commands:"
 	@echo "  verify       - Run comprehensive test suite (all backend + frontend tests)"
@@ -387,3 +388,25 @@ init: dev-setup
 	mkdir -p data/projects
 	@echo "✅ 3DShelf initialized successfully!"
 	@echo "Run 'make dev' to start development servers"
+
+# Kill all development servers and free up ports
+kill:
+	@echo "🛑 Stopping all 3DShelf development servers..."
+	@echo ""
+	@echo "📋 Killing processes on ports 3000 and 8080..."
+	@-lsof -ti:3000 | xargs -r kill -9 2>/dev/null || true
+	@-lsof -ti:8080 | xargs -r kill -9 2>/dev/null || true
+	@echo ""
+	@echo "📋 Killing Go and Node.js development processes..."
+	@-pkill -f "go run.*cmd/server" 2>/dev/null || true
+	@-pkill -f "next dev" 2>/dev/null || true
+	@-pkill -f "npm.*dev" 2>/dev/null || true
+	@-pkill -f "3dshelf" 2>/dev/null || true
+	@echo ""
+	@echo "📋 Cleaning up any remaining processes..."
+	@-ps aux | grep -E "(go run|next dev|npm.*dev|3dshelf)" | grep -v grep | awk '{print $$2}' | xargs -r kill -9 2>/dev/null || true
+	@echo ""
+	@echo "✅ All development servers stopped!"
+	@echo "🔓 Ports 3000 and 8080 are now available"
+	@echo ""
+	@echo "💡 Run 'make dev' or 'make dev-all' to restart servers"
