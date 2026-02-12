@@ -104,7 +104,7 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
       const response = await projectsApi.checkUploadConflicts(projectId, filenames)
       console.log('Conflict check response:', response)
 
-      if (response.conflicts.length > 0) {
+      if (response.conflicts && response.conflicts.length > 0) {
         console.log('Conflicts detected, showing conflict UI')
         console.log('Conflicts found:', response.conflicts)
         setConflicts(response.conflicts)

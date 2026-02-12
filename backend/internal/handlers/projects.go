@@ -185,8 +185,8 @@ func (h *ProjectsHandler) CheckUploadConflicts(c *gin.Context) {
 		existingFileMap[existingFiles[i].Filename] = &existingFiles[i]
 	}
 
-	var conflicts []FileConflict
-	var safe []string
+	conflicts := make([]FileConflict, 0)
+	safe := make([]string, 0)
 
 	for _, filename := range request.Filenames {
 		if existingFile, exists := existingFileMap[filename]; exists {
