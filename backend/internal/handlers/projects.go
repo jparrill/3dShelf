@@ -36,7 +36,7 @@ const (
 
 // FileConflict represents a file that conflicts with existing files
 type FileConflict struct {
-	Filename     string             `json:"filename"`
+	Filename     string              `json:"filename"`
 	ExistingFile *models.ProjectFile `json:"existing_file,omitempty"`
 	NewSize      int64               `json:"new_size"`
 	Reason       string              `json:"reason"`
