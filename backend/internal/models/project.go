@@ -29,14 +29,14 @@ const (
 
 // Project represents a 3D printing project
 type Project struct {
-	ID          uint          `json:"id" gorm:"primaryKey"`
-	Name        string        `json:"name" gorm:"not null"`
-	Path        string        `json:"path" gorm:"uniqueIndex;not null"`
-	Description string        `json:"description" gorm:"type:text"`
-	Status      ProjectStatus `json:"status" gorm:"default:healthy"`
-	LastScanned time.Time     `json:"last_scanned"`
-	CreatedAt   time.Time     `json:"created_at"`
-	UpdatedAt   time.Time     `json:"updated_at"`
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	Name        string         `json:"name" gorm:"not null"`
+	Path        string         `json:"path" gorm:"uniqueIndex;not null"`
+	Description string         `json:"description" gorm:"type:text"`
+	Status      ProjectStatus  `json:"status" gorm:"default:healthy"`
+	LastScanned time.Time      `json:"last_scanned"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
 
 	// Relationships
@@ -45,13 +45,13 @@ type Project struct {
 
 // ProjectFile represents a file within a project
 type ProjectFile struct {
-	ID        uint     `json:"id" gorm:"primaryKey"`
-	ProjectID uint     `json:"project_id" gorm:"not null"`
-	Filename  string   `json:"filename" gorm:"not null"`
-	Filepath  string   `json:"filepath" gorm:"not null"`
-	FileType  FileType `json:"file_type" gorm:"not null"`
-	Size      int64    `json:"size"`
-	Hash      string   `json:"hash"` // For integrity checking
+	ID        uint      `json:"id" gorm:"primaryKey"`
+	ProjectID uint      `json:"project_id" gorm:"not null"`
+	Filename  string    `json:"filename" gorm:"not null"`
+	Filepath  string    `json:"filepath" gorm:"not null"`
+	FileType  FileType  `json:"file_type" gorm:"not null"`
+	Size      int64     `json:"size"`
+	Hash      string    `json:"hash"` // For integrity checking
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 

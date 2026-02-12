@@ -5,6 +5,7 @@ backend/*.db
 backend/.env
 backend/coverage.out
 backend/coverage.html
+backend/coverage/
 backend/test-results/
 
 # Frontend
