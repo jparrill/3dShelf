@@ -1,0 +1,49 @@
+# Backend
+backend/printvault-backend
+backend/*.db
+backend/.env
+
+# Frontend
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+frontend/.env*
+frontend/*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data directories (customize as needed)
+data/projects/
+data/db/
+
+# Docker
+docker-compose.override.yml
