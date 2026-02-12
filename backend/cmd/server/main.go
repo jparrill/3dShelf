@@ -42,8 +42,8 @@ func main() {
 	// Setup router
 	router := gin.Default()
 
-	// Set larger limit for file uploads (64MB)
-	router.MaxMultipartMemory = 64 << 20
+	// Set larger limit for file uploads (1GB)
+	router.MaxMultipartMemory = 1024 << 20
 
 	// Configure CORS
 	corsConfig := cors.DefaultConfig()

@@ -222,9 +222,9 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 	fmt.Printf("Content-Length: %s\n", c.GetHeader("Content-Length"))
 
 	// Check content length
-	if c.Request.ContentLength > 64<<20 { // 64MB limit
-		fmt.Printf("File too large: %d bytes (max 64MB)\n", c.Request.ContentLength)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "File too large", "max_size": "64MB", "received": c.Request.ContentLength})
+	if c.Request.ContentLength > 1024<<20 { // 1GB limit
+		fmt.Printf("File too large: %d bytes (max 1GB)\n", c.Request.ContentLength)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "File too large", "max_size": "1GB", "received": c.Request.ContentLength})
 		return
 	}
 
@@ -240,9 +240,16 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 	fmt.Printf("Successfully parsed multipart form with %d file fields\n", len(form.File))
 
 	files := form.File["files"]
+	fmt.Printf("Found %d files in multipart form\n", len(files))
 	if len(files) == 0 {
+		fmt.Printf("ERROR: No files found in multipart form\n")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "No files provided"})
 		return
+	}
+
+	// Debug: Print file information
+	for i, fileHeader := range files {
+		fmt.Printf("File %d: %s, Size: %d bytes\n", i, fileHeader.Filename, fileHeader.Size)
 	}
 
 	// Parse conflict resolutions from form data
@@ -278,10 +285,15 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 	var errors []string
 
 	// Process each file
-	for _, fileHeader := range files {
+	fmt.Printf("Starting to process %d files\n", len(files))
+	for i, fileHeader := range files {
+		fmt.Printf("Processing file %d: %s (size: %d)\n", i+1, fileHeader.Filename, fileHeader.Size)
+
 		// Validate file type
 		fileType := models.GetFileTypeFromExtension(fileHeader.Filename)
+		fmt.Printf("File type detected: %s\n", fileType)
 		if fileType == models.FileTypeOther && !strings.Contains(fileHeader.Filename, "README") {
+			fmt.Printf("ERROR: File type not supported: %s\n", fileHeader.Filename)
 			errors = append(errors, fmt.Sprintf("File type not supported: %s", fileHeader.Filename))
 			continue
 		}
