@@ -144,7 +144,7 @@ dev-setup:
 	@echo "Installing backend dependencies..."
 	ZDOTDIR= go mod tidy -C backend && go mod download -C backend
 	@echo "Installing frontend dependencies..."
-	ZDOTDIR= cd frontend && npm install
+	ZDOTDIR= cd frontend && npm install --legacy-peer-deps
 	@echo "✅ Development environment ready!"
 	@echo "Run 'make dev' to start the development servers"
 

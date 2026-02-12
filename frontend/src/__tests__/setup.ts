@@ -2,6 +2,10 @@ import '@testing-library/jest-dom'
 import 'whatwg-fetch'
 import { server } from './mocks/server'
 
+// Polyfills for Node.js environment
+global.TextEncoder = global.TextEncoder || require('util').TextEncoder
+global.TextDecoder = global.TextDecoder || require('util').TextDecoder
+
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}

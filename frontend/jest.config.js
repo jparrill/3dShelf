@@ -42,22 +42,12 @@ const customJestConfig = {
   coverageReporters: ['text', 'html', 'json-summary', 'lcov'],
   collectCoverage: false, // Only when explicitly requested
   verbose: true,
-  // Transform configuration is handled by next/jest, removing manual transform
+  // Transform configuration is handled by next/jest
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  projects: [
-    {
-      displayName: 'unit',
-      testMatch: ['<rootDir>/src/**/__tests__/unit/**/*.{test,spec}.{js,jsx,ts,tsx}'],
-      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-      testEnvironment: 'jest-environment-jsdom',
-    },
-    {
-      displayName: 'integration',
-      testMatch: ['<rootDir>/src/**/__tests__/integration/**/*.{test,spec}.{js,jsx,ts,tsx}'],
-      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-      testEnvironment: 'jest-environment-jsdom',
-    },
-  ],
+  globals: {
+    TextEncoder: TextEncoder,
+    TextDecoder: TextDecoder,
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
