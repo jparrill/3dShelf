@@ -1,6 +1,6 @@
-<testsuites id="" name="" tests="43" failures="43" skipped="0" errors="0" time="289.776235">
-<testsuite name="comprehensive-workflow.spec.ts" timestamp="2026-02-12T20:55:57.591Z" hostname="chromium" tests="4" failures="4" skipped="0" time="153.935" errors="0">
-<testcase name="Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths)" classname="comprehensive-workflow.spec.ts" time="35.903">
+<testsuites id="" name="" tests="43" failures="10" skipped="33" errors="0" time="80.037465">
+<testsuite name="comprehensive-workflow.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="4" failures="4" skipped="0" time="153.929" errors="0">
+<testcase name="Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths)" classname="comprehensive-workflow.spec.ts" time="35.911">
 <failure message="comprehensive-workflow.spec.ts:33:7 Complete workflow: Project creation → File upload → Conflict resolution (All paths)" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:33:7 › Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths) 
 
@@ -40,7 +40,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Error handling and edge cases" classname="comprehensive-workflow.spec.ts" time="41.064">
+<testcase name="Comprehensive 3D Organizer Workflows › Error handling and edge cases" classname="comprehensive-workflow.spec.ts" time="41.049">
 <failure message="comprehensive-workflow.spec.ts:229:7 Error handling and edge cases" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:229:7 › Comprehensive 3D Organizer Workflows › Error handling and edge cases 
 
@@ -80,49 +80,9 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Accessibility and usability testing" classname="comprehensive-workflow.spec.ts" time="41.067">
+<testcase name="Comprehensive 3D Organizer Workflows › Accessibility and usability testing" classname="comprehensive-workflow.spec.ts" time="35.917">
 <failure message="comprehensive-workflow.spec.ts:321:7 Accessibility and usability testing" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:321:7 › Comprehensive 3D Organizer Workflows › Accessibility and usability testing 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      19 |   let fileManager: TestFileManager
-      20 |
-    > 21 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-      23 |     await page.goto('/')
-      24 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:21:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      21 |   test.beforeEach(async ({ page }) => {
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-    > 23 |     await page.goto('/')
-         |                ^
-      24 |
-      25 |     // Wait for the application to load
-      26 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm]]
-]]>
-</system-out>
-</testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Performance and loading states" classname="comprehensive-workflow.spec.ts" time="35.901">
-<failure message="comprehensive-workflow.spec.ts:394:7 Performance and loading states" type="FAILURE">
-<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:394:7 › Comprehensive 3D Organizer Workflows › Performance and loading states 
 
     Test timeout of 30000ms exceeded while running "beforeEach" hook.
 
@@ -150,6 +110,46 @@
         at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
 
     attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Comprehensive 3D Organizer Workflows › Performance and loading states" classname="comprehensive-workflow.spec.ts" time="41.052">
+<failure message="comprehensive-workflow.spec.ts:394:7 Performance and loading states" type="FAILURE">
+<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:394:7 › Comprehensive 3D Organizer Workflows › Performance and loading states 
+
+    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+
+      19 |   let fileManager: TestFileManager
+      20 |
+    > 21 |   test.beforeEach(async ({ page }) => {
+         |        ^
+      22 |     fileManager = new TestFileManager('comprehensive-tests')
+      23 |     await page.goto('/')
+      24 |
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:21:8
+
+    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
+    Call log:
+      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+
+
+      21 |   test.beforeEach(async ({ page }) => {
+      22 |     fileManager = new TestFileManager('comprehensive-tests')
+    > 23 |     await page.goto('/')
+         |                ^
+      24 |
+      25 |     // Wait for the application to load
+      26 |     await expect(page.getByText('3DShelf')).toBeVisible()
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
+
+    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
 ]]>
@@ -161,8 +161,8 @@
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="file-upload-and-conflicts.spec.ts" timestamp="2026-02-12T20:55:57.591Z" hostname="chromium" tests="7" failures="7" skipped="0" time="287.284" errors="0">
-<testcase name="File Upload and Conflict Resolution › should upload new files to existing project successfully" classname="file-upload-and-conflicts.spec.ts" time="41.056">
+<testsuite name="file-upload-and-conflicts.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="7" failures="6" skipped="1" time="237.513" errors="0">
+<testcase name="File Upload and Conflict Resolution › should upload new files to existing project successfully" classname="file-upload-and-conflicts.spec.ts" time="35.911">
 <failure message="file-upload-and-conflicts.spec.ts:55:7 should upload new files to existing project successfully" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:55:7 › File Upload and Conflict Resolution › should upload new files to existing project successfully 
 
@@ -177,7 +177,7 @@
       53 |   })
         at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
+    Error: page.goto: Test timeout of 30000ms exceeded.
     Call log:
       - navigating to "http://127.0.0.1:3000/", waiting until "load"
 
@@ -202,7 +202,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with skip resolution" classname="file-upload-and-conflicts.spec.ts" time="41.053">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with skip resolution" classname="file-upload-and-conflicts.spec.ts" time="41.044">
 <failure message="file-upload-and-conflicts.spec.ts:103:7 should handle file conflicts with skip resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:103:7 › File Upload and Conflict Resolution › should handle file conflicts with skip resolution 
 
@@ -242,7 +242,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution" classname="file-upload-and-conflicts.spec.ts" time="41.046">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution" classname="file-upload-and-conflicts.spec.ts" time="41.052">
 <failure message="file-upload-and-conflicts.spec.ts:159:7 should handle file conflicts with overwrite resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:159:7 › File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution 
 
@@ -282,7 +282,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution" classname="file-upload-and-conflicts.spec.ts" time="41.024">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution" classname="file-upload-and-conflicts.spec.ts" time="39.836">
 <failure message="file-upload-and-conflicts.spec.ts:219:7 should handle file conflicts with rename (upload + timestamp) resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:219:7 › File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution 
 
@@ -310,19 +310,10 @@
       54 |
       55 |   test('should upload new files to existing project successfully', async ({ page }) => {
         at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
 ]]>
 </failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/video.webm]]
-]]>
-</system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions" classname="file-upload-and-conflicts.spec.ts" time="41.024">
+<testcase name="File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions" classname="file-upload-and-conflicts.spec.ts" time="39.835">
 <failure message="file-upload-and-conflicts.spec.ts:285:7 should handle mixed conflicts with different resolutions" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:285:7 › File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions 
 
@@ -350,19 +341,10 @@
       54 |
       55 |   test('should upload new files to existing project successfully', async ({ page }) => {
         at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
 ]]>
 </failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/video.webm]]
-]]>
-</system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle upload cancellation" classname="file-upload-and-conflicts.spec.ts" time="41.04">
+<testcase name="File Upload and Conflict Resolution › should handle upload cancellation" classname="file-upload-and-conflicts.spec.ts" time="39.835">
 <failure message="file-upload-and-conflicts.spec.ts:376:7 should handle upload cancellation" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:376:7 › File Upload and Conflict Resolution › should handle upload cancellation 
 
@@ -390,1345 +372,148 @@
       54 |
       55 |   test('should upload new files to existing project successfully', async ({ page }) => {
         at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
 ]]>
 </failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/video.webm]]
-]]>
-</system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should validate file types during upload" classname="file-upload-and-conflicts.spec.ts" time="41.041">
-<failure message="file-upload-and-conflicts.spec.ts:407:7 should validate file types during upload" type="FAILURE">
-<![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:407:7 › File Upload and Conflict Resolution › should validate file types during upload 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="File Upload and Conflict Resolution › should validate file types during upload" classname="file-upload-and-conflicts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
-<testsuite name="homepage.spec.ts" timestamp="2026-02-12T20:55:57.591Z" hostname="chromium" tests="12" failures="12" skipped="0" time="492.359" errors="0">
-<testcase name="3DShelf Homepage › should display the main header and navigation" classname="homepage.spec.ts" time="41.044">
-<failure message="homepage.spec.ts:9:7 should display the main header and navigation" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:9:7 › 3DShelf Homepage › should display the main header and navigation 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--ae9ce--main-header-and-navigation-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--ae9ce--main-header-and-navigation-chromium/video.webm]]
-]]>
-</system-out>
+<testsuite name="homepage.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="3DShelf Homepage › should display the main header and navigation" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should load and display project list" classname="homepage.spec.ts" time="41.048">
-<failure message="homepage.spec.ts:20:7 should load and display project list" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:20:7 › 3DShelf Homepage › should load and display project list ─────
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should load and display project list" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should perform search functionality" classname="homepage.spec.ts" time="41.046">
-<failure message="homepage.spec.ts:33:7 should perform search functionality" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:33:7 › 3DShelf Homepage › should perform search functionality ──────
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--6e7d7-erform-search-functionality-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--6e7d7-erform-search-functionality-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should perform search functionality" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should handle empty search" classname="homepage.spec.ts" time="41.018">
-<failure message="homepage.spec.ts:54:7 should handle empty search" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:54:7 › 3DShelf Homepage › should handle empty search ───────────────
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage-should-handle-empty-search-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage-should-handle-empty-search-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should handle empty search" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should navigate to project detail when clicking project" classname="homepage.spec.ts" time="41.015">
-<failure message="homepage.spec.ts:71:7 should navigate to project detail when clicking project" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:71:7 › 3DShelf Homepage › should navigate to project detail when clicking project 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should navigate to project detail when clicking project" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should handle scan projects functionality" classname="homepage.spec.ts" time="41.034">
-<failure message="homepage.spec.ts:96:7 should handle scan projects functionality" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:96:7 › 3DShelf Homepage › should handle scan projects functionality 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--1a175-scan-projects-functionality-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--1a175-scan-projects-functionality-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should handle scan projects functionality" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should be responsive on mobile viewport" classname="homepage.spec.ts" time="41.034">
-<failure message="homepage.spec.ts:118:7 should be responsive on mobile viewport" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:118:7 › 3DShelf Homepage › should be responsive on mobile viewport ─
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should be responsive on mobile viewport" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should handle network errors gracefully" classname="homepage.spec.ts" time="41.032">
-<failure message="homepage.spec.ts:137:7 should handle network errors gracefully" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:137:7 › 3DShelf Homepage › should handle network errors gracefully ─
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should handle network errors gracefully" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should display loading states appropriately" classname="homepage.spec.ts" time="41.019">
-<failure message="homepage.spec.ts:151:7 should display loading states appropriately" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:151:7 › 3DShelf Homepage › should display loading states appropriately 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--2d620-oading-states-appropriately-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--2d620-oading-states-appropriately-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should display loading states appropriately" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should maintain state during page interactions" classname="homepage.spec.ts" time="41.036">
-<failure message="homepage.spec.ts:167:7 should maintain state during page interactions" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:167:7 › 3DShelf Homepage › should maintain state during page interactions 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--42997-te-during-page-interactions-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--42997-te-during-page-interactions-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should maintain state during page interactions" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should have proper accessibility features" classname="homepage.spec.ts" time="41.018">
-<failure message="homepage.spec.ts:188:7 should have proper accessibility features" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:188:7 › 3DShelf Homepage › should have proper accessibility features 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should have proper accessibility features" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="3DShelf Homepage › should handle keyboard navigation" classname="homepage.spec.ts" time="41.015">
-<failure message="homepage.spec.ts:208:7 should handle keyboard navigation" type="FAILURE">
-<![CDATA[  [chromium] › homepage.spec.ts:208:7 › 3DShelf Homepage › should handle keyboard navigation ───────
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('3DShelf Homepage', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to the homepage
-      6 |     await page.goto('/')
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to the homepage
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |   })
-      8 |
-      9 |   test('should display the main header and navigation', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="3DShelf Homepage › should handle keyboard navigation" classname="homepage.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
-<testsuite name="project-creation.spec.ts" timestamp="2026-02-12T20:55:57.591Z" hostname="chromium" tests="6" failures="6" skipped="0" time="246.163" errors="0">
-<testcase name="Project Creation › should create project without files successfully" classname="project-creation.spec.ts" time="41.034">
-<failure message="project-creation.spec.ts:30:7 should create project without files successfully" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:30:7 › Project Creation › should create project without files successfully 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      22 |
-      23 | test.describe('Project Creation', () => {
-    > 24 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      25 |     await page.goto('/')
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:24:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      23 | test.describe('Project Creation', () => {
-      24 |   test.beforeEach(async ({ page }) => {
-    > 25 |     await page.goto('/')
-         |                ^
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      28 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-78a94--without-files-successfully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-78a94--without-files-successfully-chromium/video.webm]]
-]]>
-</system-out>
+<testsuite name="project-creation.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="6" failures="0" skipped="6" time="0" errors="0">
+<testcase name="Project Creation › should create project without files successfully" classname="project-creation.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Creation › should create project with files successfully" classname="project-creation.spec.ts" time="41.021">
-<failure message="project-creation.spec.ts:63:7 should create project with files successfully" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:63:7 › Project Creation › should create project with files successfully 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      22 |
-      23 | test.describe('Project Creation', () => {
-    > 24 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      25 |     await page.goto('/')
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:24:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      23 | test.describe('Project Creation', () => {
-      24 |   test.beforeEach(async ({ page }) => {
-    > 25 |     await page.goto('/')
-         |                ^
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      28 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Creation › should create project with files successfully" classname="project-creation.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Creation › should validate required fields in project creation" classname="project-creation.spec.ts" time="41.034">
-<failure message="project-creation.spec.ts:120:7 should validate required fields in project creation" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:120:7 › Project Creation › should validate required fields in project creation 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      22 |
-      23 | test.describe('Project Creation', () => {
-    > 24 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      25 |     await page.goto('/')
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:24:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      23 | test.describe('Project Creation', () => {
-      24 |   test.beforeEach(async ({ page }) => {
-    > 25 |     await page.goto('/')
-         |                ^
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      28 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-5878c--fields-in-project-creation-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-5878c--fields-in-project-creation-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Creation › should validate required fields in project creation" classname="project-creation.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Creation › should handle file selection and removal in project creation" classname="project-creation.spec.ts" time="41.033">
-<failure message="project-creation.spec.ts:150:7 should handle file selection and removal in project creation" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:150:7 › Project Creation › should handle file selection and removal in project creation 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      22 |
-      23 | test.describe('Project Creation', () => {
-    > 24 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      25 |     await page.goto('/')
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:24:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      23 | test.describe('Project Creation', () => {
-      24 |   test.beforeEach(async ({ page }) => {
-    > 25 |     await page.goto('/')
-         |                ^
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      28 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Creation › should handle file selection and removal in project creation" classname="project-creation.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Creation › should handle modal cancel functionality" classname="project-creation.spec.ts" time="41.022">
-<failure message="project-creation.spec.ts:190:7 should handle modal cancel functionality" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:190:7 › Project Creation › should handle modal cancel functionality 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      22 |
-      23 | test.describe('Project Creation', () => {
-    > 24 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      25 |     await page.goto('/')
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:24:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      23 | test.describe('Project Creation', () => {
-      24 |   test.beforeEach(async ({ page }) => {
-    > 25 |     await page.goto('/')
-         |                ^
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      28 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-5d114--modal-cancel-functionality-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-5d114--modal-cancel-functionality-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Creation › should handle modal cancel functionality" classname="project-creation.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Creation › should handle file upload errors gracefully" classname="project-creation.spec.ts" time="41.019">
-<failure message="project-creation.spec.ts:211:7 should handle file upload errors gracefully" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:211:7 › Project Creation › should handle file upload errors gracefully 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      22 |
-      23 | test.describe('Project Creation', () => {
-    > 24 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      25 |     await page.goto('/')
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:24:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      23 | test.describe('Project Creation', () => {
-      24 |   test.beforeEach(async ({ page }) => {
-    > 25 |     await page.goto('/')
-         |                ^
-      26 |     // Wait for the header to be visible (contains 3DShelf heading)
-      27 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      28 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Creation › should handle file upload errors gracefully" classname="project-creation.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
-<testsuite name="project-details.spec.ts" timestamp="2026-02-12T20:55:57.591Z" hostname="chromium" tests="12" failures="12" skipped="0" time="492.384" errors="0">
-<testcase name="Project Details Page › should navigate to project details from homepage" classname="project-details.spec.ts" time="41.023">
-<failure message="project-details.spec.ts:10:7 should navigate to project details from homepage" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:10:7 › Project Details Page › should navigate to project details from homepage 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-6215c-oject-details-from-homepage-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-6215c-oject-details-from-homepage-chromium/video.webm]]
-]]>
-</system-out>
+<testsuite name="project-details.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Project Details Page › should navigate to project details from homepage" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should display project information correctly" classname="project-details.spec.ts" time="41.032">
-<failure message="project-details.spec.ts:29:7 should display project information correctly" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:29:7 › Project Details Page › should display project information correctly 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-20dbd-oject-information-correctly-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-20dbd-oject-information-correctly-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should display project information correctly" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should display project files if available" classname="project-details.spec.ts" time="41.031">
-<failure message="project-details.spec.ts:54:7 should display project files if available" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:54:7 › Project Details Page › should display project files if available 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-27d41--project-files-if-available-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-27d41--project-files-if-available-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should display project files if available" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should show project statistics" classname="project-details.spec.ts" time="41.046">
-<failure message="project-details.spec.ts:71:7 should show project statistics" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:71:7 › Project Details Page › should show project statistics 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-964e0-uld-show-project-statistics-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-964e0-uld-show-project-statistics-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should show project statistics" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should handle project README content" classname="project-details.spec.ts" time="41.042">
-<failure message="project-details.spec.ts:88:7 should handle project README content" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:88:7 › Project Details Page › should handle project README content 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-dbb7d-ndle-project-README-content-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-dbb7d-ndle-project-README-content-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should handle project README content" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should provide navigation back to homepage" classname="project-details.spec.ts" time="41.053">
-<failure message="project-details.spec.ts:109:7 should provide navigation back to homepage" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:109:7 › Project Details Page › should provide navigation back to homepage 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-c80ab-navigation-back-to-homepage-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-c80ab-navigation-back-to-homepage-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should provide navigation back to homepage" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should handle non-existent project gracefully" classname="project-details.spec.ts" time="41.026">
-<failure message="project-details.spec.ts:134:7 should handle non-existent project gracefully" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:134:7 › Project Details Page › should handle non-existent project gracefully 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should handle non-existent project gracefully" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should be responsive on mobile devices" classname="project-details.spec.ts" time="41.03">
-<failure message="project-details.spec.ts:144:7 should be responsive on mobile devices" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:144:7 › Project Details Page › should be responsive on mobile devices 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-7b250-esponsive-on-mobile-devices-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-7b250-esponsive-on-mobile-devices-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should be responsive on mobile devices" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should handle loading states appropriately" classname="project-details.spec.ts" time="41.025">
-<failure message="project-details.spec.ts:167:7 should handle loading states appropriately" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:167:7 › Project Details Page › should handle loading states appropriately 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-16485-oading-states-appropriately-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-16485-oading-states-appropriately-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should handle loading states appropriately" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should handle API errors gracefully" classname="project-details.spec.ts" time="41.02">
-<failure message="project-details.spec.ts:188:7 should handle API errors gracefully" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:188:7 › Project Details Page › should handle API errors gracefully 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should handle API errors gracefully" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should display file type icons and information" classname="project-details.spec.ts" time="41.034">
-<failure message="project-details.spec.ts:199:7 should display file type icons and information" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:199:7 › Project Details Page › should display file type icons and information 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-e8cbe--type-icons-and-information-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-e8cbe--type-icons-and-information-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should display file type icons and information" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Project Details Page › should have proper accessibility features" classname="project-details.spec.ts" time="41.022">
-<failure message="project-details.spec.ts:220:7 should have proper accessibility features" type="FAILURE">
-<![CDATA[  [chromium] › project-details.spec.ts:220:7 › Project Details Page › should have proper accessibility features 
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Project Details Page', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     // Navigate to homepage first
-      6 |     await page.goto('/')
-      7 |     await page.waitForLoadState('networkidle')
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      4 |   test.beforeEach(async ({ page }) => {
-      5 |     // Navigate to homepage first
-    > 6 |     await page.goto('/')
-        |                ^
-      7 |     await page.waitForLoadState('networkidle')
-      8 |   })
-      9 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-details-Project-De-dada6-oper-accessibility-features-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-details-Project-De-dada6-oper-accessibility-features-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Project Details Page › should have proper accessibility features" classname="project-details.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
-<testsuite name="simple-test.spec.ts" timestamp="2026-02-12T20:55:57.591Z" hostname="chromium" tests="2" failures="2" skipped="0" time="82.028" errors="0">
-<testcase name="Simple E2E Tests › should create project without files" classname="simple-test.spec.ts" time="41.019">
-<failure message="simple-test.spec.ts:9:7 should create project without files" type="FAILURE">
-<![CDATA[  [chromium] › simple-test.spec.ts:9:7 › Simple E2E Tests › should create project without files ────
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Simple E2E Tests', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     await page.goto('/')
-      6 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      3 | test.describe('Simple E2E Tests', () => {
-      4 |   test.beforeEach(async ({ page }) => {
-    > 5 |     await page.goto('/')
-        |                ^
-      6 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      7 |   })
-      8 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:5:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/simple-test-Simple-E2E-Tes-015f0-reate-project-without-files-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/simple-test-Simple-E2E-Tes-015f0-reate-project-without-files-chromium/video.webm]]
-]]>
-</system-out>
+<testsuite name="simple-test.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="2" failures="0" skipped="2" time="0" errors="0">
+<testcase name="Simple E2E Tests › should create project without files" classname="simple-test.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Simple E2E Tests › should navigate to homepage" classname="simple-test.spec.ts" time="41.009">
-<failure message="simple-test.spec.ts:32:7 should navigate to homepage" type="FAILURE">
-<![CDATA[  [chromium] › simple-test.spec.ts:32:7 › Simple E2E Tests › should navigate to homepage ───────────
-
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
-
-      2 |
-      3 | test.describe('Simple E2E Tests', () => {
-    > 4 |   test.beforeEach(async ({ page }) => {
-        |        ^
-      5 |     await page.goto('/')
-      6 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      7 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:4:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
-    Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
-
-
-      3 | test.describe('Simple E2E Tests', () => {
-      4 |   test.beforeEach(async ({ page }) => {
-    > 5 |     await page.goto('/')
-        |                ^
-      6 |     await expect(page.getByText('3DShelf')).toBeVisible()
-      7 |   })
-      8 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:5:16
-
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/simple-test-Simple-E2E-Tests-should-navigate-to-homepage-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/simple-test-Simple-E2E-Tests-should-navigate-to-homepage-chromium/video.webm]]
-]]>
-</system-out>
+<testcase name="Simple E2E Tests › should navigate to homepage" classname="simple-test.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
 </testsuites>
