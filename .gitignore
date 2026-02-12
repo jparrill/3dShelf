@@ -67,6 +67,9 @@ Thumbs.db
 data/projects/
 data/db/
 
+# Work directory (runtime data and user files)
+work/
+
 # Docker
 docker-compose.override.yml
 
