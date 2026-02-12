@@ -31,10 +31,11 @@ import {
   Tab,
   TabPanel
 } from '@chakra-ui/react'
-import { FiArrowLeft, FiRefreshCw, FiFolder } from 'react-icons/fi'
+import { FiArrowLeft, FiRefreshCw, FiFolder, FiUpload } from 'react-icons/fi'
 import { Project, ProjectFile, ProjectStats, READMEResponse } from '@/types/project'
 import { projectsApi } from '@/lib/api'
 import { getFileTypeIcon, getFileTypeName, formatFileSize } from '@/utils/fileTypes'
+import { ProjectFileUpload } from '@/components/projects/ProjectFileUpload'
 
 export default function ProjectDetailPage() {
   const router = useRouter()
@@ -47,6 +48,7 @@ export default function ProjectDetailPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isSyncing, setIsSyncing] = useState(false)
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
 
   const projectId = Number(id)
 
@@ -89,6 +91,11 @@ export default function ProjectDetailPage() {
     } finally {
       setIsSyncing(false)
     }
+  }
+
+  const handleUploadComplete = async (uploadedFiles: ProjectFile[]) => {
+    // Reload project data to show new files
+    await loadProjectData()
   }
 
   useEffect(() => {
@@ -148,16 +155,26 @@ export default function ProjectDetailPage() {
               </Badge>
             </Flex>
 
-            <Button
-              leftIcon={<Icon as={FiRefreshCw} />}
-              onClick={handleSync}
-              isLoading={isSyncing}
-              loadingText="Syncing..."
-              colorScheme="brand"
-              variant="outline"
-            >
-              Sync Project
-            </Button>
+            <Flex gap={3}>
+              <Button
+                leftIcon={<Icon as={FiUpload} />}
+                onClick={() => setIsUploadModalOpen(true)}
+                colorScheme="brand"
+                variant="solid"
+              >
+                Upload Files
+              </Button>
+              <Button
+                leftIcon={<Icon as={FiRefreshCw} />}
+                onClick={handleSync}
+                isLoading={isSyncing}
+                loadingText="Syncing..."
+                colorScheme="brand"
+                variant="outline"
+              >
+                Sync Project
+              </Button>
+            </Flex>
           </Flex>
         </Container>
       </Box>
@@ -289,6 +306,16 @@ export default function ProjectDetailPage() {
           </Tabs>
         </Stack>
       </Container>
+
+      {/* Upload Modal */}
+      {project && (
+        <ProjectFileUpload
+          projectId={project.id}
+          isOpen={isUploadModalOpen}
+          onClose={() => setIsUploadModalOpen(false)}
+          onUploadComplete={handleUploadComplete}
+        />
+      )}
     </Box>
   )
 }

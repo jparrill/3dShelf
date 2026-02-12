@@ -6,7 +6,10 @@ import {
   ProjectsResponse,
   ProjectSearchResponse,
   READMEResponse,
-  ScanResponse
+  ScanResponse,
+  UploadCheckResponse,
+  UploadResponse,
+  ConflictResolution
 } from '@/types/project'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
@@ -67,11 +70,46 @@ export const projectsApi = {
     return response.data
   },
 
-  // Upload files to a project
-  uploadProjectFiles: async (id: number, files: FileList): Promise<{ message: string; uploaded_files: ProjectFile[]; uploaded_count: number; errors?: string[] }> => {
+  // Check for upload conflicts before uploading
+  checkUploadConflicts: async (id: number, filenames: string[]): Promise<UploadCheckResponse> => {
+    const response = await api.post(`/api/projects/${id}/files/check-conflicts`, {
+      filenames
+    })
+    return response.data
+  },
+
+  // Upload files to a project (legacy method without conflict resolution)
+  uploadProjectFiles: async (id: number, files: FileList): Promise<UploadResponse> => {
     const formData = new FormData()
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i])
+    }
+
+    const response = await api.post(`/api/projects/${id}/files`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  },
+
+  // Upload files to a project with conflict resolution
+  uploadProjectFilesWithResolution: async (
+    id: number,
+    files: FileList,
+    resolutions?: Record<string, ConflictResolution>
+  ): Promise<UploadResponse> => {
+    const formData = new FormData()
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i])
+    }
+
+    // Add conflict resolutions if provided
+    if (resolutions) {
+      for (const [filename, resolution] of Object.entries(resolutions)) {
+        formData.append(`resolution_${filename}`, resolution)
+      }
     }
 
     const response = await api.post(`/api/projects/${id}/files`, formData, {

@@ -64,6 +64,7 @@ func main() {
 			projects.GET("/:id", projectsHandler.GetProject)
 			projects.PUT("/:id/sync", projectsHandler.SyncProject)
 			projects.GET("/:id/files", projectsHandler.GetProjectFiles)
+			projects.POST("/:id/files/check-conflicts", projectsHandler.CheckUploadConflicts)
 			projects.POST("/:id/files", projectsHandler.UploadProjectFiles)
 			projects.GET("/:id/readme", projectsHandler.GetProjectREADME)
 			projects.GET("/:id/stats", projectsHandler.GetProjectStats)
