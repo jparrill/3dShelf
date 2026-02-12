@@ -1,19 +1,19 @@
-<testsuites id="" name="" tests="43" failures="21" skipped="9" errors="0" time="31.420061999999998">
-<testsuite name="comprehensive-workflow.spec.ts" timestamp="2026-02-12T21:30:13.162Z" hostname="chromium" tests="4" failures="4" skipped="0" time="43.659" errors="0">
-<testcase name="Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths)" classname="comprehensive-workflow.spec.ts" time="6.853">
+<testsuites id="" name="" tests="43" failures="20" skipped="9" errors="0" time="31.446565000000003">
+<testsuite name="comprehensive-workflow.spec.ts" timestamp="2026-02-12T21:31:51.570Z" hostname="chromium" tests="4" failures="4" skipped="0" time="44.368" errors="0">
+<testcase name="Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths)" classname="comprehensive-workflow.spec.ts" time="6.906">
 <failure message="comprehensive-workflow.spec.ts:33:7 Complete workflow: Project creation → File upload → Conflict resolution (All paths)" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:33:7 › Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths) › Create project without files 
 
     Error: expect(locator).toBeVisible() failed
 
-    Locator: locator('[cursor="pointer"]').filter({ hasText: 'Empty Project 1770931815305' }).first()
+    Locator: locator('[cursor="pointer"]').filter({ hasText: 'Empty Project 1770931913381' }).first()
     Expected: visible
     Timeout: 5000ms
     Error: element(s) not found
 
     Call log:
       - Expect "toBeVisible" with timeout 5000ms
-      - waiting for locator('[cursor="pointer"]').filter({ hasText: 'Empty Project 1770931815305' }).first()
+      - waiting for locator('[cursor="pointer"]').filter({ hasText: 'Empty Project 1770931913381' }).first()
 
 
        at ../helpers/test-helpers.ts:151
@@ -50,7 +50,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Error handling and edge cases" classname="comprehensive-workflow.spec.ts" time="1.231">
+<testcase name="Comprehensive 3D Organizer Workflows › Error handling and edge cases" classname="comprehensive-workflow.spec.ts" time="1.521">
 <failure message="comprehensive-workflow.spec.ts:229:7 Error handling and edge cases" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:229:7 › Comprehensive 3D Organizer Workflows › Error handling and edge cases › Handle invalid project creation 
 
@@ -101,7 +101,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Accessibility and usability testing" classname="comprehensive-workflow.spec.ts" time="5.489">
+<testcase name="Comprehensive 3D Organizer Workflows › Accessibility and usability testing" classname="comprehensive-workflow.spec.ts" time="5.857">
 <failure message="comprehensive-workflow.spec.ts:321:7 Accessibility and usability testing" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:321:7 › Comprehensive 3D Organizer Workflows › Accessibility and usability testing › Test keyboard navigation 
 
@@ -150,7 +150,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Performance and loading states" classname="comprehensive-workflow.spec.ts" time="30.086">
+<testcase name="Comprehensive 3D Organizer Workflows › Performance and loading states" classname="comprehensive-workflow.spec.ts" time="30.084">
 <failure message="comprehensive-workflow.spec.ts:394:7 Performance and loading states" type="FAILURE">
 <![CDATA[  [chromium] › comprehensive-workflow.spec.ts:394:7 › Comprehensive 3D Organizer Workflows › Performance and loading states › Test loading states during project creation 
 
@@ -193,8 +193,8 @@
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="file-upload-and-conflicts.spec.ts" timestamp="2026-02-12T21:30:13.162Z" hostname="chromium" tests="7" failures="7" skipped="0" time="41.838" errors="0">
-<testcase name="File Upload and Conflict Resolution › should upload new files to existing project successfully" classname="file-upload-and-conflicts.spec.ts" time="5.999">
+<testsuite name="file-upload-and-conflicts.spec.ts" timestamp="2026-02-12T21:31:51.570Z" hostname="chromium" tests="7" failures="7" skipped="0" time="42.762" errors="0">
+<testcase name="File Upload and Conflict Resolution › should upload new files to existing project successfully" classname="file-upload-and-conflicts.spec.ts" time="6.556">
 <failure message="file-upload-and-conflicts.spec.ts:55:7 should upload new files to existing project successfully" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:55:7 › File Upload and Conflict Resolution › should upload new files to existing project successfully 
 
@@ -241,7 +241,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with skip resolution" classname="file-upload-and-conflicts.spec.ts" time="6.413">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with skip resolution" classname="file-upload-and-conflicts.spec.ts" time="6.494">
 <failure message="file-upload-and-conflicts.spec.ts:103:7 should handle file conflicts with skip resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:103:7 › File Upload and Conflict Resolution › should handle file conflicts with skip resolution 
 
@@ -288,7 +288,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution" classname="file-upload-and-conflicts.spec.ts" time="6.405">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution" classname="file-upload-and-conflicts.spec.ts" time="6.535">
 <failure message="file-upload-and-conflicts.spec.ts:159:7 should handle file conflicts with overwrite resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:159:7 › File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution 
 
@@ -335,7 +335,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution" classname="file-upload-and-conflicts.spec.ts" time="5.722">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution" classname="file-upload-and-conflicts.spec.ts" time="5.779">
 <failure message="file-upload-and-conflicts.spec.ts:219:7 should handle file conflicts with rename (upload + timestamp) resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:219:7 › File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution 
 
@@ -382,7 +382,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions" classname="file-upload-and-conflicts.spec.ts" time="5.725">
+<testcase name="File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions" classname="file-upload-and-conflicts.spec.ts" time="5.672">
 <failure message="file-upload-and-conflicts.spec.ts:285:7 should handle mixed conflicts with different resolutions" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:285:7 › File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions 
 
@@ -429,7 +429,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle upload cancellation" classname="file-upload-and-conflicts.spec.ts" time="5.723">
+<testcase name="File Upload and Conflict Resolution › should handle upload cancellation" classname="file-upload-and-conflicts.spec.ts" time="5.834">
 <failure message="file-upload-and-conflicts.spec.ts:376:7 should handle upload cancellation" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:376:7 › File Upload and Conflict Resolution › should handle upload cancellation 
 
@@ -476,7 +476,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should validate file types during upload" classname="file-upload-and-conflicts.spec.ts" time="5.851">
+<testcase name="File Upload and Conflict Resolution › should validate file types during upload" classname="file-upload-and-conflicts.spec.ts" time="5.892">
 <failure message="file-upload-and-conflicts.spec.ts:407:7 should validate file types during upload" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:407:7 › File Upload and Conflict Resolution › should validate file types during upload 
 
@@ -524,10 +524,10 @@
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="homepage.spec.ts" timestamp="2026-02-12T21:30:13.162Z" hostname="chromium" tests="12" failures="6" skipped="0" time="39.412" errors="0">
-<testcase name="3DShelf Homepage › should display the main header and navigation" classname="homepage.spec.ts" time="0.434">
+<testsuite name="homepage.spec.ts" timestamp="2026-02-12T21:31:51.570Z" hostname="chromium" tests="12" failures="6" skipped="0" time="38.956" errors="0">
+<testcase name="3DShelf Homepage › should display the main header and navigation" classname="homepage.spec.ts" time="0.487">
 </testcase>
-<testcase name="3DShelf Homepage › should load and display project list" classname="homepage.spec.ts" time="6.009">
+<testcase name="3DShelf Homepage › should load and display project list" classname="homepage.spec.ts" time="5.999">
 <failure message="homepage.spec.ts:20:7 should load and display project list" type="FAILURE">
 <![CDATA[  [chromium] › homepage.spec.ts:20:7 › 3DShelf Homepage › should load and display project list ─────
 
@@ -573,11 +573,11 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="3DShelf Homepage › should perform search functionality" classname="homepage.spec.ts" time="1.32">
+<testcase name="3DShelf Homepage › should perform search functionality" classname="homepage.spec.ts" time="0.975">
 </testcase>
-<testcase name="3DShelf Homepage › should handle empty search" classname="homepage.spec.ts" time="0.891">
+<testcase name="3DShelf Homepage › should handle empty search" classname="homepage.spec.ts" time="1.292">
 </testcase>
-<testcase name="3DShelf Homepage › should navigate to project detail when clicking project" classname="homepage.spec.ts" time="0.918">
+<testcase name="3DShelf Homepage › should navigate to project detail when clicking project" classname="homepage.spec.ts" time="0.885">
 <failure message="homepage.spec.ts:71:7 should navigate to project detail when clicking project" type="FAILURE">
 <![CDATA[  [chromium] › homepage.spec.ts:71:7 › 3DShelf Homepage › should navigate to project detail when clicking project 
 
@@ -585,10 +585,11 @@
 
     Locator: locator('text=/no projects|empty/i')
     Expected: visible
-    Error: strict mode violation: locator('text=/no projects|empty/i') resolved to 3 elements:
+    Error: strict mode violation: locator('text=/no projects|empty/i') resolved to 4 elements:
         1) <h2 class="chakra-heading css-rdi5vu">Empty Project 1770928949672</h2> aka getByRole('heading', { name: 'Empty Project 1770928949672' })
         2) <h2 class="chakra-heading css-rdi5vu">Empty Project 1770931573954</h2> aka getByRole('heading', { name: 'Empty Project 1770931573954' })
         3) <h2 class="chakra-heading css-rdi5vu">Empty Project 1770931815305</h2> aka getByRole('heading', { name: 'Empty Project 1770931815305' })
+        4) <h2 class="chakra-heading css-rdi5vu">Empty Project 1770931913381</h2> aka getByRole('heading', { name: 'Empty Project 1770931913381' })
 
     Call log:
       - Expect "toBeVisible" with timeout 5000ms
@@ -625,9 +626,9 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="3DShelf Homepage › should handle scan projects functionality" classname="homepage.spec.ts" time="2.317">
+<testcase name="3DShelf Homepage › should handle scan projects functionality" classname="homepage.spec.ts" time="1.974">
 </testcase>
-<testcase name="3DShelf Homepage › should be responsive on mobile viewport" classname="homepage.spec.ts" time="5.978">
+<testcase name="3DShelf Homepage › should be responsive on mobile viewport" classname="homepage.spec.ts" time="5.947">
 <failure message="homepage.spec.ts:118:7 should be responsive on mobile viewport" type="FAILURE">
 <![CDATA[  [chromium] › homepage.spec.ts:118:7 › 3DShelf Homepage › should be responsive on mobile viewport ─
 
@@ -673,7 +674,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="3DShelf Homepage › should handle network errors gracefully" classname="homepage.spec.ts" time="7.494">
+<testcase name="3DShelf Homepage › should handle network errors gracefully" classname="homepage.spec.ts" time="7.455">
 <failure message="homepage.spec.ts:137:7 should handle network errors gracefully" type="FAILURE">
 <![CDATA[  [chromium] › homepage.spec.ts:137:7 › 3DShelf Homepage › should handle network errors gracefully ─
 
@@ -719,11 +720,11 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="3DShelf Homepage › should display loading states appropriately" classname="homepage.spec.ts" time="0.462">
+<testcase name="3DShelf Homepage › should display loading states appropriately" classname="homepage.spec.ts" time="0.475">
 </testcase>
-<testcase name="3DShelf Homepage › should maintain state during page interactions" classname="homepage.spec.ts" time="1.49">
+<testcase name="3DShelf Homepage › should maintain state during page interactions" classname="homepage.spec.ts" time="1.512">
 </testcase>
-<testcase name="3DShelf Homepage › should have proper accessibility features" classname="homepage.spec.ts" time="6.066">
+<testcase name="3DShelf Homepage › should have proper accessibility features" classname="homepage.spec.ts" time="5.986">
 <failure message="homepage.spec.ts:188:7 should have proper accessibility features" type="FAILURE">
 <![CDATA[  [chromium] › homepage.spec.ts:188:7 › 3DShelf Homepage › should have proper accessibility features 
 
@@ -771,7 +772,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="3DShelf Homepage › should handle keyboard navigation" classname="homepage.spec.ts" time="6.033">
+<testcase name="3DShelf Homepage › should handle keyboard navigation" classname="homepage.spec.ts" time="5.969">
 <failure message="homepage.spec.ts:208:7 should handle keyboard navigation" type="FAILURE">
 <![CDATA[  [chromium] › homepage.spec.ts:208:7 › 3DShelf Homepage › should handle keyboard navigation ───────
 
@@ -820,90 +821,56 @@
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="project-creation.spec.ts" timestamp="2026-02-12T21:30:13.162Z" hostname="chromium" tests="6" failures="2" skipped="0" time="4.881" errors="0">
-<testcase name="Project Creation › should create project without files successfully" classname="project-creation.spec.ts" time="0.92">
+<testsuite name="project-creation.spec.ts" timestamp="2026-02-12T21:31:51.570Z" hostname="chromium" tests="6" failures="1" skipped="0" time="5.223" errors="0">
+<testcase name="Project Creation › should create project without files successfully" classname="project-creation.spec.ts" time="0.981">
 </testcase>
-<testcase name="Project Creation › should create project with files successfully" classname="project-creation.spec.ts" time="0.688">
-<failure message="project-creation.spec.ts:63:7 should create project with files successfully" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:63:7 › Project Creation › should create project with files successfully 
-
-    Error: ENOENT: no such file or directory, stat '/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/fixtures/test-model.stl'
-
-      81 |     // Upload files
-      82 |     const fileInput = page.locator('input[type="file"]')
-    > 83 |     await fileInput.setInputFiles([stlFile, gcodeFile, readmeFile])
-         |     ^
-      84 |
-      85 |     // Verify files are listed
-      86 |     await expect(page.getByText('test-model.stl').first()).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:83:5
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../../test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/test-failed-1.png]]
-
-[[ATTACHMENT|test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/video.webm]]
-
-[[ATTACHMENT|test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/error-context.md]]
-]]>
-</system-out>
+<testcase name="Project Creation › should create project with files successfully" classname="project-creation.spec.ts" time="1.059">
 </testcase>
-<testcase name="Project Creation › should validate required fields in project creation" classname="project-creation.spec.ts" time="0.88">
+<testcase name="Project Creation › should validate required fields in project creation" classname="project-creation.spec.ts" time="0.833">
 </testcase>
-<testcase name="Project Creation › should handle file selection and removal in project creation" classname="project-creation.spec.ts" time="0.612">
-<failure message="project-creation.spec.ts:150:7 should handle file selection and removal in project creation" type="FAILURE">
-<![CDATA[  [chromium] › project-creation.spec.ts:150:7 › Project Creation › should handle file selection and removal in project creation 
+<testcase name="Project Creation › should handle file selection and removal in project creation" classname="project-creation.spec.ts" time="0.948">
+</testcase>
+<testcase name="Project Creation › should handle modal cancel functionality" classname="project-creation.spec.ts" time="0.864">
+</testcase>
+<testcase name="Project Creation › should handle file upload errors gracefully" classname="project-creation.spec.ts" time="0.538">
+<failure message="project-creation.spec.ts:211:7 should handle file upload errors gracefully" type="FAILURE">
+<![CDATA[  [chromium] › project-creation.spec.ts:211:7 › Project Creation › should handle file upload errors gracefully 
 
-    Error: ENOENT: no such file or directory, stat '/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/fixtures/remove-test.stl'
+    Error: ENOENT: no such file or directory, stat '/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/fixtures/large-test.stl'
 
-      164 |     // Upload files
-      165 |     const fileInput = page.locator('input[type="file"]')
-    > 166 |     await fileInput.setInputFiles([stlFile, gcodeFile])
+      225 |     // Upload large file
+      226 |     const fileInput = page.locator('input[type="file"]')
+    > 227 |     await fileInput.setInputFiles([largeFile])
           |     ^
-      167 |
-      168 |     // Verify files are listed
-      169 |     await expect(page.getByText('remove-test.stl')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:166:5
+      228 |
+      229 |     // Submit form
+      230 |     await page.getByRole('button', { name: 'Create Project' }).click()
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:227:5
 
     attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/test-failed-1.png
+    ../../../test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/test-failed-1.png
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
     attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/video.webm
+    ../../../test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-    Error Context: ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/error-context.md
+    Error Context: ../../../test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
-[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/test-failed-1.png]]
+[[ATTACHMENT|test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/test-failed-1.png]]
 
-[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/video.webm]]
+[[ATTACHMENT|test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/video.webm]]
 
-[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/error-context.md]]
+[[ATTACHMENT|test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/error-context.md]]
 ]]>
 </system-out>
-</testcase>
-<testcase name="Project Creation › should handle modal cancel functionality" classname="project-creation.spec.ts" time="0.861">
-</testcase>
-<testcase name="Project Creation › should handle file upload errors gracefully" classname="project-creation.spec.ts" time="0.92">
 </testcase>
 </testsuite>
-<testsuite name="project-details.spec.ts" timestamp="2026-02-12T21:30:13.162Z" hostname="chromium" tests="12" failures="2" skipped="9" time="38.329" errors="0">
-<testcase name="Project Details Page › should navigate to project details from homepage" classname="project-details.spec.ts" time="0.886">
+<testsuite name="project-details.spec.ts" timestamp="2026-02-12T21:31:51.570Z" hostname="chromium" tests="12" failures="2" skipped="9" time="37.857" errors="0">
+<testcase name="Project Details Page › should navigate to project details from homepage" classname="project-details.spec.ts" time="0.843">
 <properties>
 <property name="skip" value="No projects available for navigation test">
 </property>
@@ -911,7 +878,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should display project information correctly" classname="project-details.spec.ts" time="1.445">
+<testcase name="Project Details Page › should display project information correctly" classname="project-details.spec.ts" time="1.437">
 <properties>
 <property name="skip" value="Project details page not accessible">
 </property>
@@ -919,7 +886,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should display project files if available" classname="project-details.spec.ts" time="1.454">
+<testcase name="Project Details Page › should display project files if available" classname="project-details.spec.ts" time="1.406">
 <properties>
 <property name="skip" value="Project files section not available">
 </property>
@@ -927,7 +894,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should show project statistics" classname="project-details.spec.ts" time="1.423">
+<testcase name="Project Details Page › should show project statistics" classname="project-details.spec.ts" time="1.399">
 <properties>
 <property name="skip" value="Project statistics not available">
 </property>
@@ -935,7 +902,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should handle project README content" classname="project-details.spec.ts" time="6.463">
+<testcase name="Project Details Page › should handle project README content" classname="project-details.spec.ts" time="6.456">
 <properties>
 <property name="skip" value="README content not available">
 </property>
@@ -943,9 +910,9 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should provide navigation back to homepage" classname="project-details.spec.ts" time="1.457">
+<testcase name="Project Details Page › should provide navigation back to homepage" classname="project-details.spec.ts" time="1.391">
 </testcase>
-<testcase name="Project Details Page › should handle non-existent project gracefully" classname="project-details.spec.ts" time="1.462">
+<testcase name="Project Details Page › should handle non-existent project gracefully" classname="project-details.spec.ts" time="1.438">
 <failure message="project-details.spec.ts:134:7 should handle non-existent project gracefully" type="FAILURE">
 <![CDATA[  [chromium] › project-details.spec.ts:134:7 › Project Details Page › should handle non-existent project gracefully 
 
@@ -987,7 +954,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Project Details Page › should be responsive on mobile devices" classname="project-details.spec.ts" time="6.632">
+<testcase name="Project Details Page › should be responsive on mobile devices" classname="project-details.spec.ts" time="6.54">
 <properties>
 <property name="skip" value="Mobile responsiveness test not possible">
 </property>
@@ -995,7 +962,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should handle loading states appropriately" classname="project-details.spec.ts" time="1.021">
+<testcase name="Project Details Page › should handle loading states appropriately" classname="project-details.spec.ts" time="1.001">
 <properties>
 <property name="skip" value="Loading states test not applicable">
 </property>
@@ -1003,7 +970,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should handle API errors gracefully" classname="project-details.spec.ts" time="7.99">
+<testcase name="Project Details Page › should handle API errors gracefully" classname="project-details.spec.ts" time="8.032">
 <failure message="project-details.spec.ts:188:7 should handle API errors gracefully" type="FAILURE">
 <![CDATA[  [chromium] › project-details.spec.ts:188:7 › Project Details Page › should handle API errors gracefully 
 
@@ -1049,7 +1016,7 @@
 ]]>
 </system-out>
 </testcase>
-<testcase name="Project Details Page › should display file type icons and information" classname="project-details.spec.ts" time="1.51">
+<testcase name="Project Details Page › should display file type icons and information" classname="project-details.spec.ts" time="1.403">
 <properties>
 <property name="skip" value="File type display test not applicable">
 </property>
@@ -1057,7 +1024,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="Project Details Page › should have proper accessibility features" classname="project-details.spec.ts" time="6.586">
+<testcase name="Project Details Page › should have proper accessibility features" classname="project-details.spec.ts" time="6.511">
 <properties>
 <property name="skip" value="Accessibility test not applicable">
 </property>
@@ -1066,10 +1033,10 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="simple-test.spec.ts" timestamp="2026-02-12T21:30:13.162Z" hostname="chromium" tests="2" failures="0" skipped="0" time="1.273" errors="0">
-<testcase name="Simple E2E Tests › should create project without files" classname="simple-test.spec.ts" time="0.902">
+<testsuite name="simple-test.spec.ts" timestamp="2026-02-12T21:31:51.570Z" hostname="chromium" tests="2" failures="0" skipped="0" time="1.365" errors="0">
+<testcase name="Simple E2E Tests › should create project without files" classname="simple-test.spec.ts" time="0.932">
 </testcase>
-<testcase name="Simple E2E Tests › should navigate to homepage" classname="simple-test.spec.ts" time="0.371">
+<testcase name="Simple E2E Tests › should navigate to homepage" classname="simple-test.spec.ts" time="0.433">
 </testcase>
 </testsuite>
 </testsuites>
