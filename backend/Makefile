@@ -28,11 +28,11 @@ deps:
 
 # Build the application
 build: deps
-	CGO_ENABLED=1 go build -o dshelf-backend ./cmd/server
+	CGO_ENABLED=1 go build -o 3dshelf-backend ./cmd/server
 
 # Run the application
 run: build
-	./dshelf-backend
+	./3dshelf-backend
 
 # Run all tests
 test: fmt vet
@@ -98,7 +98,7 @@ lint:
 
 # Clean build artifacts and coverage files
 clean:
-	rm -f dshelf-backend
+	rm -f 3dshelf-backend
 	rm -rf coverage/
 	go clean -testcache
 	go clean -cache

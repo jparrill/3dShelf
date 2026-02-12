@@ -2,12 +2,12 @@ package scanner
 
 import (
 	"crypto/sha256"
-	"dshelf/internal/models"
 	"fmt"
 	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
+	"3dshelf/internal/models"
 	"strings"
 	"time"
 

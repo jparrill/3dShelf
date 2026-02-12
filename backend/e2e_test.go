@@ -13,10 +13,10 @@ import (
 	"testing"
 	"time"
 
-	"dshelf/internal/config"
-	"dshelf/internal/handlers"
-	"dshelf/internal/models"
-	"dshelf/pkg/database"
+	"3dshelf/internal/config"
+	"3dshelf/internal/handlers"
+	"3dshelf/internal/models"
+	"3dshelf/pkg/database"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"

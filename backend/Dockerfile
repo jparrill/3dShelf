@@ -16,7 +16,7 @@ COPY . .
 RUN go mod tidy
 
 # Build the application
-RUN CGO_ENABLED=1 go build -o dshelf-backend ./cmd/server
+RUN CGO_ENABLED=1 go build -o 3dshelf-backend ./cmd/server
 
 # Final stage
 FROM debian:bullseye-slim
@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y ca-certificates curl sqlite3 && rm -rf 
 WORKDIR /root/
 
 # Copy the binary from builder stage
-COPY --from=builder /app/dshelf-backend .
+COPY --from=builder /app/3dshelf-backend .
 
 # Create directory for database
 RUN mkdir -p /app/data
@@ -36,4 +36,4 @@ RUN mkdir -p /app/data
 EXPOSE 8080
 
 # Run the binary
-CMD ["./dshelf-backend"]
+CMD ["./3dshelf-backend"]
