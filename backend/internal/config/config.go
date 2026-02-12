@@ -1,7 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/joho/godotenv"
@@ -46,4 +48,34 @@ func getEnvAsInt(key string, defaultValue int) int {
 		}
 	}
 	return defaultValue
+}
+
+// Validate checks if the configuration is valid and ready to use
+func (c *Config) Validate() error {
+	// Check if scan path exists, create if possible
+	if _, err := os.Stat(c.ScanPath); os.IsNotExist(err) {
+		if err := os.MkdirAll(c.ScanPath, 0755); err != nil {
+			return fmt.Errorf("scan path '%s' does not exist and cannot be created: %v", c.ScanPath, err)
+		}
+	}
+
+	// Check if scan path is writable
+	testFile := filepath.Join(c.ScanPath, ".write_test")
+	if err := os.WriteFile(testFile, []byte("test"), 0644); err != nil {
+		return fmt.Errorf("scan path '%s' is not writable: %v", c.ScanPath, err)
+	}
+	os.Remove(testFile)
+
+	// Check database directory
+	dbDir := filepath.Dir(c.DatabasePath)
+	if err := os.MkdirAll(dbDir, 0755); err != nil {
+		return fmt.Errorf("cannot create database directory '%s': %v", dbDir, err)
+	}
+
+	// Validate port is reasonable
+	if portInt := getEnvAsInt("PORT", 8080); portInt < 1 || portInt > 65535 {
+		return fmt.Errorf("port %d is not valid (must be between 1 and 65535)", portInt)
+	}
+
+	return nil
 }
