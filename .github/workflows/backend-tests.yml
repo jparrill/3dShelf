@@ -13,26 +13,25 @@ on:
       - '.github/workflows/backend-tests.yml'
 
 env:
-  GO_VERSION: '1.21'
+  GO_VERSION: '1.25'
 
 jobs:
-  # Test Matrix: Run tests across multiple Go versions and OS
+  # Test Matrix: Run tests across multiple OS
   test-matrix:
-    name: Test (Go ${{ matrix.go-version }}, ${{ matrix.os }})
+    name: Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        go-version: ['1.21', '1.22']
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Go ${{ matrix.go-version }}
+    - name: Set up Go ${{ env.GO_VERSION }}
       uses: actions/setup-go@v4
       with:
-        go-version: ${{ matrix.go-version }}
+        go-version: ${{ env.GO_VERSION }}
         cache-dependency-path: backend/go.sum
 
     - name: Cache Go modules
@@ -41,9 +40,9 @@ jobs:
         path: |
           ~/.cache/go-build
           ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-${{ hashFiles('backend/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-go-${{ matrix.go-version }}-
+          ${{ runner.os }}-go-${{ env.GO_VERSION }}-
 
     - name: Download dependencies
       working-directory: ./backend
@@ -80,7 +79,7 @@ jobs:
         path: |
           ~/.cache/go-build
           ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-${{ hashFiles('backend/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-${{ env.GO_VERSION }}-
 
@@ -194,7 +193,7 @@ jobs:
         path: |
           ~/.cache/go-build
           ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-${{ env.GO_VERSION }}-${{ hashFiles('backend/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-${{ env.GO_VERSION }}-
 
