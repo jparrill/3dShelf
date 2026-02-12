@@ -125,6 +125,7 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
         return false // Has conflicts, need resolution
       }
 
+      console.log('No conflicts found, can proceed with upload')
       return true // No conflicts, can proceed
     } catch (error) {
       toast({
@@ -147,11 +148,13 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     if (!showConflicts) {
       console.log('No conflicts shown yet, checking for conflicts...')
       const canProceed = await checkConflicts()
+      console.log('checkConflicts returned:', canProceed)
       if (!canProceed) {
         // Conflicts were found and are now being shown, don't proceed with upload
         console.log('Conflicts found, stopping upload to show resolution UI')
         return
       }
+      console.log('No conflicts, proceeding with upload...')
     }
 
     setIsUploading(true)
