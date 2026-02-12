@@ -61,9 +61,22 @@ type ProjectFile struct {
 
 // GetFileTypeFromExtension determines the file type based on file extension
 func GetFileTypeFromExtension(filename string) FileType {
-	ext := filename[len(filename)-4:]
-	if len(filename) < 4 {
+	if len(filename) < 3 {
 		return FileTypeOther
+	}
+
+	// Check for README files first
+	if filename == "README.md" || filename == "readme.md" || filename == "README.MD" {
+		return FileTypeREADME
+	}
+
+	// Find the extension (everything after the last dot)
+	var ext string
+	for i := len(filename) - 1; i >= 0; i-- {
+		if filename[i] == '.' {
+			ext = filename[i:]
+			break
+		}
 	}
 
 	switch ext {
@@ -71,14 +84,11 @@ func GetFileTypeFromExtension(filename string) FileType {
 		return FileTypeSTL
 	case ".3mf", ".3MF":
 		return FileType3MF
-	case ".gco", ".GCO":
+	case ".gcode", ".gco", ".GCODE", ".GCO":
 		return FileTypeGCode
-	case ".dwg", ".DWG", ".step", ".iges", ".stp", ".igs":
+	case ".dwg", ".DWG", ".step", ".iges", ".stp", ".igs", ".STEP", ".IGES", ".STP", ".IGS":
 		return FileTypeCAD
 	default:
-		if filename == "README.md" || filename == "readme.md" || filename == "README.MD" {
-			return FileTypeREADME
-		}
 		return FileTypeOther
 	}
 }

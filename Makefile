@@ -1,4 +1,4 @@
-.PHONY: help build run test clean docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
+.PHONY: help build run test clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
 
 # Default target
 help:
@@ -9,6 +9,7 @@ help:
 	@echo "  run          - Run backend and frontend locally"
 	@echo "  test         - Run all tests"
 	@echo "  clean        - Clean build artifacts"
+	@echo "  update       - Update all dependencies to latest versions"
 	@echo "  docker-build - Build Docker images"
 	@echo "  docker-up    - Start application with Docker Compose"
 	@echo "  docker-down  - Stop Docker containers"
@@ -18,32 +19,43 @@ help:
 # Build both backend and frontend
 build:
 	@echo "Building backend..."
-	cd backend && go build -o dshelf-backend ./cmd/server
+	ZDOTDIR= go build -C backend -o dshelf-backend ./cmd/server
 	@echo "Building frontend..."
-	cd frontend && npm run build
+	ZDOTDIR= cd frontend && npm run build
 
 # Run locally (requires Go and Node.js)
 run:
 	@echo "Starting backend..."
-	cd backend && go run ./cmd/server &
+	ZDOTDIR= go run -C backend ./cmd/server &
 	@echo "Starting frontend..."
-	cd frontend && npm run dev
+	ZDOTDIR= cd frontend && npm run dev
 
 # Run tests
 test:
 	@echo "Running backend tests..."
-	cd backend && go test ./...
+	ZDOTDIR= go test -C backend ./...
 	@echo "Running frontend tests..."
-	cd frontend && npm test
+	ZDOTDIR= cd frontend && npm test
 
 # Clean build artifacts
 clean:
 	@echo "Cleaning backend build..."
-	cd backend && rm -f dshelf-backend
+	rm -f backend/dshelf-backend
 	@echo "Cleaning frontend build..."
-	cd frontend && rm -rf .next out
+	rm -rf frontend/.next frontend/out
 	@echo "Cleaning Docker images..."
 	docker image prune -f
+
+# Update dependencies
+update:
+	@echo "Updating backend dependencies..."
+	ZDOTDIR= go get -u -C backend ./...
+	ZDOTDIR= go mod tidy -C backend
+	@echo "Updating frontend dependencies..."
+	ZDOTDIR= cd frontend && npm update
+	ZDOTDIR= cd frontend && npm audit fix --force || true
+	@echo "✅ All dependencies updated!"
+	@echo "💡 Run 'make build' to test the updated dependencies"
 
 # Docker commands
 docker-build:
@@ -66,9 +78,9 @@ docker-down:
 dev-setup:
 	@echo "Setting up development environment..."
 	@echo "Installing backend dependencies..."
-	cd backend && go mod tidy && go mod download
+	ZDOTDIR= go mod tidy -C backend && go mod download -C backend
 	@echo "Installing frontend dependencies..."
-	cd frontend && npm install
+	ZDOTDIR= cd frontend && npm install
 	@echo "✅ Development environment ready!"
 	@echo "Run 'make dev' to start the development servers"
 
@@ -88,12 +100,12 @@ dev: dev-setup
 # Backend development server
 dev-backend:
 	@echo "🔧 Starting backend development server..."
-	cd backend && go run ./cmd/server
+	ZDOTDIR= go run -C backend ./cmd/server
 
 # Frontend development server
 dev-frontend:
 	@echo "📱 Starting frontend development server..."
-	cd frontend && npm run dev
+	ZDOTDIR= cd frontend && npm run dev
 
 # Initialize project (for first time setup)
 init: dev-setup
