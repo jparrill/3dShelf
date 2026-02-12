@@ -216,10 +216,16 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		return
 	}
 
+	// Debug: Log request headers
+	fmt.Printf("Request Headers: %+v\n", c.Request.Header)
+	fmt.Printf("Content-Type: %s\n", c.GetHeader("Content-Type"))
+	fmt.Printf("Content-Length: %s\n", c.GetHeader("Content-Length"))
+
 	// Parse multipart form
 	form, err := c.MultipartForm()
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form"})
+		fmt.Printf("Multipart form parse error: %v\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form", "details": err.Error()})
 		return
 	}
 
