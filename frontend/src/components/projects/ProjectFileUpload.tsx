@@ -106,6 +106,7 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
 
       if (response.conflicts.length > 0) {
         console.log('Conflicts detected, showing conflict UI')
+        console.log('Conflicts found:', response.conflicts)
         setConflicts(response.conflicts)
         setShowConflicts(true)
 
@@ -147,6 +148,7 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
       const canProceed = await checkConflicts()
       if (!canProceed) {
         // Conflicts were found and are now being shown, don't proceed with upload
+        console.log('Conflicts found, stopping upload to show resolution UI')
         return
       }
     }
@@ -318,9 +320,10 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
 
                           <RadioGroup
                             value={resolutions[conflict.filename]}
-                            onChange={(value: ConflictResolution) =>
+                            onChange={(value: ConflictResolution) => {
+                              console.log(`Setting resolution for ${conflict.filename}: ${value}`)
                               setResolutions(prev => ({ ...prev, [conflict.filename]: value }))
-                            }
+                            }}
                           >
                             <Stack spacing={2}>
                               <Radio value="overwrite" colorScheme="red">

@@ -163,6 +163,8 @@ func (h *ProjectsHandler) CheckUploadConflicts(c *gin.Context) {
 		return
 	}
 
+	fmt.Printf("CheckUploadConflicts called for project %s with filenames: %v\n", projectID, request.Filenames)
+
 	// Verify project exists
 	var project models.Project
 	if err := database.GetDB().First(&project, projectID).Error; err != nil {
@@ -199,10 +201,15 @@ func (h *ProjectsHandler) CheckUploadConflicts(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, UploadCheckResponse{
+	response := UploadCheckResponse{
 		Conflicts: conflicts,
 		Safe:      safe,
-	})
+	}
+
+	fmt.Printf("CheckUploadConflicts response: %d conflicts, %d safe files\n", len(conflicts), len(safe))
+	fmt.Printf("Conflicts: %+v\n", conflicts)
+
+	c.JSON(http.StatusOK, response)
 }
 
 // UploadProjectFiles uploads files to an existing project with conflict resolution
