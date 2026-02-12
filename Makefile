@@ -19,41 +19,41 @@ help:
 # Build both backend and frontend
 build:
 	@echo "Building backend..."
-	cd backend && go build -o dshelf-backend ./cmd/server
+	ZDOTDIR= go build -C backend -o dshelf-backend ./cmd/server
 	@echo "Building frontend..."
-	cd frontend && npm run build
+	ZDOTDIR= cd frontend && npm run build
 
 # Run locally (requires Go and Node.js)
 run:
 	@echo "Starting backend..."
-	cd backend && go run ./cmd/server &
+	ZDOTDIR= go run -C backend ./cmd/server &
 	@echo "Starting frontend..."
-	cd frontend && npm run dev
+	ZDOTDIR= cd frontend && npm run dev
 
 # Run tests
 test:
 	@echo "Running backend tests..."
-	cd backend && go test ./...
+	ZDOTDIR= go test -C backend ./...
 	@echo "Running frontend tests..."
-	cd frontend && npm test
+	ZDOTDIR= cd frontend && npm test
 
 # Clean build artifacts
 clean:
 	@echo "Cleaning backend build..."
-	cd backend && rm -f dshelf-backend
+	rm -f backend/dshelf-backend
 	@echo "Cleaning frontend build..."
-	cd frontend && rm -rf .next out
+	rm -rf frontend/.next frontend/out
 	@echo "Cleaning Docker images..."
 	docker image prune -f
 
 # Update dependencies
 update:
 	@echo "Updating backend dependencies..."
-	cd backend && go get -u ./...
-	cd backend && go mod tidy
+	ZDOTDIR= go get -u -C backend ./...
+	ZDOTDIR= go mod tidy -C backend
 	@echo "Updating frontend dependencies..."
-	cd frontend && npm update
-	cd frontend && npm audit fix --force || true
+	ZDOTDIR= cd frontend && npm update
+	ZDOTDIR= cd frontend && npm audit fix --force || true
 	@echo "✅ All dependencies updated!"
 	@echo "💡 Run 'make build' to test the updated dependencies"
 
@@ -78,9 +78,9 @@ docker-down:
 dev-setup:
 	@echo "Setting up development environment..."
 	@echo "Installing backend dependencies..."
-	cd backend && go mod tidy && go mod download
+	ZDOTDIR= go mod tidy -C backend && go mod download -C backend
 	@echo "Installing frontend dependencies..."
-	cd frontend && npm install
+	ZDOTDIR= cd frontend && npm install
 	@echo "✅ Development environment ready!"
 	@echo "Run 'make dev' to start the development servers"
 
@@ -100,12 +100,12 @@ dev: dev-setup
 # Backend development server
 dev-backend:
 	@echo "🔧 Starting backend development server..."
-	cd backend && go run ./cmd/server
+	ZDOTDIR= go run -C backend ./cmd/server
 
 # Frontend development server
 dev-frontend:
 	@echo "📱 Starting frontend development server..."
-	cd frontend && npm run dev
+	ZDOTDIR= cd frontend && npm run dev
 
 # Initialize project (for first time setup)
 init: dev-setup
