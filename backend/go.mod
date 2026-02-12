@@ -1,4 +1,4 @@
-module dshelf
+module 3dshelf
 
 go 1.25
 

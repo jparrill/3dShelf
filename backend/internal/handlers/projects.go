@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"dshelf/internal/models"
-	"dshelf/pkg/database"
-	"dshelf/pkg/scanner"
+	"3dshelf/internal/models"
+	"3dshelf/pkg/database"
+	"3dshelf/pkg/scanner"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

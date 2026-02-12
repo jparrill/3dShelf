@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"dshelf/internal/models"
+	"3dshelf/internal/models"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

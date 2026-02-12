@@ -211,14 +211,14 @@ jobs:
     - name: Verify binary
       working-directory: ./backend
       run: |
-        ./dshelf-backend --help || echo "Binary built successfully but help flag not implemented"
-        ls -la dshelf-backend
+        ./3dshelf-backend --help || echo "Binary built successfully but help flag not implemented"
+        ls -la 3dshelf-backend
 
     - name: Upload binary artifact
       uses: actions/upload-artifact@v4
       with:
-        name: dshelf-backend-${{ github.sha }}
-        path: backend/dshelf-backend
+        name: 3dshelf-backend-${{ github.sha }}
+        path: backend/3dshelf-backend
         retention-days: 7
 
   # Performance benchmarking

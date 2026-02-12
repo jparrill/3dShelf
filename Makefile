@@ -30,7 +30,7 @@ help:
 # Build both backend and frontend
 build:
 	@echo "Building backend..."
-	ZDOTDIR= go build -C backend -o dshelf-backend ./cmd/server
+	ZDOTDIR= go build -C backend -o 3dshelf-backend ./cmd/server
 	@echo "Building frontend..."
 	(cd frontend && ZDOTDIR= npm run build)
 
@@ -224,7 +224,7 @@ test-setup:
 # Clean build artifacts
 clean:
 	@echo "Cleaning backend build..."
-	rm -f backend/dshelf-backend
+	rm -f backend/3dshelf-backend
 	@echo "Cleaning frontend build..."
 	rm -rf frontend/.next frontend/out
 	@echo "Cleaning Docker images..."

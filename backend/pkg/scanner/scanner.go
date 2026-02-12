@@ -1,8 +1,8 @@
 package scanner
 
 import (
+	"3dshelf/internal/models"
 	"crypto/sha256"
-	"dshelf/internal/models"
 	"fmt"
 	"io"
 	"io/fs"

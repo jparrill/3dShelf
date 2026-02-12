@@ -12,11 +12,11 @@ services:
       - ./data/db:/app/data
     environment:
       - SCAN_PATH=/data/projects
-      - DATABASE_PATH=/app/data/dshelf.db
+      - DATABASE_PATH=/app/data/3dshelf.db
       - PORT=8080
       - GIN_MODE=release
     networks:
-      - dshelf-network
+      - 3dshelf-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
       interval: 30s
@@ -34,11 +34,11 @@ services:
     depends_on:
       - backend
     networks:
-      - dshelf-network
+      - 3dshelf-network
 
 volumes:
   db_data:
 
 networks:
-  dshelf-network:
+  3dshelf-network:
     driver: bridge
