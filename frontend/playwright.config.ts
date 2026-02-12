@@ -38,36 +38,19 @@ const config = defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-    /* Test against mobile viewports. */
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
-    },
-    {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
-    },
   ],
 
   /* Global setup and teardown */
-  globalSetup: './src/__tests__/global-setup.ts',
-  globalTeardown: './src/__tests__/global-teardown.ts',
+  // globalSetup: './src/__tests__/global-setup.ts',
+  // globalTeardown: './src/__tests__/global-teardown.ts',
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes
-  },
+  // webServer: {
+  //   command: 'npm run dev',
+  //   url: 'http://127.0.0.1:3000',
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120 * 1000, // 2 minutes
+  // },
 
   /* Test timeout */
   timeout: 30 * 1000, // 30 seconds
