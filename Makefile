@@ -1,4 +1,4 @@
-.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all
+.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all kill
 
 # Default target
 help:
@@ -15,6 +15,7 @@ help:
 	@echo "  dev          - Start local development servers (backend + frontend)"
 	@echo "  dev-setup    - Install dependencies for local development"
 	@echo "  dev-all      - Light verification, build everything, and start local servers"
+	@echo "  kill         - Kill any orphaned development servers"
 	@echo ""
 	@echo "Testing commands:"
 	@echo "  verify       - Run comprehensive test suite (all backend + frontend tests)"
@@ -343,6 +344,39 @@ dev-all:
 	@echo "💡 Press Ctrl+C to stop both servers"
 	@echo ""
 	@make -j2 dev-backend dev-frontend
+
+# Kill any orphaned development servers
+kill:
+	@echo "🔪 KILLING ORPHANED DEVELOPMENT SERVERS"
+	@echo "═══════════════════════════════════════"
+	@echo ""
+	@echo "🔍 Searching for running servers..."
+	@echo ""
+	@echo "🔧 Terminating backend servers..."
+	@-pkill -f "go run.*server" 2>/dev/null && echo "✅ Killed Go development server" || echo "ℹ️  No Go development server running"
+	@-pkill -f "3dshelf-backend" 2>/dev/null && echo "✅ Killed 3dshelf backend binary" || echo "ℹ️  No 3dshelf backend binary running"
+	@echo ""
+	@echo "📱 Terminating frontend servers..."
+	@-pkill -f "npm.*dev" 2>/dev/null && echo "✅ Killed npm dev server" || echo "ℹ️  No npm dev server running"
+	@-pkill -f "next.*dev" 2>/dev/null && echo "✅ Killed Next.js dev server" || echo "ℹ️  No Next.js dev server running"
+	@echo ""
+	@echo "🔌 Checking development ports..."
+	@if lsof -ti:8080 >/dev/null 2>&1; then \
+		echo "🔪 Killing process on port 8080..."; \
+		lsof -ti:8080 | xargs kill -9 2>/dev/null && echo "✅ Port 8080 freed"; \
+	else \
+		echo "✅ Port 8080 is free"; \
+	fi
+	@if lsof -ti:3000 >/dev/null 2>&1; then \
+		echo "🔪 Killing process on port 3000..."; \
+		lsof -ti:3000 | xargs kill -9 2>/dev/null && echo "✅ Port 3000 freed"; \
+	else \
+		echo "✅ Port 3000 is free"; \
+	fi
+	@echo ""
+	@echo "🧹 Cleanup completed!"
+	@echo "💡 All development servers have been terminated"
+	@echo "   You can now run 'make dev' or 'make dev-all' safely"
 
 # Display verification summary
 verify-summary:
