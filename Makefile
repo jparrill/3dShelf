@@ -1,4 +1,4 @@
-.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all kill
+.PHONY: help build run test test-unit test-integration test-e2e test-e2e-auto test-coverage test-frontend test-backend test-watch test-setup clear-db verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all kill
 
 # Default target
 help:
@@ -23,11 +23,13 @@ help:
 	@echo "  test-unit    - Run unit tests only"
 	@echo "  test-integration - Run integration tests only"
 	@echo "  test-e2e     - Run end-to-end tests only"
+	@echo "  test-e2e-auto - AUTOMATED: Clear DB + Start servers + Run E2E + Stop servers"
 	@echo "  test-coverage - Run tests with coverage report"
 	@echo "  test-frontend - Run all frontend tests"
 	@echo "  test-backend - Run backend tests only"
 	@echo "  test-watch   - Run frontend tests in watch mode"
 	@echo "  test-setup   - Install test dependencies (Playwright browsers)"
+	@echo "  clear-db     - Clear database for fresh test runs"
 
 # Build both backend and frontend
 build:
@@ -196,6 +198,69 @@ test-e2e:
 	(cd frontend && ZDOTDIR= npx playwright install --with-deps)
 	@echo "Starting development server for E2E tests..."
 	(cd frontend && ZDOTDIR= npm run test:e2e)
+
+# Clear database for fresh E2E test runs
+clear-db:
+	@echo "🗑️  Clearing database for fresh test run..."
+	@if [ -f "./printvault.db" ]; then \
+		rm -f "./printvault.db" && echo "✅ Main database cleared"; \
+	else \
+		echo "ℹ️  Main database doesn't exist (already clean)"; \
+	fi
+	@if [ -f "./backend/printvault.db" ]; then \
+		rm -f "./backend/printvault.db" && echo "✅ Backend database cleared"; \
+	else \
+		echo "ℹ️  Backend database doesn't exist (already clean)"; \
+	fi
+	@if [ -f "./data/db/printvault.db" ]; then \
+		rm -f "./data/db/printvault.db" && echo "✅ Data directory database cleared"; \
+	else \
+		echo "ℹ️  Data directory database doesn't exist (already clean)"; \
+	fi
+	@echo "🧹 Database cleanup completed!"
+
+# Automated E2E testing with fresh database and managed servers
+test-e2e-auto: clear-db
+	@echo ""
+	@echo "🚀 AUTOMATED E2E TEST SUITE"
+	@echo "═══════════════════════════"
+	@echo ""
+	@echo "📋 Pipeline:"
+	@echo "   1. ✅ Database cleared"
+	@echo "   2. 🚀 Starting development servers..."
+	@echo "   3. 🧪 Running E2E tests"
+	@echo "   4. 🛑 Stopping servers"
+	@echo ""
+	@echo ""
+	@echo "🚀 STARTING SERVERS..."
+	@echo "─────────────────────────"
+	@echo "Starting backend and frontend servers in background..."
+	@$(MAKE) dev > /dev/null 2>&1 & \
+	DEV_PID=$$!; \
+	echo "🔧 Backend starting on port 8080"; \
+	echo "📱 Frontend starting on port 3000"; \
+	echo "⏳ Waiting for servers to be ready..."; \
+	sleep 8; \
+	echo ""; \
+	echo "🧪 RUNNING E2E TESTS..."; \
+	echo "─────────────────────────"; \
+	cd frontend && ZDOTDIR= npx playwright test --reporter=line; \
+	TEST_EXIT_CODE=$$?; \
+	echo ""; \
+	echo "🛑 STOPPING SERVERS..."; \
+	echo "─────────────────────────"; \
+	$(MAKE) kill > /dev/null 2>&1; \
+	echo "✅ All servers stopped"; \
+	echo ""; \
+	if [ $$TEST_EXIT_CODE -eq 0 ]; then \
+		echo "🎉 E2E TESTS PASSED!"; \
+		echo "═══════════════════════"; \
+	else \
+		echo "❌ E2E TESTS FAILED!"; \
+		echo "═══════════════════════"; \
+		echo "Check the test output above for details"; \
+		exit $$TEST_EXIT_CODE; \
+	fi
 
 # Run tests with coverage report
 test-coverage:
