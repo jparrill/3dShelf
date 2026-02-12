@@ -17,9 +17,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 30000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Remove default Content-Type to allow axios to set it automatically for FormData
 })
 
 export const projectsApi = {
@@ -34,6 +32,10 @@ export const projectsApi = {
     const response = await api.post('/api/projects', {
       name,
       description: description || ''
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     return response.data
   },
@@ -54,7 +56,11 @@ export const projectsApi = {
 
   // Scan filesystem for projects
   scanProjects: async (): Promise<ScanResponse> => {
-    const response = await api.post('/api/projects/scan')
+    const response = await api.post('/api/projects/scan', {}, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
     return response.data
   },
 
@@ -74,6 +80,10 @@ export const projectsApi = {
   checkUploadConflicts: async (id: number, filenames: string[]): Promise<UploadCheckResponse> => {
     const response = await api.post(`/api/projects/${id}/files/check-conflicts`, {
       filenames
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     return response.data
   },
