@@ -109,6 +109,7 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
         console.log('Conflicts found:', response.conflicts)
         setConflicts(response.conflicts)
         setShowConflicts(true)
+        console.log('showConflicts set to true, conflicts state updated')
 
         // Initialize resolutions - no default value to force user choice
         const defaultResolutions: Record<string, ConflictResolution> = {}
@@ -250,6 +251,8 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
       default: return FiFile
     }
   }
+
+  console.log('Render - showConflicts:', showConflicts, 'conflicts.length:', conflicts.length, 'resolutions:', resolutions)
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} size="xl" closeOnOverlayClick={!isUploading}>
