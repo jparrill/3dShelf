@@ -1,10 +1,10 @@
 package main
 
 import (
-	"log"
 	"3dshelf/internal/config"
 	"3dshelf/internal/handlers"
 	"3dshelf/pkg/database"
+	"log"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

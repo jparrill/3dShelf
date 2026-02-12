@@ -1,8 +1,8 @@
 package database
 
 import (
-	"log"
 	"3dshelf/internal/models"
+	"log"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
