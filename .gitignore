@@ -70,6 +70,9 @@ data/db/
 # Work directory (runtime data and user files)
 work/
 
+# Local projects directory (user project data)
+projects/
+
 # Docker
 docker-compose.override.yml
 
