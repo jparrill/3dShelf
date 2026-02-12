@@ -1,6 +1,8 @@
 # Backend
 backend/printvault-backend
 backend/dshelf-backend
+backend/3dshelf-backend
+backend/server
 backend/*.db
 backend/.env
 backend/coverage.out
@@ -14,6 +16,7 @@ frontend/out/
 frontend/node_modules/
 frontend/.env*
 frontend/*.log
+frontend/next-env.d.ts
 frontend/tsconfig.tsbuildinfo
 frontend/.tsbuildinfo
 
