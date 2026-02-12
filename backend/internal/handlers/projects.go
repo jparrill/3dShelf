@@ -44,7 +44,7 @@ type FileConflict struct {
 
 // UploadCheckRequest represents the request to check for conflicts before upload
 type UploadCheckRequest struct {
-	Filenames []string `json:"filenames" binding:"required"`
+	Filenames []string `json:"filenames"`
 }
 
 // UploadCheckResponse represents the response from upload conflict check

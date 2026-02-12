@@ -93,6 +93,14 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
   const checkConflicts = async () => {
     try {
       const filenames = selectedFiles.map(file => file.name)
+
+      // Validate filenames array
+      if (!filenames || filenames.length === 0) {
+        console.error('No filenames to check for conflicts')
+        return true // No conflicts if no files
+      }
+
+      console.log('Checking conflicts for files:', filenames)
       const response = await projectsApi.checkUploadConflicts(projectId, filenames)
 
       if (response.conflicts.length > 0) {
