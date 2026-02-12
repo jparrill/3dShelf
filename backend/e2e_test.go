@@ -25,10 +25,10 @@ import (
 
 // E2ETestSuite represents a complete end-to-end test environment
 type E2ETestSuite struct {
-	TempDir   string
-	DB        *gorm.DB
-	Router    *gin.Engine
-	Handler   *handlers.ProjectsHandler
+	TempDir     string
+	DB          *gorm.DB
+	Router      *gin.Engine
+	Handler     *handlers.ProjectsHandler
 	ProjectDirs map[string]string
 }
 
@@ -128,27 +128,27 @@ func TestE2ECompleteWorkflow(t *testing.T) {
 
 	// Project 1: Complex project with multiple file types
 	suite.createProjectDirectory(t, "ComplexModel", map[string]string{
-		"model.stl":      "Binary STL content for a complex 3D model",
-		"supports.stl":   "Binary STL content for support structures",
-		"print.3mf":      "3MF project file with complete print settings",
-		"sliced.gco":     "G1 X10 Y10\nG1 Z0.2\nG1 E5\n; End of G-code",
-		"design.dwg":     "CAD file content",
-		"README.md":      "# Complex 3D Model\n\nThis is a complex model with multiple components.\n\n## Print Settings\n- Layer Height: 0.2mm\n- Infill: 20%\n- Supports: Yes",
-		"notes.txt":      "Additional printing notes and troubleshooting",
-		"config.ini":     "[print_settings]\nlayer_height=0.2\ninfill=20",
+		"model.stl":    "Binary STL content for a complex 3D model",
+		"supports.stl": "Binary STL content for support structures",
+		"print.3mf":    "3MF project file with complete print settings",
+		"sliced.gco":   "G1 X10 Y10\nG1 Z0.2\nG1 E5\n; End of G-code",
+		"design.dwg":   "CAD file content",
+		"README.md":    "# Complex 3D Model\n\nThis is a complex model with multiple components.\n\n## Print Settings\n- Layer Height: 0.2mm\n- Infill: 20%\n- Supports: Yes",
+		"notes.txt":    "Additional printing notes and troubleshooting",
+		"config.ini":   "[print_settings]\nlayer_height=0.2\ninfill=20",
 	})
 
 	// Project 2: Simple project
 	suite.createProjectDirectory(t, "SimpleGadget", map[string]string{
-		"gadget.stl":  "STL content for a simple gadget",
-		"README.md":   "# Simple Gadget\nA basic 3D printed gadget.",
+		"gadget.stl": "STL content for a simple gadget",
+		"README.md":  "# Simple Gadget\nA basic 3D printed gadget.",
 	})
 
 	// Project 3: Project with only documentation (should not be detected)
 	suite.createProjectDirectory(t, "DocumentationOnly", map[string]string{
-		"manual.pdf":     "PDF manual content",
+		"manual.pdf":       "PDF manual content",
 		"instructions.txt": "Text instructions",
-		"README.md":      "# Documentation\nOnly documentation, no 3D files.",
+		"README.md":        "# Documentation\nOnly documentation, no 3D files.",
 	})
 
 	// Project 4: Hidden project (should not be detected)
@@ -481,8 +481,8 @@ func TestE2EFilesystemChanges(t *testing.T) {
 
 	// Add new files
 	newFiles := map[string]string{
-		"model_v2.stl":    "Version 2 of the model with improvements",
-		"supports.stl":    "Support structures for version 2",
+		"model_v2.stl":     "Version 2 of the model with improvements",
+		"supports.stl":     "Support structures for version 2",
 		"print_config.3mf": "3MF file with print configuration",
 	}
 
@@ -643,11 +643,11 @@ func TestE2EPerformance(t *testing.T) {
 	for i := 0; i < numProjects; i++ {
 		projectName := "PerfProject" + strings.Repeat("0", 2-len(strconv.Itoa(i))) + strconv.Itoa(i)
 		files := map[string]string{
-			"model.stl":      strings.Repeat("STL content ", 100),
-			"print.3mf":      strings.Repeat("3MF content ", 100),
-			"README.md":      "# " + projectName + "\n" + strings.Repeat("Description text. ", 50),
-			"notes.txt":      strings.Repeat("Notes content. ", 100),
-			"config.ini":     "[settings]\nvalue=" + strconv.Itoa(i),
+			"model.stl":  strings.Repeat("STL content ", 100),
+			"print.3mf":  strings.Repeat("3MF content ", 100),
+			"README.md":  "# " + projectName + "\n" + strings.Repeat("Description text. ", 50),
+			"notes.txt":  strings.Repeat("Notes content. ", 100),
+			"config.ini": "[settings]\nvalue=" + strconv.Itoa(i),
 		}
 		suite.createProjectDirectory(t, projectName, files)
 	}
@@ -747,9 +747,9 @@ func BenchmarkE2ECompleteWorkflow(b *testing.B) {
 
 			// Create a test project
 			suite.createProjectDirectory(&testing.T{}, "BenchmarkProject", map[string]string{
-				"model.stl":  "STL content",
-				"README.md":  "# Benchmark Project",
-				"notes.txt":  "Some notes",
+				"model.stl": "STL content",
+				"README.md": "# Benchmark Project",
+				"notes.txt": "Some notes",
 			})
 
 			// Scan

@@ -84,8 +84,8 @@ func TestContainsProjectFiles(t *testing.T) {
 		{
 			name: "Directory with STL file",
 			files: map[string]string{
-				"model.stl":  "STL content",
-				"notes.txt":  "Some notes",
+				"model.stl": "STL content",
+				"notes.txt": "Some notes",
 				"README.md": "Project description",
 			},
 			expected: true,
@@ -93,7 +93,7 @@ func TestContainsProjectFiles(t *testing.T) {
 		{
 			name: "Directory with 3MF file",
 			files: map[string]string{
-				"print.3mf": "3MF content",
+				"print.3mf":  "3MF content",
 				"config.ini": "Configuration",
 			},
 			expected: true,
@@ -101,7 +101,7 @@ func TestContainsProjectFiles(t *testing.T) {
 		{
 			name: "Directory with G-code file",
 			files: map[string]string{
-				"sliced.gco":  "G-code content",
+				"sliced.gco":   "G-code content",
 				"settings.txt": "Settings",
 			},
 			expected: true,
@@ -123,8 +123,8 @@ func TestContainsProjectFiles(t *testing.T) {
 		{
 			name: "Directory with mixed case extensions",
 			files: map[string]string{
-				"model.STL":  "STL content",
-				"notes.txt":  "Notes",
+				"model.STL": "STL content",
+				"notes.txt": "Notes",
 			},
 			expected: true,
 		},
@@ -160,9 +160,9 @@ func TestCreateProject(t *testing.T) {
 
 	projectName := "TestProject"
 	files := map[string]string{
-		"model.stl":  "STL content",
-		"README.md":  "# Test Project\nThis is a test project for 3D printing.",
-		"notes.txt":  "Some additional notes",
+		"model.stl": "STL content",
+		"README.md": "# Test Project\nThis is a test project for 3D printing.",
+		"notes.txt": "Some additional notes",
 	}
 
 	projectPath := createTestProject(t, tmpDir, projectName, files)
@@ -223,8 +223,8 @@ func TestUpdateProject(t *testing.T) {
 	// Create initial project
 	projectName := "UpdateTestProject"
 	initialFiles := map[string]string{
-		"model.stl":  "STL content",
-		"README.md":  "# Initial Description",
+		"model.stl": "STL content",
+		"README.md": "# Initial Description",
 	}
 
 	projectPath := createTestProject(t, tmpDir, projectName, initialFiles)
@@ -303,12 +303,12 @@ func TestScanProjectFiles(t *testing.T) {
 
 	// Create test files
 	files := map[string]string{
-		"model.stl":     "STL file content",
-		"print.3mf":     "3MF file content",
-		"sliced.gco":    "G-code content",
-		"design.dwg":    "CAD file content",
-		"README.md":     "Documentation",
-		"photo.jpg":     "Image data",
+		"model.stl":  "STL file content",
+		"print.3mf":  "3MF file content",
+		"sliced.gco": "G-code content",
+		"design.dwg": "CAD file content",
+		"README.md":  "Documentation",
+		"photo.jpg":  "Image data",
 	}
 
 	projectPath := createTestProject(t, tmpDir, "filescantest", files)
@@ -330,12 +330,12 @@ func TestScanProjectFiles(t *testing.T) {
 
 	// Verify file types are correct
 	expectedTypes := map[string]models.FileType{
-		"model.stl":     models.FileTypeSTL,
-		"print.3mf":     models.FileType3MF,
-		"sliced.gco":    models.FileTypeGCode,
-		"design.dwg":    models.FileTypeCAD,
-		"README.md":     models.FileTypeREADME,
-		"photo.jpg":     models.FileTypeOther,
+		"model.stl":  models.FileTypeSTL,
+		"print.3mf":  models.FileType3MF,
+		"sliced.gco": models.FileTypeGCode,
+		"design.dwg": models.FileTypeCAD,
+		"README.md":  models.FileTypeREADME,
+		"photo.jpg":  models.FileTypeOther,
 	}
 
 	for _, file := range projectFiles {
@@ -461,8 +461,8 @@ func TestProcessProject(t *testing.T) {
 	scanner := New(db, tmpDir)
 
 	files := map[string]string{
-		"model.stl":  "STL content",
-		"README.md":  "# Process Test\nTesting project processing.",
+		"model.stl": "STL content",
+		"README.md": "# Process Test\nTesting project processing.",
 	}
 
 	projectPath := createTestProject(t, tmpDir, "ProcessTest", files)
@@ -513,11 +513,11 @@ func TestScanForProjects(t *testing.T) {
 	// Create multiple test projects
 	projects := map[string]map[string]string{
 		"Project1": {
-			"model.stl":  "STL content 1",
-			"README.md":  "# Project 1",
+			"model.stl": "STL content 1",
+			"README.md": "# Project 1",
 		},
 		"Project2": {
-			"print.3mf": "3MF content",
+			"print.3mf":  "3MF content",
 			"config.ini": "Configuration",
 		},
 		"NotAProject": {
@@ -626,7 +626,7 @@ type testDirEntry struct {
 
 func (d *testDirEntry) Name() string               { return d.name }
 func (d *testDirEntry) IsDir() bool                { return d.isDir }
-func (d *testDirEntry) Type() os.FileMode         { return 0 }
+func (d *testDirEntry) Type() os.FileMode          { return 0 }
 func (d *testDirEntry) Info() (os.FileInfo, error) { return nil, nil }
 
 // BenchmarkScanForProjects benchmarks the scanning performance
@@ -642,9 +642,9 @@ func BenchmarkScanForProjects(b *testing.B) {
 	for i := 0; i < 10; i++ {
 		projectName := fmt.Sprintf("BenchProject%d", i)
 		files := map[string]string{
-			"model.stl":  fmt.Sprintf("STL content %d", i),
-			"README.md":  fmt.Sprintf("# Project %d", i),
-			"notes.txt":  fmt.Sprintf("Notes for project %d", i),
+			"model.stl": fmt.Sprintf("STL content %d", i),
+			"README.md": fmt.Sprintf("# Project %d", i),
+			"notes.txt": fmt.Sprintf("Notes for project %d", i),
 		}
 		createTestProject(&testing.T{}, tmpDir, projectName, files)
 	}

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"log"
 	"dshelf/internal/config"
 	"dshelf/internal/handlers"
 	"dshelf/pkg/database"
+	"log"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

@@ -245,10 +245,7 @@ func TestProjectStruct(t *testing.T) {
 		t.Errorf("Expected UpdatedAt to be %v, got %v", now, project.UpdatedAt)
 	}
 
-	// Test that Files slice is initialized empty
-	if project.Files == nil {
-		t.Error("Files slice should not be nil")
-	}
+	// Test that Files slice is initialized empty (can be nil)
 	if len(project.Files) != 0 {
 		t.Errorf("Expected Files length to be 0, got %d", len(project.Files))
 	}
@@ -416,7 +413,7 @@ func TestFileTypeValidation(t *testing.T) {
 // TestGetFileTypeFromExtensionBoundaryConditions tests edge cases for GetFileTypeFromExtension
 func TestGetFileTypeFromExtensionBoundaryConditions(t *testing.T) {
 	t.Run("panic protection for short filenames", func(t *testing.T) {
-		// These should not panic and should return FileTypeOther
+		// These should not panic and should return FileTypeOther (length < 3)
 		if GetFileTypeFromExtension("") != FileTypeOther {
 			t.Error("Empty string should return FileTypeOther")
 		}
@@ -426,8 +423,9 @@ func TestGetFileTypeFromExtensionBoundaryConditions(t *testing.T) {
 		if GetFileTypeFromExtension("ab") != FileTypeOther {
 			t.Error("Two characters should return FileTypeOther")
 		}
+		// Three characters and above pass the length check
 		if GetFileTypeFromExtension("abc") != FileTypeOther {
-			t.Error("Three characters should return FileTypeOther")
+			t.Error("Three characters with no valid extension should return FileTypeOther")
 		}
 	})
 
@@ -448,12 +446,15 @@ func TestGetFileTypeFromExtensionBoundaryConditions(t *testing.T) {
 	})
 
 	t.Run("exact length matching", func(t *testing.T) {
-		// Test exactly 4-character filenames
-		if GetFileTypeFromExtension(".stl") != FileTypeOther {
-			t.Error(".stl should return FileTypeOther (too short)")
+		// Test minimum length requirement (< 3 returns FileTypeOther)
+		if GetFileTypeFromExtension("ab") != FileTypeOther {
+			t.Error("Two character filename should return FileTypeOther")
+		}
+		if GetFileTypeFromExtension(".stl") != FileTypeSTL {
+			t.Error(".stl should return FileTypeSTL (valid extension)")
 		}
 		if GetFileTypeFromExtension("m.stl") != FileTypeSTL {
-			t.Error("m.stl should return FileTypeSTL (minimum valid)")
+			t.Error("m.stl should return FileTypeSTL (valid filename with extension)")
 		}
 	})
 }

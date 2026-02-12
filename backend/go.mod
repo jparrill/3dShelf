@@ -9,8 +9,6 @@ require (
 	github.com/joho/godotenv v1.5.1
 	gorm.io/driver/sqlite v1.6.0
 	gorm.io/gorm v1.31.1
-	github.com/stretchr/testify v1.9.0
-	github.com/DATA-DOG/go-sqlmock v1.5.0
 )
 
 require (

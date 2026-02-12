@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"net/http"
 	"dshelf/internal/models"
 	"dshelf/pkg/database"
 	"dshelf/pkg/scanner"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
@@ -56,7 +56,7 @@ func (h *ProjectsHandler) GetProject(c *gin.Context) {
 func (h *ProjectsHandler) ScanProjects(c *gin.Context) {
 	if err := h.scanner.ScanForProjects(); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to scan projects",
+			"error":   "Failed to scan projects",
 			"details": err.Error(),
 		})
 		return
@@ -67,7 +67,7 @@ func (h *ProjectsHandler) ScanProjects(c *gin.Context) {
 	database.GetDB().Model(&models.Project{}).Count(&count)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Scan completed successfully",
+		"message":       "Scan completed successfully",
 		"project_count": count,
 	})
 }
