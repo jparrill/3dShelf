@@ -123,7 +123,7 @@ export class ProjectTestHelpers {
 
       // Verify files are listed
       for (const file of config.initialFiles) {
-        await expect(page.getByText(file.filename)).toBeVisible()
+        await expect(page.getByText(file.filename, { exact: true }).first()).toBeVisible()
       }
     }
 
@@ -147,8 +147,32 @@ export class ProjectTestHelpers {
   static async navigateToProject(page: Page, projectName: string): Promise<void> {
     await page.goto('/')
 
-    const projectCard = page.locator('[cursor="pointer"]').filter({ hasText: projectName }).first()
-    await expect(projectCard).toBeVisible()
+    // Wait for page to load completely
+    await page.waitForLoadState('networkidle')
+
+    // Try multiple selector strategies to find the project card
+    const selectors = [
+      page.locator('[cursor="pointer"]').filter({ hasText: projectName }),
+      page.locator('text=' + projectName).first(),
+      page.getByRole('heading').filter({ hasText: projectName }),
+      page.locator('h1, h2, h3, h4, h5, h6').filter({ hasText: projectName })
+    ]
+
+    let projectCard = null
+    for (const selector of selectors) {
+      try {
+        await expect(selector.first()).toBeVisible({ timeout: 3000 })
+        projectCard = selector.first()
+        break
+      } catch {
+        // Continue to next selector
+      }
+    }
+
+    if (!projectCard) {
+      throw new Error(`Could not find project "${projectName}" on homepage`)
+    }
+
     await projectCard.click()
 
     // Verify we're on the project detail page

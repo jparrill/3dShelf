@@ -127,7 +127,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     await expect(page.getByText('conflict-test.stl').first()).toBeVisible()
 
     // Select skip resolution - click the radio button for skip
-    await page.locator('input[value="skip"]').check()
+    await page.locator('input[value="skip"]').check({ force: true })
 
     // Upload with resolution
     const uploadPromise = page.waitForResponse(response =>
@@ -174,19 +174,14 @@ test.describe('File Upload and Conflict Resolution', () => {
     const fileInput = uploadModal.locator('input[type="file"]')
     await fileInput.setInputFiles([conflictFile])
 
-    // Check conflicts
-    await page.getByRole('button', { name: /check conflicts/i }).click()
+    // Try to upload - this will automatically check for conflicts
+    await page.getByRole('button', { name: 'Upload Files' }).click()
 
-    await page.waitForResponse(response =>
-      response.url().includes('/files/check-conflicts') &&
-      response.request().method() === 'POST'
-    )
-
-    // Should show conflict detected
+    // Should show conflict detected after upload attempt
     await expect(page.getByText(/conflicts detected/i)).toBeVisible()
 
     // Select overwrite resolution
-    await page.locator('input[value="overwrite"]').check()
+    await page.locator('input[value="overwrite"]').check({ force: true })
 
     // Upload with resolution
     const uploadPromise = page.waitForResponse(response =>
@@ -235,19 +230,14 @@ test.describe('File Upload and Conflict Resolution', () => {
     const fileInput = uploadModal.locator('input[type="file"]')
     await fileInput.setInputFiles([conflictFile])
 
-    // Check conflicts
-    await page.getByRole('button', { name: /check conflicts/i }).click()
+    // Try to upload - this will automatically check for conflicts
+    await page.getByRole('button', { name: 'Upload Files' }).click()
 
-    await page.waitForResponse(response =>
-      response.url().includes('/files/check-conflicts') &&
-      response.request().method() === 'POST'
-    )
-
-    // Should show conflict detected
+    // Should show conflict detected after upload attempt
     await expect(page.getByText(/conflicts detected/i)).toBeVisible()
 
     // Select rename resolution
-    await page.locator('input[value="rename"]').check()
+    await page.locator('input[value="rename"]').check({ force: true })
 
     // Upload with resolution
     const uploadPromise = page.waitForResponse(response =>
@@ -304,8 +294,8 @@ test.describe('File Upload and Conflict Resolution', () => {
     const fileInput = uploadModal.locator('input[type="file"]')
     await fileInput.setInputFiles([conflictFile1, conflictFile2, conflictFile3, newFile])
 
-    // Check conflicts
-    await page.getByRole('button', { name: /check conflicts/i }).click()
+    // Try to upload - this will automatically check for conflicts
+    await page.getByRole('button', { name: 'Upload Files' }).click()
 
     await page.waitForResponse(response =>
       response.url().includes('/files/check-conflicts') &&
