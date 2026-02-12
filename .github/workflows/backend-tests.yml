@@ -140,17 +140,23 @@ jobs:
 
     - name: Install Gosec
       run: |
+        echo "🔧 Installing Gosec security scanner..."
         go version
-        go env GOPATH
+        echo "GOPATH: $(go env GOPATH)"
+        echo "Installing gosec..."
         go install github.com/securecodewarrior/gosec/v2/cmd/gosec@latest
-        export PATH=$PATH:$(go env GOPATH)/bin
-        gosec --version || echo "Gosec installation verification failed"
+        echo "Adding GOPATH/bin to PATH..."
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+        ls -la $(go env GOPATH)/bin/ | grep gosec || echo "⚠️ Gosec binary not found in GOPATH/bin"
 
     - name: Run Gosec Security Scanner
       working-directory: ./backend
       run: |
-        export PATH=$PATH:$(go env GOPATH)/bin
-        gosec -fmt sarif -out gosec-report.sarif -quiet ./... || echo "Gosec found security issues - check the report"
+        echo "🔍 Running security scan with Gosec..."
+        which gosec || echo "⚠️ Gosec not found in PATH"
+        gosec --version || echo "⚠️ Cannot get Gosec version"
+        gosec -fmt sarif -out gosec-report.sarif -quiet ./... || echo "⚠️ Gosec found security issues - check the report"
+        ls -la gosec-report.sarif || echo "⚠️ SARIF report not generated"
 
     - name: Upload Gosec scan results to GitHub Security tab
       uses: github/codeql-action/upload-sarif@v3
