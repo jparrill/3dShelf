@@ -1,7 +1,11 @@
 # Backend
 backend/printvault-backend
+backend/dshelf-backend
 backend/*.db
 backend/.env
+backend/coverage.out
+backend/coverage.html
+backend/test-results/
 
 # Frontend
 frontend/.next/
@@ -9,6 +13,15 @@ frontend/out/
 frontend/node_modules/
 frontend/.env*
 frontend/*.log
+
+# Test coverage and reports
+frontend/coverage/
+frontend/.nyc_output/
+frontend/jest-coverage/
+frontend/test-results/
+frontend/playwright-report/
+frontend/test-output/
+*.lcov
 
 # Database
 *.db
@@ -25,6 +38,10 @@ frontend/*.log
 # Logs
 *.log
 logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # OS generated files
 .DS_Store
@@ -47,3 +64,46 @@ data/db/
 
 # Docker
 docker-compose.override.yml
+
+# Dependencies lock files (opcional - algunos prefieren incluirlos)
+# frontend/package-lock.json
+# frontend/yarn.lock
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Editor directories and files
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+*.code-workspace
+
+# OS generated files
+**/.DS_Store
+**/.DS_Store?
+**/._*
+**/.Spotlight-V100
+**/.Trashes
+**/ehthumbs.db
+**/Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~
