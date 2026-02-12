@@ -1,519 +1,1040 @@
-<testsuites id="" name="" tests="43" failures="10" skipped="33" errors="0" time="80.037465">
-<testsuite name="comprehensive-workflow.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="4" failures="4" skipped="0" time="153.929" errors="0">
-<testcase name="Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths)" classname="comprehensive-workflow.spec.ts" time="35.911">
+<testsuites id="" name="" tests="43" failures="20" skipped="9" errors="0" time="31.843467999999998">
+<testsuite name="comprehensive-workflow.spec.ts" timestamp="2026-02-12T21:26:11.515Z" hostname="chromium" tests="4" failures="4" skipped="0" time="44.765" errors="0">
+<testcase name="Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths)" classname="comprehensive-workflow.spec.ts" time="7.125">
 <failure message="comprehensive-workflow.spec.ts:33:7 Complete workflow: Project creation → File upload → Conflict resolution (All paths)" type="FAILURE">
-<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:33:7 › Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths) 
+<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:33:7 › Comprehensive 3D Organizer Workflows › Complete workflow: Project creation → File upload → Conflict resolution (All paths) › Create project without files 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      19 |   let fileManager: TestFileManager
-      20 |
-    > 21 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-      23 |     await page.goto('/')
-      24 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:21:8
+    Locator: locator('[cursor="pointer"]').filter({ hasText: 'Empty Project 1770931573954' }).first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: Test timeout of 30000ms exceeded.
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[cursor="pointer"]').filter({ hasText: 'Empty Project 1770931573954' }).first()
 
 
-      21 |   test.beforeEach(async ({ page }) => {
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-    > 23 |     await page.goto('/')
-         |                ^
-      24 |
-      25 |     // Wait for the application to load
-      26 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
+       at ../helpers/test-helpers.ts:151
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+      149 |
+      150 |     const projectCard = page.locator('[cursor="pointer"]').filter({ hasText: projectName }).first()
+    > 151 |     await expect(projectCard).toBeVisible()
+          |                               ^
+      152 |     await projectCard.click()
+      153 |
+      154 |     // Verify we're on the project detail page
+        at ProjectTestHelpers.navigateToProject (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/helpers/test-helpers.ts:151:31)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:49:7
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:40:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/comprehensive-workflow-Com-245d4-flict-resolution-All-paths--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/comprehensive-workflow-Com-245d4-flict-resolution-All-paths--chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/comprehensive-workflow-Com-245d4-flict-resolution-All-paths--chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-245d4-flict-resolution-All-paths--chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/comprehensive-workflow-Com-245d4-flict-resolution-All-paths--chromium/video.webm]]
+
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-245d4-flict-resolution-All-paths--chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Error handling and edge cases" classname="comprehensive-workflow.spec.ts" time="41.049">
+<testcase name="Comprehensive 3D Organizer Workflows › Error handling and edge cases" classname="comprehensive-workflow.spec.ts" time="1.437">
 <failure message="comprehensive-workflow.spec.ts:229:7 Error handling and edge cases" type="FAILURE">
-<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:229:7 › Comprehensive 3D Organizer Workflows › Error handling and edge cases 
+<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:229:7 › Comprehensive 3D Organizer Workflows › Error handling and edge cases › Handle invalid project creation 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      19 |   let fileManager: TestFileManager
-      20 |
-    > 21 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-      23 |     await page.goto('/')
-      24 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:21:8
+    Locator: getByText(/project name is required/i)
+    Expected: visible
+    Error: strict mode violation: getByText(/project name is required/i) resolved to 2 elements:
+        1) <div data-status="error" id="toast-1-description" class="chakra-alert__desc css-161kwbg">Project name is required</div> aka locator('#toast-1-description')
+        2) <div data-status="error" id="toast-2-description" class="chakra-alert__desc css-161kwbg">Project name is required</div> aka locator('#toast-2-description')
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText(/project name is required/i)
 
 
-      21 |   test.beforeEach(async ({ page }) => {
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-    > 23 |     await page.goto('/')
-         |                ^
-      24 |
-      25 |     // Wait for the application to load
-      26 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
+       at ../helpers/test-helpers.ts:326
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+      324 |     await page.getByPlaceholder(new RegExp(fieldPlaceholder, 'i')).fill('   ')
+      325 |     await page.getByRole('button', { name: new RegExp(submitButtonText, 'i') }).click()
+    > 326 |     await expect(page.getByText(new RegExp(expectedErrorText, 'i'))).toBeVisible()
+          |                                                                      ^
+      327 |   }
+      328 |
+      329 |   /**
+        at ValidationHelpers.validateRequiredField (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/helpers/test-helpers.ts:326:70)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:238:7
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:232:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Accessibility and usability testing" classname="comprehensive-workflow.spec.ts" time="35.917">
+<testcase name="Comprehensive 3D Organizer Workflows › Accessibility and usability testing" classname="comprehensive-workflow.spec.ts" time="6.112">
 <failure message="comprehensive-workflow.spec.ts:321:7 Accessibility and usability testing" type="FAILURE">
-<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:321:7 › Comprehensive 3D Organizer Workflows › Accessibility and usability testing 
+<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:321:7 › Comprehensive 3D Organizer Workflows › Accessibility and usability testing › Test keyboard navigation 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeFocused() failed
 
-      19 |   let fileManager: TestFileManager
-      20 |
-    > 21 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-      23 |     await page.goto('/')
-      24 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:21:8
+    Locator:  getByRole('button', { name: 'Create Project' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
 
-    Error: page.goto: Test timeout of 30000ms exceeded.
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Create Project' })
+        9 × locator resolved to <button type="button" class="chakra-button css-112nfzy">…</button>
+          - unexpected value "inactive"
 
 
-      21 |   test.beforeEach(async ({ page }) => {
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-    > 23 |     await page.goto('/')
-         |                ^
-      24 |
-      25 |     // Wait for the application to load
-      26 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
+      328 |       // Should be able to navigate to create project button
+      329 |       const createButton = page.getByRole('button', { name: 'Create Project' })
+    > 330 |       await expect(createButton).toBeFocused()
+          |                                  ^
+      331 |
+      332 |       // Press Enter to open modal
+      333 |       await page.keyboard.press('Enter')
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:330:34
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:324:5
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Comprehensive 3D Organizer Workflows › Performance and loading states" classname="comprehensive-workflow.spec.ts" time="41.052">
+<testcase name="Comprehensive 3D Organizer Workflows › Performance and loading states" classname="comprehensive-workflow.spec.ts" time="30.091">
 <failure message="comprehensive-workflow.spec.ts:394:7 Performance and loading states" type="FAILURE">
-<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:394:7 › Comprehensive 3D Organizer Workflows › Performance and loading states 
+<![CDATA[  [chromium] › comprehensive-workflow.spec.ts:394:7 › Comprehensive 3D Organizer Workflows › Performance and loading states › Test loading states during project creation 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Test timeout of 30000ms exceeded.
 
-      19 |   let fileManager: TestFileManager
-      20 |
-    > 21 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-      23 |     await page.goto('/')
-      24 |
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:21:8
-
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
+    Error: locator.click: Test timeout of 30000ms exceeded.
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - waiting for getByRole('button', { name: /create project/i }).nth(1)
 
 
-      21 |   test.beforeEach(async ({ page }) => {
-      22 |     fileManager = new TestFileManager('comprehensive-tests')
-    > 23 |     await page.goto('/')
-         |                ^
-      24 |
-      25 |     // Wait for the application to load
-      26 |     await expect(page.getByText('3DShelf')).toBeVisible()
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16
+      419 |
+      420 |       // Check if button shows loading state
+    > 421 |       await submitButton.click()
+          |                          ^
+      422 |
+      423 |       // Button might show loading state or be disabled
+      424 |       // Wait for the operation to complete
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:421:26
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:397:5
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/comprehensive-workflow-Com-d2ff1-formance-and-loading-states-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="file-upload-and-conflicts.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="7" failures="6" skipped="1" time="237.513" errors="0">
-<testcase name="File Upload and Conflict Resolution › should upload new files to existing project successfully" classname="file-upload-and-conflicts.spec.ts" time="35.911">
+<testsuite name="file-upload-and-conflicts.spec.ts" timestamp="2026-02-12T21:26:11.515Z" hostname="chromium" tests="7" failures="7" skipped="0" time="43.392" errors="0">
+<testcase name="File Upload and Conflict Resolution › should upload new files to existing project successfully" classname="file-upload-and-conflicts.spec.ts" time="6.799">
 <failure message="file-upload-and-conflicts.spec.ts:55:7 should upload new files to existing project successfully" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:55:7 › File Upload and Conflict Resolution › should upload new files to existing project successfully 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: Test timeout of 30000ms exceeded.
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
 
 
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:62:5
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with skip resolution" classname="file-upload-and-conflicts.spec.ts" time="41.044">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with skip resolution" classname="file-upload-and-conflicts.spec.ts" time="6.771">
 <failure message="file-upload-and-conflicts.spec.ts:103:7 should handle file conflicts with skip resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:103:7 › File Upload and Conflict Resolution › should handle file conflicts with skip resolution 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
 
 
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:109:5
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--5ecdf-flicts-with-skip-resolution-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/file-upload-and-conflicts--5ecdf-flicts-with-skip-resolution-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--5ecdf-flicts-with-skip-resolution-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--5ecdf-flicts-with-skip-resolution-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/file-upload-and-conflicts--5ecdf-flicts-with-skip-resolution-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--5ecdf-flicts-with-skip-resolution-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution" classname="file-upload-and-conflicts.spec.ts" time="41.052">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution" classname="file-upload-and-conflicts.spec.ts" time="6.802">
 <failure message="file-upload-and-conflicts.spec.ts:159:7 should handle file conflicts with overwrite resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:159:7 › File Upload and Conflict Resolution › should handle file conflicts with overwrite resolution 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
 
 
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:165:5
 
-    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--ede38-s-with-overwrite-resolution-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
     ../../../test-results/file-upload-and-conflicts--ede38-s-with-overwrite-resolution-chromium/video.webm
     ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--ede38-s-with-overwrite-resolution-chromium/error-context.md
 ]]>
 </failure>
 <system-out>
 <![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--ede38-s-with-overwrite-resolution-chromium/test-failed-1.png]]
+
 [[ATTACHMENT|test-results/file-upload-and-conflicts--ede38-s-with-overwrite-resolution-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--ede38-s-with-overwrite-resolution-chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution" classname="file-upload-and-conflicts.spec.ts" time="39.836">
+<testcase name="File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution" classname="file-upload-and-conflicts.spec.ts" time="5.746">
 <failure message="file-upload-and-conflicts.spec.ts:219:7 should handle file conflicts with rename (upload + timestamp) resolution" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:219:7 › File Upload and Conflict Resolution › should handle file conflicts with rename (upload + timestamp) resolution 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
 
 
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:225:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/error-context.md
 ]]>
 </failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--d0995-upload-timestamp-resolution-chromium/error-context.md]]
+]]>
+</system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions" classname="file-upload-and-conflicts.spec.ts" time="39.835">
+<testcase name="File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions" classname="file-upload-and-conflicts.spec.ts" time="5.682">
 <failure message="file-upload-and-conflicts.spec.ts:285:7 should handle mixed conflicts with different resolutions" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:285:7 › File Upload and Conflict Resolution › should handle mixed conflicts with different resolutions 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
 
 
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:293:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/error-context.md
 ]]>
 </failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--084de--with-different-resolutions-chromium/error-context.md]]
+]]>
+</system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should handle upload cancellation" classname="file-upload-and-conflicts.spec.ts" time="39.835">
+<testcase name="File Upload and Conflict Resolution › should handle upload cancellation" classname="file-upload-and-conflicts.spec.ts" time="5.784">
 <failure message="file-upload-and-conflicts.spec.ts:376:7 should handle upload cancellation" type="FAILURE">
 <![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:376:7 › File Upload and Conflict Resolution › should handle upload cancellation 
 
-    Test timeout of 30000ms exceeded while running "beforeEach" hook.
+    Error: expect(locator).toBeVisible() failed
 
-      48 |
-      49 | test.describe('File Upload and Conflict Resolution', () => {
-    > 50 |   test.beforeEach(async ({ page }) => {
-         |        ^
-      51 |     // Ensure we're starting fresh
-      52 |     await page.goto('/')
-      53 |   })
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:50:8
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
 
-    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
     Call log:
-      - navigating to "http://127.0.0.1:3000/", waiting until "load"
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
 
 
-      50 |   test.beforeEach(async ({ page }) => {
-      51 |     // Ensure we're starting fresh
-    > 52 |     await page.goto('/')
-         |                ^
-      53 |   })
-      54 |
-      55 |   test('should upload new files to existing project successfully', async ({ page }) => {
-        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:52:16
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:379:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/error-context.md
 ]]>
 </failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/error-context.md]]
+]]>
+</system-out>
 </testcase>
-<testcase name="File Upload and Conflict Resolution › should validate file types during upload" classname="file-upload-and-conflicts.spec.ts" time="0">
+<testcase name="File Upload and Conflict Resolution › should validate file types during upload" classname="file-upload-and-conflicts.spec.ts" time="5.808">
+<failure message="file-upload-and-conflicts.spec.ts:407:7 should validate file types during upload" type="FAILURE">
+<![CDATA[  [chromium] › file-upload-and-conflicts.spec.ts:407:7 › File Upload and Conflict Resolution › should validate file types during upload 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('create-project-modal')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('create-project-modal')
+
+
+      20 |
+      21 |   const modal = page.getByTestId('create-project-modal')
+    > 22 |   await expect(modal).toBeVisible()
+         |                       ^
+      23 |
+      24 |   await page.getByPlaceholder(/project name/i).fill(projectName)
+      25 |   await page.getByPlaceholder(/project description/i).fill(`Test project for file uploads`)
+        at createProjectWithFiles (/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:22:23)
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:410:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="homepage.spec.ts" timestamp="2026-02-12T21:26:11.515Z" hostname="chromium" tests="12" failures="6" skipped="0" time="39.887" errors="0">
+<testcase name="3DShelf Homepage › should display the main header and navigation" classname="homepage.spec.ts" time="0.546">
+</testcase>
+<testcase name="3DShelf Homepage › should load and display project list" classname="homepage.spec.ts" time="6.108">
+<failure message="homepage.spec.ts:20:7 should load and display project list" type="FAILURE">
+<![CDATA[  [chromium] › homepage.spec.ts:20:7 › 3DShelf Homepage › should load and display project list ─────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-testid="project-grid"], .project-card, [role="main"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-testid="project-grid"], .project-card, [role="main"]')
+
+
+      23 |
+      24 |     // Check if projects are displayed (assuming we have test data)
+    > 25 |     await expect(page.locator('[data-testid="project-grid"], .project-card, [role="main"]')).toBeVisible()
+         |                                                                                              ^
+      26 |
+      27 |     // We should see some content indicating projects are loaded
+      28 |     // This could be project cards or a "no projects" message
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:25:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="3DShelf Homepage › should perform search functionality" classname="homepage.spec.ts" time="1.304">
+</testcase>
+<testcase name="3DShelf Homepage › should handle empty search" classname="homepage.spec.ts" time="0.903">
+</testcase>
+<testcase name="3DShelf Homepage › should navigate to project detail when clicking project" classname="homepage.spec.ts" time="0.876">
+<failure message="homepage.spec.ts:71:7 should navigate to project detail when clicking project" type="FAILURE">
+<![CDATA[  [chromium] › homepage.spec.ts:71:7 › 3DShelf Homepage › should navigate to project detail when clicking project 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=/no projects|empty/i')
+    Expected: visible
+    Error: strict mode violation: locator('text=/no projects|empty/i') resolved to 2 elements:
+        1) <h2 class="chakra-heading css-rdi5vu">Empty Project 1770928949672</h2> aka getByRole('heading', { name: 'Empty Project 1770928949672' })
+        2) <h2 class="chakra-heading css-rdi5vu">Empty Project 1770931573954</h2> aka getByRole('heading', { name: 'Empty Project 1770931573954' })
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('text=/no projects|empty/i')
+
+
+      90 |     } else {
+      91 |       // If no projects exist, verify the empty state is shown properly
+    > 92 |       await expect(page.locator('text=/no projects|empty/i')).toBeVisible()
+         |                                                               ^
+      93 |     }
+      94 |   })
+      95 |
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:92:63
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="3DShelf Homepage › should handle scan projects functionality" classname="homepage.spec.ts" time="2.288">
+</testcase>
+<testcase name="3DShelf Homepage › should be responsive on mobile viewport" classname="homepage.spec.ts" time="5.943">
+<failure message="homepage.spec.ts:118:7 should be responsive on mobile viewport" type="FAILURE">
+<![CDATA[  [chromium] › homepage.spec.ts:118:7 › 3DShelf Homepage › should be responsive on mobile viewport ─
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('header, [data-testid="header"], nav').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('header, [data-testid="header"], nav').first()
+
+
+      132 |     // Elements should be stacked vertically on mobile
+      133 |     const header = page.locator('header, [data-testid="header"], nav').first()
+    > 134 |     await expect(header).toBeVisible()
+          |                          ^
+      135 |   })
+      136 |
+      137 |   test('should handle network errors gracefully', async ({ page }) => {
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:134:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="3DShelf Homepage › should handle network errors gracefully" classname="homepage.spec.ts" time="7.493">
+<failure message="homepage.spec.ts:137:7 should handle network errors gracefully" type="FAILURE">
+<![CDATA[  [chromium] › homepage.spec.ts:137:7 › 3DShelf Homepage › should handle network errors gracefully ─
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=/error|failed|unable to load/i')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('text=/error|failed|unable to load/i')
+
+
+      146 |
+      147 |     // Should show error state
+    > 148 |     await expect(page.locator('text=/error|failed|unable to load/i')).toBeVisible()
+          |                                                                       ^
+      149 |   })
+      150 |
+      151 |   test('should display loading states appropriately', async ({ page }) => {
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:148:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="3DShelf Homepage › should display loading states appropriately" classname="homepage.spec.ts" time="0.5">
+</testcase>
+<testcase name="3DShelf Homepage › should maintain state during page interactions" classname="homepage.spec.ts" time="1.552">
+</testcase>
+<testcase name="3DShelf Homepage › should have proper accessibility features" classname="homepage.spec.ts" time="6.021">
+<failure message="homepage.spec.ts:188:7 should have proper accessibility features" type="FAILURE">
+<![CDATA[  [chromium] › homepage.spec.ts:188:7 › 3DShelf Homepage › should have proper accessibility features 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByPlaceholder('Search projects...')
+    Expected: "text"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByPlaceholder('Search projects...')
+        9 × locator resolved to <input value="" placeholder="Search projects..." class="chakra-input css-1l3vxd8"/>
+          - unexpected value "null"
+
+
+      194 |     // Check that search input has proper accessibility
+      195 |     const searchInput = page.getByPlaceholder('Search projects...')
+    > 196 |     await expect(searchInput).toHaveAttribute('type', 'text')
+          |                               ^
+      197 |
+      198 |     // Check that buttons are properly labeled
+      199 |     const scanButton = page.getByRole('button', { name: /scan projects/i })
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:196:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="3DShelf Homepage › should handle keyboard navigation" classname="homepage.spec.ts" time="6.353">
+<failure message="homepage.spec.ts:208:7 should handle keyboard navigation" type="FAILURE">
+<![CDATA[  [chromium] › homepage.spec.ts:208:7 › 3DShelf Homepage › should handle keyboard navigation ───────
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: /scan projects/i })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for getByRole('button', { name: /scan projects/i })
+        9 × locator resolved to <button type="button" class="chakra-button css-7l1c99">…</button>
+          - unexpected value "inactive"
+
+
+      218 |     // Should move to scan button
+      219 |     const scanButton = page.getByRole('button', { name: /scan projects/i })
+    > 220 |     await expect(scanButton).toBeFocused()
+          |                              ^
+      221 |
+      222 |     // Test Enter key on buttons
+      223 |     await page.keyboard.press('Enter')
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:220:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="project-creation.spec.ts" timestamp="2026-02-12T21:26:11.515Z" hostname="chromium" tests="6" failures="1" skipped="0" time="5.025" errors="0">
+<testcase name="Project Creation › should create project without files successfully" classname="project-creation.spec.ts" time="0.882">
+</testcase>
+<testcase name="Project Creation › should create project with files successfully" classname="project-creation.spec.ts" time="1.032">
+</testcase>
+<testcase name="Project Creation › should validate required fields in project creation" classname="project-creation.spec.ts" time="0.81">
+</testcase>
+<testcase name="Project Creation › should handle file selection and removal in project creation" classname="project-creation.spec.ts" time="0.56">
+<failure message="project-creation.spec.ts:150:7 should handle file selection and removal in project creation" type="FAILURE">
+<![CDATA[  [chromium] › project-creation.spec.ts:150:7 › Project Creation › should handle file selection and removal in project creation 
+
+    Error: ENOENT: no such file or directory, stat '/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/fixtures/remove-test.stl'
+
+      164 |     // Upload files
+      165 |     const fileInput = page.locator('input[type="file"]')
+    > 166 |     await fileInput.setInputFiles([stlFile, gcodeFile])
+          |     ^
+      167 |
+      168 |     // Verify files are listed
+      169 |     await expect(page.getByText('remove-test.stl')).toBeVisible()
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:166:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/project-creation-Project-C-8f804-removal-in-project-creation-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Project Creation › should handle modal cancel functionality" classname="project-creation.spec.ts" time="0.85">
+</testcase>
+<testcase name="Project Creation › should handle file upload errors gracefully" classname="project-creation.spec.ts" time="0.891">
+</testcase>
+</testsuite>
+<testsuite name="project-details.spec.ts" timestamp="2026-02-12T21:26:11.515Z" hostname="chromium" tests="12" failures="2" skipped="9" time="37.589" errors="0">
+<testcase name="Project Details Page › should navigate to project details from homepage" classname="project-details.spec.ts" time="0.846">
+<properties>
+<property name="skip" value="No projects available for navigation test">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should display project information correctly" classname="project-details.spec.ts" time="1.449">
+<properties>
+<property name="skip" value="Project details page not accessible">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should display project files if available" classname="project-details.spec.ts" time="1.391">
+<properties>
+<property name="skip" value="Project files section not available">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should show project statistics" classname="project-details.spec.ts" time="1.415">
+<properties>
+<property name="skip" value="Project statistics not available">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should handle project README content" classname="project-details.spec.ts" time="6.415">
+<properties>
+<property name="skip" value="README content not available">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should provide navigation back to homepage" classname="project-details.spec.ts" time="1.401">
+</testcase>
+<testcase name="Project Details Page › should handle non-existent project gracefully" classname="project-details.spec.ts" time="1.485">
+<failure message="project-details.spec.ts:134:7 should handle non-existent project gracefully" type="FAILURE">
+<![CDATA[  [chromium] › project-details.spec.ts:134:7 › Project Details Page › should handle non-existent project gracefully 
+
+    Error: locator.isVisible: Error: strict mode violation: locator('text=/404|not found|project not found|error/i') resolved to 2 elements:
+        1) <span id="nextjs__container_errors_label" class="nextjs__container_errors_label ">Runtime AxiosError</span> aka getByText('Runtime AxiosError')
+        2) <div id="nextjs__container_errors_desc" class="nextjs__container_errors_desc ">…</div> aka getByText('Request failed with status')
+
+    Call log:
+        - checking visibility of locator('text=/404|not found|project not found|error/i')
+
+
+      138 |
+      139 |     // Should show 404 or appropriate error message
+    > 140 |     const has404 = await page.locator('text=/404|not found|project not found|error/i').isVisible()
+          |                                                                                        ^
+      141 |     expect(has404).toBeTruthy()
+      142 |   })
+      143 |
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:140:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Project Details Page › should be responsive on mobile devices" classname="project-details.spec.ts" time="6.458">
+<properties>
+<property name="skip" value="Mobile responsiveness test not possible">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should handle loading states appropriately" classname="project-details.spec.ts" time="0.903">
+<properties>
+<property name="skip" value="Loading states test not applicable">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should handle API errors gracefully" classname="project-details.spec.ts" time="7.958">
+<failure message="project-details.spec.ts:188:7 should handle API errors gracefully" type="FAILURE">
+<![CDATA[  [chromium] › project-details.spec.ts:188:7 › Project Details Page › should handle API errors gracefully 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('text=/error|failed|unable to load|not found/i')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('text=/error|failed|unable to load|not found/i')
+
+
+      194 |
+      195 |     // Should show error state
+    > 196 |     await expect(page.locator('text=/error|failed|unable to load|not found/i')).toBeVisible()
+          |                                                                                 ^
+      197 |   })
+      198 |
+      199 |   test('should display file type icons and information', async ({ page }) => {
+        at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:196:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../../test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/video.webm]]
+
+[[ATTACHMENT|test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Project Details Page › should display file type icons and information" classname="project-details.spec.ts" time="1.437">
+<properties>
+<property name="skip" value="File type display test not applicable">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Details Page › should have proper accessibility features" classname="project-details.spec.ts" time="6.431">
+<properties>
+<property name="skip" value="Accessibility test not applicable">
+</property>
+</properties>
 <skipped>
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="homepage.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
-<testcase name="3DShelf Homepage › should display the main header and navigation" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
+<testsuite name="simple-test.spec.ts" timestamp="2026-02-12T21:26:11.515Z" hostname="chromium" tests="2" failures="0" skipped="0" time="1.194" errors="0">
+<testcase name="Simple E2E Tests › should create project without files" classname="simple-test.spec.ts" time="0.829">
 </testcase>
-<testcase name="3DShelf Homepage › should load and display project list" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should perform search functionality" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should handle empty search" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should navigate to project detail when clicking project" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should handle scan projects functionality" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should be responsive on mobile viewport" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should handle network errors gracefully" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should display loading states appropriately" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should maintain state during page interactions" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should have proper accessibility features" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="3DShelf Homepage › should handle keyboard navigation" classname="homepage.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="project-creation.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="6" failures="0" skipped="6" time="0" errors="0">
-<testcase name="Project Creation › should create project without files successfully" classname="project-creation.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Creation › should create project with files successfully" classname="project-creation.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Creation › should validate required fields in project creation" classname="project-creation.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Creation › should handle file selection and removal in project creation" classname="project-creation.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Creation › should handle modal cancel functionality" classname="project-creation.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Creation › should handle file upload errors gracefully" classname="project-creation.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="project-details.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
-<testcase name="Project Details Page › should navigate to project details from homepage" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should display project information correctly" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should display project files if available" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should show project statistics" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should handle project README content" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should provide navigation back to homepage" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should handle non-existent project gracefully" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should be responsive on mobile devices" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should handle loading states appropriately" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should handle API errors gracefully" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should display file type icons and information" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Project Details Page › should have proper accessibility features" classname="project-details.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="simple-test.spec.ts" timestamp="2026-02-12T21:11:19.789Z" hostname="chromium" tests="2" failures="0" skipped="2" time="0" errors="0">
-<testcase name="Simple E2E Tests › should create project without files" classname="simple-test.spec.ts" time="0">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Simple E2E Tests › should navigate to homepage" classname="simple-test.spec.ts" time="0">
-<skipped>
-</skipped>
+<testcase name="Simple E2E Tests › should navigate to homepage" classname="simple-test.spec.ts" time="0.365">
 </testcase>
 </testsuite>
 </testsuites>
