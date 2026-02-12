@@ -302,11 +302,15 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		finalFilename := fileHeader.Filename
 		existingFile, hasConflict := existingFileMap[fileHeader.Filename]
 
+		fmt.Printf("Checking conflicts for: %s, hasConflict: %t\n", fileHeader.Filename, hasConflict)
 		if hasConflict {
+			fmt.Printf("Found existing file, checking resolutions map: %+v\n", resolutions)
 			resolution, hasResolution := resolutions[fileHeader.Filename]
+			fmt.Printf("Resolution for %s: %s, hasResolution: %t\n", fileHeader.Filename, resolution, hasResolution)
 
 			if !hasResolution {
 				// No resolution provided for conflict - default to skip
+				fmt.Printf("SKIPPING file due to no resolution: %s\n", fileHeader.Filename)
 				skippedFiles = append(skippedFiles, fileHeader.Filename)
 				continue
 			}
@@ -408,9 +412,13 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 		response["error_count"] = len(errors)
 	}
 
-	if len(uploadedFiles) > 0 {
+	fmt.Printf("Upload summary - Uploaded: %d, Skipped: %d, Errors: %d\n", len(uploadedFiles), len(skippedFiles), len(errors))
+
+	// Return 200 if any files were processed (uploaded or skipped), 400 only if nothing was processed
+	if len(uploadedFiles) > 0 || len(skippedFiles) > 0 {
 		c.JSON(http.StatusOK, response)
 	} else {
+		fmt.Printf("ERROR: No files were processed - returning 400\n")
 		c.JSON(http.StatusBadRequest, response)
 	}
 }
