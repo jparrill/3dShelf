@@ -4,6 +4,7 @@ import (
 	"3dshelf/internal/config"
 	"3dshelf/internal/handlers"
 	"3dshelf/pkg/database"
+	"fmt"
 	"log"
 
 	"github.com/gin-contrib/cors"
@@ -47,6 +48,22 @@ func main() {
 	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	corsConfig.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
 	router.Use(cors.New(corsConfig))
+
+	// Add debugging middleware for file uploads
+	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		if param.StatusCode >= 400 {
+			return fmt.Sprintf("[DEBUG] %v | %3d | %13v | %15s | %-7s %#v (ERROR: %s)\n",
+				param.TimeStamp.Format("2006/01/02 - 15:04:05"),
+				param.StatusCode,
+				param.Latency,
+				param.ClientIP,
+				param.Method,
+				param.Path,
+				param.ErrorMessage,
+			)
+		}
+		return ""
+	}))
 
 	// Health check endpoint
 	router.GET("/api/health", projectsHandler.HealthCheck)
