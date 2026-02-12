@@ -102,16 +102,16 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
 
       console.log('Checking conflicts for files:', filenames)
       const response = await projectsApi.checkUploadConflicts(projectId, filenames)
+      console.log('Conflict check response:', response)
 
       if (response.conflicts.length > 0) {
+        console.log('Conflicts detected, showing conflict UI')
         setConflicts(response.conflicts)
         setShowConflicts(true)
 
-        // Initialize resolutions to skip by default
+        // Initialize resolutions - no default value to force user choice
         const defaultResolutions: Record<string, ConflictResolution> = {}
-        response.conflicts.forEach(conflict => {
-          defaultResolutions[conflict.filename] = 'skip'
-        })
+        // Don't set default values - user must choose explicitly
         setResolutions(defaultResolutions)
 
         // Update upload tasks with conflicts
@@ -139,8 +139,11 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
   const handleUpload = async () => {
     if (selectedFiles.length === 0) return
 
+    console.log('handleUpload called - showConflicts:', showConflicts, 'resolutions:', resolutions)
+
     // Check for conflicts first if we haven't already
     if (!showConflicts) {
+      console.log('No conflicts shown yet, checking for conflicts...')
       const canProceed = await checkConflicts()
       if (!canProceed) {
         // Conflicts were found and are now being shown, don't proceed with upload
@@ -160,13 +163,19 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
 
       // Add conflict resolutions if provided
       if (resolutions && Object.keys(resolutions).length > 0) {
+        console.log('Adding conflict resolutions to FormData:', resolutions)
         for (const [filename, resolution] of Object.entries(resolutions)) {
+          console.log(`Adding resolution_${filename} = ${resolution}`)
           formData.append(`resolution_${filename}`, resolution)
         }
+      } else {
+        console.log('No conflict resolutions to add')
       }
 
       // Upload with resolutions using direct API call
+      console.log('Uploading FormData to backend...')
       const response = await projectsApi.uploadFormData(projectId, formData)
+      console.log('Upload response received:', response)
 
       // Update task statuses
       setUploadTasks(prev => prev.map(task => {
@@ -301,6 +310,12 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
                             {conflict.reason}
                           </Text>
 
+                          {!resolutions[conflict.filename] && (
+                            <Text fontSize="sm" color="red.500" fontWeight="medium">
+                              Please choose how to handle this conflict
+                            </Text>
+                          )}
+
                           <RadioGroup
                             value={resolutions[conflict.filename]}
                             onChange={(value: ConflictResolution) =>
@@ -404,7 +419,10 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
               leftIcon={<Icon as={FiUpload} />}
               onClick={handleUpload}
               isLoading={isUploading}
-              isDisabled={selectedFiles.length === 0}
+              isDisabled={
+                selectedFiles.length === 0 ||
+                (showConflicts && conflicts.some(conflict => !resolutions[conflict.filename]))
+              }
             >
               {showConflicts ? 'Upload with Resolutions' : 'Upload Files'}
             </Button>
