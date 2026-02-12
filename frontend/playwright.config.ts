@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test'
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-export default defineConfig({
+const config = defineConfig({
   testDir: './src/__tests__/e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -79,4 +79,6 @@ export default defineConfig({
 
   /* Output directories */
   outputDir: 'test-results/',
-}
+})
+
+export default config

@@ -18,7 +18,8 @@
     "test:unit": "jest --testPathPattern=unit",
     "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
     "test:coverage:report": "node scripts/test-coverage.js",
-    "test:ci": "npm run type-check && npm run lint && npm run test:coverage"
+    "test:ci": "npm run lint && npm run test:coverage",
+    "test:ci:full": "npm run type-check && npm run lint && npm run test:coverage"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.10.1",
