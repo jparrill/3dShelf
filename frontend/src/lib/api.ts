@@ -26,6 +26,15 @@ export const projectsApi = {
     return response.data
   },
 
+  // Create a new project
+  createProject: async (name: string, description?: string): Promise<Project> => {
+    const response = await api.post('/api/projects', {
+      name,
+      description: description || ''
+    })
+    return response.data
+  },
+
   // Get a specific project
   getProject: async (id: number): Promise<Project> => {
     const response = await api.get(`/api/projects/${id}`)
@@ -55,6 +64,21 @@ export const projectsApi = {
   // Get project files
   getProjectFiles: async (id: number): Promise<{ files: ProjectFile[]; count: number }> => {
     const response = await api.get(`/api/projects/${id}/files`)
+    return response.data
+  },
+
+  // Upload files to a project
+  uploadProjectFiles: async (id: number, files: FileList): Promise<{ message: string; uploaded_files: ProjectFile[]; uploaded_count: number; errors?: string[] }> => {
+    const formData = new FormData()
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i])
+    }
+
+    const response = await api.post(`/api/projects/${id}/files`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     return response.data
   },
 

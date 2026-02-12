@@ -48,11 +48,13 @@ func main() {
 		projects := api.Group("/projects")
 		{
 			projects.GET("", projectsHandler.GetProjects)
+			projects.POST("", projectsHandler.CreateProject)
 			projects.POST("/scan", projectsHandler.ScanProjects)
 			projects.GET("/search", projectsHandler.SearchProjects)
 			projects.GET("/:id", projectsHandler.GetProject)
 			projects.PUT("/:id/sync", projectsHandler.SyncProject)
 			projects.GET("/:id/files", projectsHandler.GetProjectFiles)
+			projects.POST("/:id/files", projectsHandler.UploadProjectFiles)
 			projects.GET("/:id/readme", projectsHandler.GetProjectREADME)
 			projects.GET("/:id/stats", projectsHandler.GetProjectStats)
 		}

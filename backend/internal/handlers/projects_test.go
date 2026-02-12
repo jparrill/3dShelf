@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"bytes"
 	"encoding/json"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -110,11 +112,13 @@ func setupRouter(tmpDir string) *gin.Engine {
 	{
 		api.GET("/health", handler.HealthCheck)
 		api.GET("/projects", handler.GetProjects)
+		api.POST("/projects", handler.CreateProject)
 		api.POST("/projects/scan", handler.ScanProjects)
 		api.GET("/projects/search", handler.SearchProjects)
 		api.GET("/projects/:id", handler.GetProject)
 		api.PUT("/projects/:id/sync", handler.SyncProject)
 		api.GET("/projects/:id/files", handler.GetProjectFiles)
+		api.POST("/projects/:id/files", handler.UploadProjectFiles)
 		api.GET("/projects/:id/readme", handler.GetProjectREADME)
 		api.GET("/projects/:id/stats", handler.GetProjectStats)
 	}
@@ -737,4 +741,263 @@ func TestConcurrentRequests(t *testing.T) {
 	if successCount != numRequests {
 		t.Errorf("Expected all %d requests to succeed, got %d successes", numRequests, successCount)
 	}
+}
+
+// TestCreateProject tests creating a new project
+func TestCreateProject(t *testing.T) {
+	db := setupTestDB(t)
+	tmpDir := t.TempDir()
+	router := setupRouter(tmpDir)
+
+	tests := []struct {
+		name           string
+		requestBody    string
+		expectedStatus int
+		expectedName   string
+		shouldError    bool
+	}{
+		{
+			name:           "Valid project creation",
+			requestBody:    `{"name": "New Test Project", "description": "A new test project"}`,
+			expectedStatus: http.StatusCreated,
+			expectedName:   "New Test Project",
+			shouldError:    false,
+		},
+		{
+			name:           "Project with no description",
+			requestBody:    `{"name": "No Description Project"}`,
+			expectedStatus: http.StatusCreated,
+			expectedName:   "No Description Project",
+			shouldError:    false,
+		},
+		{
+			name:           "Empty name",
+			requestBody:    `{"name": "", "description": "No name"}`,
+			expectedStatus: http.StatusBadRequest,
+			shouldError:    true,
+		},
+		{
+			name:           "Whitespace name",
+			requestBody:    `{"name": "   ", "description": "Whitespace name"}`,
+			expectedStatus: http.StatusBadRequest,
+			shouldError:    true,
+		},
+		{
+			name:           "Invalid JSON",
+			requestBody:    `{"name": "Invalid JSON"`,
+			expectedStatus: http.StatusBadRequest,
+			shouldError:    true,
+		},
+		{
+			name:           "Missing name field",
+			requestBody:    `{"description": "Missing name"}`,
+			expectedStatus: http.StatusBadRequest,
+			shouldError:    true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest("POST", "/api/projects", strings.NewReader(tt.requestBody))
+			req.Header.Set("Content-Type", "application/json")
+			router.ServeHTTP(w, req)
+
+			if w.Code != tt.expectedStatus {
+				t.Errorf("Expected status %d, got %d", tt.expectedStatus, w.Code)
+			}
+
+			if !tt.shouldError && w.Code == http.StatusCreated {
+				var project models.Project
+				if err := json.Unmarshal(w.Body.Bytes(), &project); err != nil {
+					t.Errorf("Failed to unmarshal response: %v", err)
+				}
+
+				if project.Name != tt.expectedName {
+					t.Errorf("Expected name %s, got %s", tt.expectedName, project.Name)
+				}
+
+				if project.ID == 0 {
+					t.Error("Expected project to have an ID")
+				}
+
+				// Check that project was actually created in database
+				var dbProject models.Project
+				if err := db.Where("name = ?", tt.expectedName).First(&dbProject).Error; err != nil {
+					t.Errorf("Project not found in database: %v", err)
+				}
+
+				// Check that project directory was created
+				expectedPath := filepath.Join(tmpDir, strings.ReplaceAll(tt.expectedName, " ", "_"))
+				if _, err := os.Stat(expectedPath); os.IsNotExist(err) {
+					t.Errorf("Project directory not created: %s", expectedPath)
+				}
+			}
+		})
+	}
+}
+
+// TestCreateProjectDuplicate tests creating a project with duplicate name/path
+func TestCreateProjectDuplicate(t *testing.T) {
+	db := setupTestDB(t)
+	tmpDir := t.TempDir()
+	router := setupRouter(tmpDir)
+
+	// Create a project first
+	firstProject := models.Project{
+		Name:        "Duplicate Test",
+		Path:        filepath.Join(tmpDir, "Duplicate_Test"),
+		Description: "First project",
+		Status:      models.StatusHealthy,
+		LastScanned: time.Now(),
+	}
+	if err := db.Create(&firstProject).Error; err != nil {
+		t.Fatalf("Failed to create first project: %v", err)
+	}
+
+	// Create the directory
+	if err := os.MkdirAll(firstProject.Path, 0755); err != nil {
+		t.Fatalf("Failed to create project directory: %v", err)
+	}
+
+	// Try to create a project with the same name
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/api/projects", strings.NewReader(`{"name": "Duplicate Test", "description": "Second project"}`))
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	if w.Code != http.StatusConflict {
+		t.Errorf("Expected status %d, got %d", http.StatusConflict, w.Code)
+	}
+
+	var response map[string]interface{}
+	if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+		t.Errorf("Failed to unmarshal response: %v", err)
+	}
+
+	errorMsg, ok := response["error"].(string)
+	if !ok || !strings.Contains(errorMsg, "already exists") {
+		t.Errorf("Expected error about duplicate project, got: %v", response)
+	}
+}
+
+// TestUploadProjectFiles tests file upload functionality
+func TestUploadProjectFiles(t *testing.T) {
+	db := setupTestDB(t)
+	tmpDir := t.TempDir()
+	router := setupRouter(tmpDir)
+
+	// Create a test project first
+	project := models.Project{
+		Name:        "Upload Test Project",
+		Path:        filepath.Join(tmpDir, "upload_test"),
+		Description: "Project for testing file uploads",
+		Status:      models.StatusHealthy,
+		LastScanned: time.Now(),
+	}
+	if err := db.Create(&project).Error; err != nil {
+		t.Fatalf("Failed to create test project: %v", err)
+	}
+
+	// Create the project directory
+	if err := os.MkdirAll(project.Path, 0755); err != nil {
+		t.Fatalf("Failed to create project directory: %v", err)
+	}
+
+	t.Run("Upload valid files", func(t *testing.T) {
+		// Create a multipart form with test files
+		body := &bytes.Buffer{}
+		writer := multipart.NewWriter(body)
+
+		// Add STL file
+		stlFile, err := writer.CreateFormFile("files", "test.stl")
+		if err != nil {
+			t.Fatalf("Failed to create STL form file: %v", err)
+		}
+		stlFile.Write([]byte("STL test content"))
+
+		// Add README file
+		readmeFile, err := writer.CreateFormFile("files", "README.md")
+		if err != nil {
+			t.Fatalf("Failed to create README form file: %v", err)
+		}
+		readmeFile.Write([]byte("# Test Project\nThis is a test README."))
+
+		writer.Close()
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("POST", "/api/projects/"+strconv.Itoa(int(project.ID))+"/files", body)
+		req.Header.Set("Content-Type", writer.FormDataContentType())
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusOK {
+			t.Errorf("Expected status %d, got %d", http.StatusOK, w.Code)
+		}
+
+		var response map[string]interface{}
+		if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+			t.Errorf("Failed to unmarshal response: %v", err)
+		}
+
+		if uploadedCount, ok := response["uploaded_count"].(float64); !ok || uploadedCount != 2 {
+			t.Errorf("Expected 2 uploaded files, got: %v", response["uploaded_count"])
+		}
+
+		// Check files were created in database
+		var files []models.ProjectFile
+		if err := db.Where("project_id = ?", project.ID).Find(&files).Error; err != nil {
+			t.Errorf("Failed to query uploaded files: %v", err)
+		}
+
+		if len(files) != 2 {
+			t.Errorf("Expected 2 files in database, got %d", len(files))
+		}
+
+		// Check files exist on filesystem
+		stlPath := filepath.Join(project.Path, "test.stl")
+		readmePath := filepath.Join(project.Path, "README.md")
+
+		if _, err := os.Stat(stlPath); os.IsNotExist(err) {
+			t.Errorf("STL file not created: %s", stlPath)
+		}
+
+		if _, err := os.Stat(readmePath); os.IsNotExist(err) {
+			t.Errorf("README file not created: %s", readmePath)
+		}
+	})
+
+	t.Run("Upload to non-existent project", func(t *testing.T) {
+		body := &bytes.Buffer{}
+		writer := multipart.NewWriter(body)
+		file, err := writer.CreateFormFile("files", "test.stl")
+		if err != nil {
+			t.Fatalf("Failed to create form file: %v", err)
+		}
+		file.Write([]byte("Test content"))
+		writer.Close()
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("POST", "/api/projects/999/files", body)
+		req.Header.Set("Content-Type", writer.FormDataContentType())
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusNotFound {
+			t.Errorf("Expected status %d, got %d", http.StatusNotFound, w.Code)
+		}
+	})
+
+	t.Run("Upload with no files", func(t *testing.T) {
+		body := &bytes.Buffer{}
+		writer := multipart.NewWriter(body)
+		writer.Close()
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("POST", "/api/projects/"+strconv.Itoa(int(project.ID))+"/files", body)
+		req.Header.Set("Content-Type", writer.FormDataContentType())
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusBadRequest {
+			t.Errorf("Expected status %d, got %d", http.StatusBadRequest, w.Code)
+		}
+	})
 }

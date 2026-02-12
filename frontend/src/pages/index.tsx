@@ -8,6 +8,7 @@ import {
 import { useRouter } from 'next/router'
 import { Header } from '@/components/layout/Header'
 import { ProjectGrid } from '@/components/projects/ProjectGrid'
+import { CreateProjectModal } from '@/components/projects/CreateProjectModal'
 import { Project } from '@/types/project'
 import { projectsApi } from '@/lib/api'
 
@@ -16,6 +17,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [currentQuery, setCurrentQuery] = useState('')
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const router = useRouter()
   const toast = useToast()
@@ -60,9 +62,29 @@ export default function HomePage() {
     router.push(`/projects/${project.id}`)
   }
 
+  const handleCreateProject = () => {
+    setIsCreateModalOpen(true)
+  }
+
+  const handleProjectCreated = (project: Project) => {
+    // Add the new project to the list
+    setProjects(prev => [project, ...prev])
+    toast({
+      title: 'Project created successfully',
+      description: `Project "${project.name}" has been created`,
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
+  }
+
   return (
     <Box minH="100vh" bg="gray.50">
-      <Header onSearch={handleSearch} onScanComplete={handleScanComplete} />
+      <Header
+        onSearch={handleSearch}
+        onScanComplete={handleScanComplete}
+        onCreateProject={handleCreateProject}
+      />
 
       <Container maxW="container.xl" py={8}>
         <ProjectGrid
@@ -72,6 +94,12 @@ export default function HomePage() {
           onProjectClick={handleProjectClick}
         />
       </Container>
+
+      <CreateProjectModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onProjectCreated={handleProjectCreated}
+      />
     </Box>
   )
 }
