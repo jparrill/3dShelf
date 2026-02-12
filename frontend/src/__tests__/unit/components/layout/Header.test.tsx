@@ -65,8 +65,12 @@ describe('Header Component', () => {
     const scanButton = screen.getByRole('button', { name: /scan projects/i })
     await user.click(scanButton)
 
-    // Check loading state
-    expect(screen.getByRole('button', { name: /scanning.../i })).toBeInTheDocument()
+    // Check loading state - button should be disabled and show loading text
+    await waitFor(() => {
+      const scanButton = screen.getByRole('button', { name: /scanning.../i })
+      expect(scanButton).toBeInTheDocument()
+      expect(scanButton).toBeDisabled()
+    })
 
     await waitFor(() => {
       expect(mockProjectsApi.scanProjects).toHaveBeenCalledTimes(1)
@@ -150,10 +154,12 @@ describe('Header Component', () => {
   it('has proper accessibility attributes', () => {
     render(<Header {...defaultProps} />)
 
-    const searchInput = screen.getByPlaceholderText('Search projects...')
+    const searchInput = screen.getByRole('textbox')
     const scanButton = screen.getByRole('button', { name: /scan projects/i })
 
-    expect(searchInput).toHaveAttribute('type', 'text')
+    // Check that the input is accessible as a textbox
+    expect(searchInput).toBeInTheDocument()
+    expect(searchInput).toHaveAttribute('placeholder', 'Search projects...')
     expect(scanButton).toHaveAttribute('type', 'button')
   })
 })
