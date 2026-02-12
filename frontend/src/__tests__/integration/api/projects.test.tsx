@@ -175,6 +175,82 @@ describe('API Integration Tests', () => {
         timestamp: expect.any(String)
       })
     })
+
+    it('successfully creates a new project', async () => {
+      // Mock successful project creation
+      server.use(
+        http.post('/api/projects', async ({ request }) => {
+          const body = await request.json() as { name: string, description?: string }
+
+          return HttpResponse.json({
+            id: 123,
+            name: body.name,
+            description: body.description || '',
+            path: `/projects/${body.name.replace(/\s+/g, '_')}`,
+            status: 'healthy',
+            last_scanned: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+        })
+      )
+
+      const project = await projectsApi.createProject('New Test Project', 'A test project')
+
+      expect(project).toEqual({
+        id: 123,
+        name: 'New Test Project',
+        description: 'A test project',
+        path: '/projects/New_Test_Project',
+        status: 'healthy',
+        last_scanned: expect.any(String),
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+      })
+    })
+
+    it('creates project without description', async () => {
+      server.use(
+        http.post('/api/projects', async ({ request }) => {
+          const body = await request.json() as { name: string, description?: string }
+
+          return HttpResponse.json({
+            id: 124,
+            name: body.name,
+            description: '',
+            path: `/projects/${body.name.replace(/\s+/g, '_')}`,
+            status: 'healthy',
+            last_scanned: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+        })
+      )
+
+      const project = await projectsApi.createProject('Project Without Description')
+
+      expect(project.name).toBe('Project Without Description')
+      expect(project.description).toBe('')
+    })
+
+    it('handles project creation errors', async () => {
+      server.use(
+        http.post('/api/projects', () => {
+          return HttpResponse.json(
+            { error: 'Project with this name already exists' },
+            { status: 409 }
+          )
+        })
+      )
+
+      await expect(projectsApi.createProject('Duplicate Project')).rejects.toEqual(
+        expect.objectContaining({
+          response: expect.objectContaining({
+            status: 409
+          })
+        })
+      )
+    })
   })
 
   describe('ProjectCard + API Integration', () => {

@@ -15,6 +15,7 @@ const mockProjectsApi = projectsApi as jest.Mocked<typeof projectsApi>
 describe('Header Component', () => {
   const mockOnSearch = jest.fn()
   const mockOnScanComplete = jest.fn()
+  const mockOnCreateProject = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -22,7 +23,8 @@ describe('Header Component', () => {
 
   const defaultProps = {
     onSearch: mockOnSearch,
-    onScanComplete: mockOnScanComplete
+    onScanComplete: mockOnScanComplete,
+    onCreateProject: mockOnCreateProject
   }
 
   it('renders header with title and controls', () => {
@@ -30,6 +32,7 @@ describe('Header Component', () => {
 
     expect(screen.getByText('3DShelf')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Search projects...')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /create project/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /scan projects/i })).toBeInTheDocument()
   })
 
@@ -151,15 +154,39 @@ describe('Header Component', () => {
     })
   })
 
+  it('calls onCreateProject when create project button is clicked', async () => {
+    const user = userEvent.setup()
+    render(<Header {...defaultProps} />)
+
+    const createButton = screen.getByRole('button', { name: /create project/i })
+    await user.click(createButton)
+
+    expect(mockOnCreateProject).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders without create project button when onCreateProject is not provided', () => {
+    const propsWithoutCreate = {
+      onSearch: mockOnSearch,
+      onScanComplete: mockOnScanComplete
+    }
+
+    render(<Header {...propsWithoutCreate} />)
+
+    expect(screen.queryByRole('button', { name: /create project/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /scan projects/i })).toBeInTheDocument()
+  })
+
   it('has proper accessibility attributes', () => {
     render(<Header {...defaultProps} />)
 
     const searchInput = screen.getByRole('textbox')
+    const createButton = screen.getByRole('button', { name: /create project/i })
     const scanButton = screen.getByRole('button', { name: /scan projects/i })
 
     // Check that the input is accessible as a textbox
     expect(searchInput).toBeInTheDocument()
     expect(searchInput).toHaveAttribute('placeholder', 'Search projects...')
+    expect(createButton).toHaveAttribute('type', 'button')
     expect(scanButton).toHaveAttribute('type', 'button')
   })
 })

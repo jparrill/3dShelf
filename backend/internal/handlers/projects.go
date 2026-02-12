@@ -4,7 +4,14 @@ import (
 	"3dshelf/internal/models"
 	"3dshelf/pkg/database"
 	"3dshelf/pkg/scanner"
+	"crypto/sha256"
+	"fmt"
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
@@ -14,13 +21,21 @@ import (
 
 // ProjectsHandler handles project-related HTTP requests
 type ProjectsHandler struct {
-	scanner *scanner.Scanner
+	scanner  *scanner.Scanner
+	scanPath string
+}
+
+// CreateProjectRequest represents the request body for creating a new project
+type CreateProjectRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
 }
 
 // NewProjectsHandler creates a new ProjectsHandler
 func NewProjectsHandler(scanPath string) *ProjectsHandler {
 	return &ProjectsHandler{
-		scanner: scanner.New(database.GetDB(), scanPath),
+		scanner:  scanner.New(database.GetDB(), scanPath),
+		scanPath: scanPath,
 	}
 }
 
@@ -50,6 +65,172 @@ func (h *ProjectsHandler) GetProject(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, project)
+}
+
+// CreateProject creates a new project
+func (h *ProjectsHandler) CreateProject(c *gin.Context) {
+	var req CreateProjectRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request format"})
+		return
+	}
+
+	// Validate the project name
+	if strings.TrimSpace(req.Name) == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project name is required"})
+		return
+	}
+
+	// Create a safe project path by sanitizing the name
+	projectName := strings.TrimSpace(req.Name)
+	safeName := strings.ReplaceAll(projectName, " ", "_")
+	safeName = strings.ReplaceAll(safeName, "/", "_")
+	projectPath := filepath.Join(h.scanPath, safeName)
+
+	// Check if a project with this name or path already exists
+	var existingProject models.Project
+	if err := database.GetDB().Where("name = ? OR path = ?", projectName, projectPath).First(&existingProject).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "Project with this name or path already exists"})
+		return
+	}
+
+	// Create the project directory
+	if err := os.MkdirAll(projectPath, 0755); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create project directory"})
+		return
+	}
+
+	// Create the project in the database
+	project := models.Project{
+		Name:        projectName,
+		Path:        projectPath,
+		Description: req.Description,
+		Status:      models.StatusHealthy,
+		LastScanned: time.Now(),
+	}
+
+	if err := database.GetDB().Create(&project).Error; err != nil {
+		// Clean up the directory if database creation fails
+		os.RemoveAll(projectPath)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create project"})
+		return
+	}
+
+	// Return the created project
+	c.JSON(http.StatusCreated, project)
+}
+
+// UploadProjectFiles uploads files to an existing project
+func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
+	projectID := c.Param("id")
+
+	// Verify project exists
+	var project models.Project
+	if err := database.GetDB().First(&project, projectID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Parse multipart form
+	form, err := c.MultipartForm()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form"})
+		return
+	}
+
+	files := form.File["files"]
+	if len(files) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No files provided"})
+		return
+	}
+
+	var uploadedFiles []models.ProjectFile
+	var errors []string
+
+	// Process each file
+	for _, fileHeader := range files {
+		// Validate file type
+		fileType := models.GetFileTypeFromExtension(fileHeader.Filename)
+		if fileType == models.FileTypeOther && !strings.Contains(fileHeader.Filename, "README") {
+			errors = append(errors, fmt.Sprintf("File type not supported: %s", fileHeader.Filename))
+			continue
+		}
+
+		// Open uploaded file
+		file, err := fileHeader.Open()
+		if err != nil {
+			errors = append(errors, fmt.Sprintf("Failed to open file %s: %v", fileHeader.Filename, err))
+			continue
+		}
+
+		// Create destination path
+		destPath := filepath.Join(project.Path, fileHeader.Filename)
+
+		// Create destination file
+		dest, err := os.Create(destPath)
+		if err != nil {
+			file.Close()
+			errors = append(errors, fmt.Sprintf("Failed to create file %s: %v", fileHeader.Filename, err))
+			continue
+		}
+
+		// Copy file content and calculate hash
+		hasher := sha256.New()
+		size, err := io.Copy(io.MultiWriter(dest, hasher), file)
+		dest.Close()
+		file.Close()
+
+		if err != nil {
+			os.Remove(destPath)
+			errors = append(errors, fmt.Sprintf("Failed to copy file %s: %v", fileHeader.Filename, err))
+			continue
+		}
+
+		// Calculate hash
+		hash := fmt.Sprintf("%x", hasher.Sum(nil))
+
+		// Create file record in database
+		projectFile := models.ProjectFile{
+			ProjectID: project.ID,
+			Filename:  fileHeader.Filename,
+			Filepath:  destPath,
+			FileType:  fileType,
+			Size:      size,
+			Hash:      hash,
+		}
+
+		if err := database.GetDB().Create(&projectFile).Error; err != nil {
+			os.Remove(destPath)
+			errors = append(errors, fmt.Sprintf("Failed to save file record for %s: %v", fileHeader.Filename, err))
+			continue
+		}
+
+		uploadedFiles = append(uploadedFiles, projectFile)
+	}
+
+	// Update project last_scanned time
+	if err := database.GetDB().Model(&project).Update("last_scanned", time.Now()).Error; err != nil {
+		// Non-critical error, just log it
+		errors = append(errors, "Failed to update project scan time")
+	}
+
+	// Prepare response
+	response := gin.H{
+		"message":        fmt.Sprintf("Uploaded %d file(s)", len(uploadedFiles)),
+		"uploaded_files": uploadedFiles,
+		"uploaded_count": len(uploadedFiles),
+	}
+
+	if len(errors) > 0 {
+		response["errors"] = errors
+		response["error_count"] = len(errors)
+	}
+
+	if len(uploadedFiles) > 0 {
+		c.JSON(http.StatusOK, response)
+	} else {
+		c.JSON(http.StatusBadRequest, response)
+	}
 }
 
 // ScanProjects triggers a filesystem scan for projects

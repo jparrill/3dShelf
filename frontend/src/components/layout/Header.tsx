@@ -10,15 +10,16 @@ import {
   Icon
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { FiSearch, FiRefreshCw, FiFolder } from 'react-icons/fi'
+import { FiSearch, FiRefreshCw, FiFolder, FiPlus } from 'react-icons/fi'
 import { projectsApi } from '@/lib/api'
 
 interface HeaderProps {
   onSearch: (query: string) => void
   onScanComplete: () => void
+  onCreateProject?: () => void
 }
 
-export function Header({ onSearch, onScanComplete }: HeaderProps) {
+export function Header({ onSearch, onScanComplete, onCreateProject }: HeaderProps) {
   const [isScanning, setIsScanning] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const toast = useToast()
@@ -84,6 +85,15 @@ export function Header({ onSearch, onScanComplete }: HeaderProps) {
               />
             </InputGroup>
           </Box>
+
+          <Button
+            leftIcon={<Icon as={FiPlus} />}
+            onClick={onCreateProject}
+            colorScheme="brand"
+            mr={2}
+          >
+            Create Project
+          </Button>
 
           <Button
             leftIcon={<Icon as={FiRefreshCw} />}
