@@ -1,4 +1,4 @@
-.PHONY: help build run test clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
+.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
 
 # Default target
 help:
@@ -7,7 +7,6 @@ help:
 	@echo "Available commands:"
 	@echo "  build        - Build backend and frontend"
 	@echo "  run          - Run backend and frontend locally"
-	@echo "  test         - Run all tests"
 	@echo "  clean        - Clean build artifacts"
 	@echo "  update       - Update all dependencies to latest versions"
 	@echo "  docker-build - Build Docker images"
@@ -15,6 +14,17 @@ help:
 	@echo "  docker-down  - Stop Docker containers"
 	@echo "  dev          - Start local development servers (backend + frontend)"
 	@echo "  dev-setup    - Install dependencies for local development"
+	@echo ""
+	@echo "Testing commands:"
+	@echo "  test         - Run all tests (backend + frontend)"
+	@echo "  test-unit    - Run unit tests only"
+	@echo "  test-integration - Run integration tests only"
+	@echo "  test-e2e     - Run end-to-end tests only"
+	@echo "  test-coverage - Run tests with coverage report"
+	@echo "  test-frontend - Run all frontend tests"
+	@echo "  test-backend - Run backend tests only"
+	@echo "  test-watch   - Run frontend tests in watch mode"
+	@echo "  test-setup   - Install test dependencies (Playwright browsers)"
 
 # Build both backend and frontend
 build:
@@ -30,12 +40,66 @@ run:
 	@echo "Starting frontend..."
 	ZDOTDIR= cd frontend && npm run dev
 
-# Run tests
-test:
-	@echo "Running backend tests..."
+# Run all tests (backend + frontend)
+test: test-backend test-frontend
+	@echo "✅ All tests completed successfully!"
+
+# Run backend tests only
+test-backend:
+	@echo "🧪 Running backend tests..."
 	ZDOTDIR= go test -C backend ./...
-	@echo "Running frontend tests..."
-	ZDOTDIR= cd frontend && npm test
+
+# Run frontend tests only
+test-frontend:
+	@echo "🧪 Running frontend tests..."
+	ZDOTDIR= cd frontend && npm run test:ci
+
+# Run unit tests only
+test-unit:
+	@echo "🧪 Running unit tests..."
+	@echo "Backend unit tests:"
+	ZDOTDIR= go test -C backend ./...
+	@echo "Frontend unit tests:"
+	ZDOTDIR= cd frontend && npm run test:unit
+
+# Run integration tests only
+test-integration:
+	@echo "🧪 Running integration tests..."
+	ZDOTDIR= cd frontend && npm run test:integration
+
+# Run end-to-end tests only
+test-e2e:
+	@echo "🧪 Running end-to-end tests..."
+	@echo "Installing Playwright browsers..."
+	ZDOTDIR= cd frontend && npx playwright install --with-deps
+	@echo "Starting development server for E2E tests..."
+	ZDOTDIR= cd frontend && npm run test:e2e
+
+# Run tests with coverage report
+test-coverage:
+	@echo "🧪 Running tests with coverage..."
+	@echo "Backend coverage:"
+	ZDOTDIR= go test -C backend -coverprofile=coverage.out ./...
+	ZDOTDIR= go tool cover -html=backend/coverage.out -o backend/coverage.html
+	@echo "Frontend coverage:"
+	ZDOTDIR= cd frontend && npm run test:coverage
+	@echo ""
+	@echo "📊 Coverage reports generated:"
+	@echo "   Backend: backend/coverage.html"
+	@echo "   Frontend: frontend/coverage/lcov-report/index.html"
+
+# Run frontend tests in watch mode (for development)
+test-watch:
+	@echo "🧪 Running frontend tests in watch mode..."
+	@echo "Press 'q' to quit, 'a' to run all tests"
+	ZDOTDIR= cd frontend && npm run test:watch
+
+# Setup test dependencies
+test-setup:
+	@echo "🛠️  Setting up test dependencies..."
+	@echo "Installing Playwright browsers..."
+	ZDOTDIR= cd frontend && npx playwright install --with-deps
+	@echo "✅ Test setup completed!"
 
 # Clean build artifacts
 clean:
