@@ -13,6 +13,8 @@ frontend/out/
 frontend/node_modules/
 frontend/.env*
 frontend/*.log
+frontend/tsconfig.tsbuildinfo
+frontend/.tsbuildinfo
 
 # Test coverage and reports
 frontend/coverage/
@@ -73,6 +75,10 @@ docker-compose.override.yml
 *.temp
 .cache/
 .parcel-cache/
+
+# TypeScript build info
+*.tsbuildinfo
+.tsbuildinfo
 
 # Runtime data
 pids
