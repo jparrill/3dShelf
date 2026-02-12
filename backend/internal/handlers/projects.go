@@ -221,13 +221,23 @@ func (h *ProjectsHandler) UploadProjectFiles(c *gin.Context) {
 	fmt.Printf("Content-Type: %s\n", c.GetHeader("Content-Type"))
 	fmt.Printf("Content-Length: %s\n", c.GetHeader("Content-Length"))
 
+	// Check content length
+	if c.Request.ContentLength > 64<<20 { // 64MB limit
+		fmt.Printf("File too large: %d bytes (max 64MB)\n", c.Request.ContentLength)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "File too large", "max_size": "64MB", "received": c.Request.ContentLength})
+		return
+	}
+
 	// Parse multipart form
+	fmt.Printf("Attempting to parse multipart form...\n")
 	form, err := c.MultipartForm()
 	if err != nil {
 		fmt.Printf("Multipart form parse error: %v\n", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form", "details": err.Error()})
+		fmt.Printf("Error type: %T\n", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form", "details": err.Error(), "content_length": c.Request.ContentLength})
 		return
 	}
+	fmt.Printf("Successfully parsed multipart form with %d file fields\n", len(form.File))
 
 	files := form.File["files"]
 	if len(files) == 0 {
