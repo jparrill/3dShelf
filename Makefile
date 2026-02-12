@@ -1,4 +1,4 @@
-.PHONY: help build run test clean docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
+.PHONY: help build run test clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
 
 # Default target
 help:
@@ -9,6 +9,7 @@ help:
 	@echo "  run          - Run backend and frontend locally"
 	@echo "  test         - Run all tests"
 	@echo "  clean        - Clean build artifacts"
+	@echo "  update       - Update all dependencies to latest versions"
 	@echo "  docker-build - Build Docker images"
 	@echo "  docker-up    - Start application with Docker Compose"
 	@echo "  docker-down  - Stop Docker containers"
@@ -44,6 +45,17 @@ clean:
 	cd frontend && rm -rf .next out
 	@echo "Cleaning Docker images..."
 	docker image prune -f
+
+# Update dependencies
+update:
+	@echo "Updating backend dependencies..."
+	cd backend && go get -u ./...
+	cd backend && go mod tidy
+	@echo "Updating frontend dependencies..."
+	cd frontend && npm update
+	cd frontend && npm audit fix --force || true
+	@echo "✅ All dependencies updated!"
+	@echo "💡 Run 'make build' to test the updated dependencies"
 
 # Docker commands
 docker-build:
