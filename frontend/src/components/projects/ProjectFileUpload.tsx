@@ -139,14 +139,14 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
   const handleUpload = async () => {
     if (selectedFiles.length === 0) return
 
-    // TEMPORARY: Skip conflict checking for debugging
-    // if (!showConflicts) {
-    //   const canProceed = await checkConflicts()
-    //   if (!canProceed) {
-    //     // Conflicts were found and are now being shown, don't proceed with upload
-    //     return
-    //   }
-    // }
+    // Check for conflicts first if we haven't already
+    if (!showConflicts) {
+      const canProceed = await checkConflicts()
+      if (!canProceed) {
+        // Conflicts were found and are now being shown, don't proceed with upload
+        return
+      }
+    }
 
     setIsUploading(true)
 
