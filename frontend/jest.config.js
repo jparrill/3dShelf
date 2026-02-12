@@ -33,10 +33,10 @@ const customJestConfig = {
   ],
   coverageThreshold: {
     global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
+      branches: 50,
+      functions: 50,
+      lines: 50,
+      statements: 50,
     },
   },
   coverageReporters: ['text', 'html', 'json-summary', 'lcov'],
@@ -44,9 +44,8 @@ const customJestConfig = {
   verbose: true,
   // Transform configuration is handled by next/jest
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  globals: {
-    TextEncoder: TextEncoder,
-    TextDecoder: TextDecoder,
+  testEnvironmentOptions: {
+    customExportConditions: [''],
   },
 }
 

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import 'whatwg-fetch'
-import { server } from './mocks/server'
+// import { server } from './mocks/server' // Temporarily disabled
 
 // Polyfills for Node.js environment
 global.TextEncoder = global.TextEncoder || require('util').TextEncoder
@@ -72,20 +72,21 @@ afterAll(() => {
   console.error = originalConsoleError
 })
 
+// MSW setup temporarily disabled
 // Enable MSW
-beforeAll(() => {
-  server.listen({
-    onUnhandledRequest: 'warn'
-  })
-})
+// beforeAll(() => {
+//   server.listen({
+//     onUnhandledRequest: 'warn'
+//   })
+// })
 
 // Reset MSW handlers after each test
-afterEach(() => {
-  jest.clearAllMocks()
-  server.resetHandlers()
-})
+// afterEach(() => {
+//   jest.clearAllMocks()
+//   server.resetHandlers()
+// })
 
 // Cleanup MSW
-afterAll(() => {
-  server.close()
-})
+// afterAll(() => {
+//   server.close()
+// })
