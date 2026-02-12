@@ -1,4 +1,4 @@
-.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend
+.PHONY: help build run test test-unit test-integration test-e2e test-coverage test-frontend test-backend test-watch test-setup verify verify-backend verify-frontend clean update docker-build docker-up docker-down dev dev-setup dev-backend dev-frontend dev-all
 
 # Default target
 help:
@@ -14,6 +14,7 @@ help:
 	@echo "  docker-down  - Stop Docker containers"
 	@echo "  dev          - Start local development servers (backend + frontend)"
 	@echo "  dev-setup    - Install dependencies for local development"
+	@echo "  dev-all      - Light verification, build everything, and start local servers"
 	@echo ""
 	@echo "Testing commands:"
 	@echo "  verify       - Run comprehensive test suite (all backend + frontend tests)"
@@ -290,6 +291,58 @@ dev-backend:
 dev-frontend:
 	@echo "📱 Starting frontend development server..."
 	(cd frontend && ZDOTDIR= npm run dev)
+
+# Light verification, build everything, and start local servers
+dev-all:
+	@echo ""
+	@echo "🚀 3DSHELF DEV-ALL: LIGHT VERIFICATION → BUILD → DEV SERVERS"
+	@echo "════════════════════════════════════════════════════════════"
+	@echo ""
+	@echo "📋 Pipeline:"
+	@echo "   1. 🔍 Light verification (basic checks + unit tests)"
+	@echo "   2. 🔧 Build backend and frontend"
+	@echo "   3. 🚀 Start development servers"
+	@echo ""
+	@echo ""
+	@echo "🔍 PHASE 1: LIGHT VERIFICATION"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo ""
+	@echo "🔧 Backend: Code quality & unit tests..."
+	@if $(MAKE) -C backend fmt vet test-unit 2>/dev/null; then \
+		echo "✅ Backend verification passed"; \
+	else \
+		echo "❌ Backend verification failed"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "📱 Frontend: Type checking & unit tests..."
+	@if (cd frontend && ZDOTDIR= npm run type-check && ZDOTDIR= npm run test:unit); then \
+		echo "✅ Frontend verification passed"; \
+	else \
+		echo "❌ Frontend verification failed"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo ""
+	@echo "🔧 PHASE 2: BUILD"
+	@echo "━━━━━━━━━━━━━━━━━━━"
+	@$(MAKE) build
+	@echo ""
+	@echo ""
+	@echo "🚀 PHASE 3: START DEVELOPMENT SERVERS"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo ""
+	@echo "✅ Light verification completed"
+	@echo "✅ Build completed"
+	@echo "🚀 Starting development servers..."
+	@echo ""
+	@echo "📋 Development URLs:"
+	@echo "   🔧 Backend API: http://localhost:8080"
+	@echo "   📱 Frontend: http://localhost:3000"
+	@echo ""
+	@echo "💡 Press Ctrl+C to stop both servers"
+	@echo ""
+	@make -j2 dev-backend dev-frontend
 
 # Display verification summary
 verify-summary:
