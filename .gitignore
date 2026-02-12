@@ -53,7 +53,6 @@ ehthumbs.db
 Thumbs.db
 
 # IDE
-.vscode/
 .idea/
 *.swp
 *.swo
@@ -91,7 +90,6 @@ pids
 .vscode/settings.json
 .vscode/tasks.json
 .vscode/launch.json
-.vscode/extensions.json
 *.code-workspace
 
 # OS generated files
