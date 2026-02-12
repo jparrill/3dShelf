@@ -1,6 +1,8 @@
 # .golangci.yml configuration for Go linting
 # This configuration ensures high code quality and consistency
 
+version: 2
+
 run:
   timeout: 5m
   issues-exit-code: 1

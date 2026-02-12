@@ -6,7 +6,7 @@
       "dom.iterable",
       "es2017"
     ],
-    "types": ["node", "@playwright/test", "jest"],
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -51,9 +51,7 @@
   ],
   "exclude": [
     "node_modules",
-    "src/__tests__/e2e/**/*",
-    "playwright.config.ts",
-    "src/__tests__/global-setup.ts",
-    "src/__tests__/global-teardown.ts"
+    "src/__tests__/**/*",
+    "playwright.config.ts"
   ]
 }
