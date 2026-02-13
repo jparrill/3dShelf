@@ -79,7 +79,13 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
 
     // STEP 3: Upload NEW files (no conflicts)
     await test.step('Upload new files to project', async () => {
-      await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      // We should already be on the project page from previous step
+      // If not, navigate to the project
+      try {
+        await expect(page.getByText(projectWithFilesName)).toBeVisible({ timeout: 3000 })
+      } catch {
+        await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      }
 
       const newFiles = [
         testFiles.gcodeFile,
@@ -100,7 +106,12 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
 
     // STEP 4: Test SKIP conflict resolution
     await test.step('Upload same file with SKIP resolution', async () => {
-      await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      // We should still be on the project page from previous upload
+      try {
+        await expect(page.getByText(projectWithFilesName)).toBeVisible({ timeout: 3000 })
+      } catch {
+        await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      }
 
       // Create modified version of existing file
       const modifiedStlFile = {
@@ -124,7 +135,12 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
 
     // STEP 5: Test OVERWRITE conflict resolution
     await test.step('Upload same file with OVERWRITE resolution', async () => {
-      await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      // We should still be on the project page
+      try {
+        await expect(page.getByText(projectWithFilesName)).toBeVisible({ timeout: 3000 })
+      } catch {
+        await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      }
 
       // Create another modified version of existing file
       const modifiedGcodeFile = {
@@ -148,7 +164,12 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
 
     // STEP 6: Test RENAME (upload + timestamp) conflict resolution
     await test.step('Upload same file with RENAME resolution', async () => {
-      await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      // We should still be on the project page
+      try {
+        await expect(page.getByText(projectWithFilesName)).toBeVisible({ timeout: 3000 })
+      } catch {
+        await ProjectTestHelpers.navigateToProject(page, projectWithFilesName)
+      }
 
       // Create another modified version of existing file
       const modifiedCadFile = {
