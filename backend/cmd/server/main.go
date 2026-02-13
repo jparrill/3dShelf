@@ -84,6 +84,8 @@ func main() {
 			projects.POST("/scan", projectsHandler.ScanProjects)
 			projects.GET("/search", projectsHandler.SearchProjects)
 			projects.GET("/:id", projectsHandler.GetProject)
+			projects.PUT("/:id", projectsHandler.UpdateProject)
+			projects.DELETE("/:id", projectsHandler.DeleteProject)
 			projects.PUT("/:id/sync", projectsHandler.SyncProject)
 			projects.GET("/:id/files", projectsHandler.GetProjectFiles)
 			projects.POST("/:id/files/check-conflicts", projectsHandler.CheckUploadConflicts)

@@ -234,6 +234,25 @@ export const projectsApi = {
     window.URL.revokeObjectURL(url)
   },
 
+  // Update a project (rename and/or change description)
+  updateProject: async (id: number, name: string, description?: string): Promise<{ message: string; project: Project }> => {
+    const response = await api.put(`/api/projects/${id}`, {
+      name,
+      description: description || ''
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response.data
+  },
+
+  // Delete a project completely
+  deleteProject: async (id: number): Promise<{ message: string; deleted_project: { id: number; name: string; path: string } }> => {
+    const response = await api.delete(`/api/projects/${id}`)
+    return response.data
+  },
+
   // Health check
   healthCheck: async (): Promise<{ status: string; project_count: number }> => {
     const response = await api.get('/api/health')
