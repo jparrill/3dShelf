@@ -152,6 +152,64 @@ export const projectsApi = {
     return response.data
   },
 
+  // Download a specific project file
+  downloadProjectFile: async (projectId: number, fileId: number): Promise<void> => {
+    const response = await api.get(`/api/projects/${projectId}/files/${fileId}/download`, {
+      responseType: 'blob'
+    })
+
+    // Create blob URL and trigger download
+    const blob = new Blob([response.data])
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+
+    // Extract filename from Content-Disposition header or use fallback
+    const contentDisposition = response.headers['content-disposition']
+    let filename = `file_${fileId}`
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename=(.+)/)
+      if (filenameMatch) {
+        filename = filenameMatch[1]
+      }
+    }
+
+    link.setAttribute('download', filename)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+  },
+
+  // Download entire project as ZIP
+  downloadProject: async (projectId: number): Promise<void> => {
+    const response = await api.get(`/api/projects/${projectId}/download`, {
+      responseType: 'blob'
+    })
+
+    // Create blob URL and trigger download
+    const blob = new Blob([response.data])
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+
+    // Extract filename from Content-Disposition header or use fallback
+    const contentDisposition = response.headers['content-disposition']
+    let filename = `project_${projectId}.zip`
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename=(.+)/)
+      if (filenameMatch) {
+        filename = filenameMatch[1]
+      }
+    }
+
+    link.setAttribute('download', filename)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+  },
+
   // Health check
   healthCheck: async (): Promise<{ status: string; project_count: number }> => {
     const response = await api.get('/api/health')
