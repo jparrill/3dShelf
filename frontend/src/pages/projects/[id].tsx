@@ -39,9 +39,10 @@ import {
   useDisclosure,
   useToast,
   IconButton,
-  Tooltip
+  Tooltip,
+  HStack
 } from '@chakra-ui/react'
-import { FiArrowLeft, FiRefreshCw, FiFolder, FiUpload, FiTrash2 } from 'react-icons/fi'
+import { FiArrowLeft, FiRefreshCw, FiFolder, FiUpload, FiTrash2, FiDownload } from 'react-icons/fi'
 import { Project, ProjectFile, ProjectStats, READMEResponse } from '@/types/project'
 import { projectsApi } from '@/lib/api'
 import { getFileTypeIcon, getFileTypeName, formatFileSize } from '@/utils/fileTypes'
@@ -157,6 +158,58 @@ export default function ProjectDetailPage() {
     onDeleteDialogClose()
   }
 
+  const handleDownloadFile = async (file: ProjectFile) => {
+    if (!projectId) return
+
+    try {
+      await projectsApi.downloadProjectFile(projectId, file.id)
+
+      toast({
+        title: "File download started",
+        description: `${file.filename} is being downloaded`,
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      })
+
+    } catch (err) {
+      console.error('Error downloading file:', err)
+      toast({
+        title: "Failed to download file",
+        description: "There was an error downloading the file. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+  }
+
+  const handleDownloadProject = async () => {
+    if (!projectId) return
+
+    try {
+      await projectsApi.downloadProject(projectId)
+
+      toast({
+        title: "Project download started",
+        description: `${project?.name || 'Project'} is being downloaded as ZIP`,
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      })
+
+    } catch (err) {
+      console.error('Error downloading project:', err)
+      toast({
+        title: "Failed to download project",
+        description: "There was an error downloading the project. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+  }
+
   useEffect(() => {
     if (projectId) {
       loadProjectData()
@@ -215,6 +268,14 @@ export default function ProjectDetailPage() {
             </Flex>
 
             <Flex gap={3}>
+              <Button
+                leftIcon={<Icon as={FiDownload} />}
+                onClick={handleDownloadProject}
+                colorScheme="blue"
+                variant="outline"
+              >
+                Download Project
+              </Button>
               <Button
                 leftIcon={<Icon as={FiUpload} />}
                 onClick={() => setIsUploadModalOpen(true)}
@@ -314,16 +375,28 @@ export default function ProjectDetailPage() {
                               <Td>{formatFileSize(file.size)}</Td>
                               <Td>{new Date(file.updated_at).toLocaleDateString()}</Td>
                               <Td>
-                                <Tooltip label="Delete file" hasArrow>
-                                  <IconButton
-                                    icon={<Icon as={FiTrash2} />}
-                                    aria-label="Delete file"
-                                    size="sm"
-                                    variant="ghost"
-                                    colorScheme="red"
-                                    onClick={() => handleDeleteClick(file)}
-                                  />
-                                </Tooltip>
+                                <HStack spacing={1}>
+                                  <Tooltip label="Download file" hasArrow>
+                                    <IconButton
+                                      icon={<Icon as={FiDownload} />}
+                                      aria-label="Download file"
+                                      size="sm"
+                                      variant="ghost"
+                                      colorScheme="blue"
+                                      onClick={() => handleDownloadFile(file)}
+                                    />
+                                  </Tooltip>
+                                  <Tooltip label="Delete file" hasArrow>
+                                    <IconButton
+                                      icon={<Icon as={FiTrash2} />}
+                                      aria-label="Delete file"
+                                      size="sm"
+                                      variant="ghost"
+                                      colorScheme="red"
+                                      onClick={() => handleDeleteClick(file)}
+                                    />
+                                  </Tooltip>
+                                </HStack>
                               </Td>
                             </Tr>
                           ))}

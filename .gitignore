@@ -3,6 +3,7 @@ backend/printvault-backend
 backend/dshelf-backend
 backend/3dshelf-backend
 backend/server
+backend/bin/
 backend/*.db
 backend/.env
 backend/coverage.out

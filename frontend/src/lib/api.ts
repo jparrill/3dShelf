@@ -152,6 +152,88 @@ export const projectsApi = {
     return response.data
   },
 
+  // Download a specific project file
+  downloadProjectFile: async (projectId: number, fileId: number): Promise<void> => {
+    // Use fetch instead of axios for better blob header handling
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+    const response = await fetch(`${API_BASE_URL}/api/projects/${projectId}/files/${fileId}/download`)
+
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.status} ${response.statusText}`)
+    }
+
+    // Extract filename from Content-Disposition header
+    const contentDisposition = response.headers.get('content-disposition')
+    let filename = `file_${fileId}`
+
+    if (contentDisposition) {
+      // More robust filename extraction
+      // First try: filename="name" or filename='name' (quoted)
+      let filenameMatch = contentDisposition.match(/filename[*]?=['"]([^'"]+)['"]/)
+      if (filenameMatch) {
+        filename = filenameMatch[1]
+      } else {
+        // Second try: filename=name (unquoted, until semicolon or end)
+        filenameMatch = contentDisposition.match(/filename[*]?=([^;,\s]+)/)
+        if (filenameMatch) {
+          filename = filenameMatch[1]
+        }
+      }
+    }
+
+    // Create blob and trigger download
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', filename)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+  },
+
+  // Download entire project as ZIP
+  downloadProject: async (projectId: number): Promise<void> => {
+    // Use fetch instead of axios for better blob header handling
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+    const response = await fetch(`${API_BASE_URL}/api/projects/${projectId}/download`)
+
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.status} ${response.statusText}`)
+    }
+
+    // Extract filename from Content-Disposition header
+    const contentDisposition = response.headers.get('content-disposition')
+
+    let filename = `project_${projectId}.zip`
+    if (contentDisposition) {
+      // More robust filename extraction
+      // First try: filename="name" or filename='name' (quoted)
+      let filenameMatch = contentDisposition.match(/filename[*]?=['"]([^'"]+)['"]/)
+      if (filenameMatch) {
+        filename = filenameMatch[1]
+      } else {
+        // Second try: filename=name (unquoted, until semicolon or end)
+        filenameMatch = contentDisposition.match(/filename[*]?=([^;,\s]+)/)
+        if (filenameMatch) {
+          filename = filenameMatch[1]
+        }
+      }
+    }
+
+    // Create blob and trigger download
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', filename)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+  },
+
   // Health check
   healthCheck: async (): Promise<{ status: string; project_count: number }> => {
     const response = await api.get('/api/health')

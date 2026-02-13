@@ -4,6 +4,7 @@ import (
 	"3dshelf/internal/models"
 	"3dshelf/pkg/database"
 	"3dshelf/pkg/scanner"
+	"archive/zip"
 	"crypto/sha256"
 	"fmt"
 	"io"
@@ -639,6 +640,110 @@ func (h *ProjectsHandler) SearchProjects(c *gin.Context) {
 		"count":    len(projects),
 		"query":    query,
 	})
+}
+
+// DownloadProjectFile downloads a specific file from a project
+func (h *ProjectsHandler) DownloadProjectFile(c *gin.Context) {
+	projectID := c.Param("id")
+	fileID := c.Param("fileId")
+
+	// Verify project exists
+	var project models.Project
+	if err := database.GetDB().First(&project, projectID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Find and verify the file belongs to this project
+	var file models.ProjectFile
+	if err := database.GetDB().Where("id = ? AND project_id = ?", fileID, projectID).First(&file).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "File not found"})
+		return
+	}
+
+	// Check if file exists on filesystem
+	if _, err := os.Stat(file.Filepath); os.IsNotExist(err) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "File not found on filesystem"})
+		return
+	}
+
+	// Set headers for file download
+	c.Header("Content-Description", "File Transfer")
+	c.Header("Content-Transfer-Encoding", "binary")
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", file.Filename))
+	c.Header("Content-Type", "application/octet-stream")
+
+	// Stream the file
+	c.File(file.Filepath)
+}
+
+// DownloadProject downloads the entire project as a ZIP file
+func (h *ProjectsHandler) DownloadProject(c *gin.Context) {
+	projectID := c.Param("id")
+
+	// Verify project exists
+	var project models.Project
+	if err := database.GetDB().Preload("Files").First(&project, projectID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Check if project directory exists
+	if _, err := os.Stat(project.Path); os.IsNotExist(err) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project directory not found"})
+		return
+	}
+
+	// Set headers for ZIP download
+	zipFilename := fmt.Sprintf("%s.zip", strings.ReplaceAll(project.Name, " ", "_"))
+	c.Header("Content-Type", "application/zip")
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", zipFilename))
+
+	// Create ZIP writer that writes directly to the response
+	zipWriter := zip.NewWriter(c.Writer)
+	defer zipWriter.Close()
+
+	// Walk through project directory and add all files to ZIP
+	err := filepath.Walk(project.Path, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Skip directories
+		if info.IsDir() {
+			return nil
+		}
+
+		// Get relative path for ZIP entry
+		relPath, err := filepath.Rel(project.Path, path)
+		if err != nil {
+			return err
+		}
+
+		// Create ZIP entry
+		zipFile, err := zipWriter.Create(relPath)
+		if err != nil {
+			return err
+		}
+
+		// Open source file
+		sourceFile, err := os.Open(path)
+		if err != nil {
+			return err
+		}
+		defer sourceFile.Close()
+
+		// Copy file content to ZIP
+		_, err = io.Copy(zipFile, sourceFile)
+		return err
+	})
+
+	if err != nil {
+		// If error occurs during ZIP creation, we can't send JSON response
+		// because headers are already written. Log the error instead.
+		fmt.Printf("Error creating ZIP file for project %s: %v\n", project.Name, err)
+		return
+	}
 }
 
 // HealthCheck returns the health status of the service
