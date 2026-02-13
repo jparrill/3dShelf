@@ -668,9 +668,13 @@ func (h *ProjectsHandler) DownloadProjectFile(c *gin.Context) {
 	}
 
 	// Set headers for file download
+	contentDisposition := fmt.Sprintf("attachment; filename=\"%s\"", file.Filename)
+	fmt.Printf("DEBUG: Setting Content-Disposition header: %s\n", contentDisposition)
+	fmt.Printf("DEBUG: Original filename: %s\n", file.Filename)
+
 	c.Header("Content-Description", "File Transfer")
 	c.Header("Content-Transfer-Encoding", "binary")
-	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", file.Filename))
+	c.Header("Content-Disposition", contentDisposition)
 	c.Header("Content-Type", "application/octet-stream")
 
 	// Stream the file

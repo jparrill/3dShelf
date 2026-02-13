@@ -165,14 +165,32 @@ export const projectsApi = {
     link.href = url
 
     // Extract filename from Content-Disposition header or use fallback
-    const contentDisposition = response.headers['content-disposition']
+    // Axios normalizes headers to lowercase
+    const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition']
+    console.log('DEBUG: Content-Disposition header:', contentDisposition)
+    console.log('DEBUG: All response headers:', response.headers)
+
     let filename = `file_${fileId}`
     if (contentDisposition) {
-      // Handle both quoted and unquoted filenames
-      const filenameMatch = contentDisposition.match(/filename[*]?=(?:"([^"]+)"|([^;,\s]+))/)
+      console.log('DEBUG: Processing Content-Disposition:', contentDisposition)
+
+      // Try multiple patterns to extract filename
+      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/) // quoted
       if (filenameMatch) {
-        filename = filenameMatch[1] || filenameMatch[2] // Use quoted version first, then unquoted
+        filename = filenameMatch[1]
+        console.log('DEBUG: Extracted quoted filename:', filename)
+      } else {
+        // Try unquoted pattern
+        filenameMatch = contentDisposition.match(/filename=([^;,\s]+)/)
+        if (filenameMatch) {
+          filename = filenameMatch[1]
+          console.log('DEBUG: Extracted unquoted filename:', filename)
+        } else {
+          console.log('DEBUG: No filename pattern matched')
+        }
       }
+    } else {
+      console.log('DEBUG: No Content-Disposition header found')
     }
 
     link.setAttribute('download', filename)
@@ -195,13 +213,19 @@ export const projectsApi = {
     link.href = url
 
     // Extract filename from Content-Disposition header or use fallback
-    const contentDisposition = response.headers['content-disposition']
+    const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition']
     let filename = `project_${projectId}.zip`
     if (contentDisposition) {
-      // Handle both quoted and unquoted filenames
-      const filenameMatch = contentDisposition.match(/filename[*]?=(?:"([^"]+)"|([^;,\s]+))/)
+      // Try multiple patterns to extract filename
+      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/) // quoted
       if (filenameMatch) {
-        filename = filenameMatch[1] || filenameMatch[2] // Use quoted version first, then unquoted
+        filename = filenameMatch[1]
+      } else {
+        // Try unquoted pattern
+        filenameMatch = contentDisposition.match(/filename=([^;,\s]+)/)
+        if (filenameMatch) {
+          filename = filenameMatch[1]
+        }
       }
     }
 
