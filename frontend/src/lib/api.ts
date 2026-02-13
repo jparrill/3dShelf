@@ -167,13 +167,14 @@ export const projectsApi = {
     let filename = `file_${fileId}`
 
     if (contentDisposition) {
-      // Try quoted filename first
-      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/)
+      // More robust filename extraction
+      // First try: filename="name" or filename='name' (quoted)
+      let filenameMatch = contentDisposition.match(/filename[*]?=['"]([^'"]+)['"]/)
       if (filenameMatch) {
         filename = filenameMatch[1]
       } else {
-        // Try unquoted filename
-        filenameMatch = contentDisposition.match(/filename=([^;,\s]+)/)
+        // Second try: filename=name (unquoted, until semicolon or end)
+        filenameMatch = contentDisposition.match(/filename[*]?=([^;,\s]+)/)
         if (filenameMatch) {
           filename = filenameMatch[1]
         }
@@ -204,15 +205,17 @@ export const projectsApi = {
 
     // Extract filename from Content-Disposition header
     const contentDisposition = response.headers.get('content-disposition')
+
     let filename = `project_${projectId}.zip`
     if (contentDisposition) {
-      // Try quoted filename first
-      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/)
+      // More robust filename extraction
+      // First try: filename="name" or filename='name' (quoted)
+      let filenameMatch = contentDisposition.match(/filename[*]?=['"]([^'"]+)['"]/)
       if (filenameMatch) {
         filename = filenameMatch[1]
       } else {
-        // Try unquoted filename
-        filenameMatch = contentDisposition.match(/filename=([^;,\s]+)/)
+        // Second try: filename=name (unquoted, until semicolon or end)
+        filenameMatch = contentDisposition.match(/filename[*]?=([^;,\s]+)/)
         if (filenameMatch) {
           filename = filenameMatch[1]
         }
