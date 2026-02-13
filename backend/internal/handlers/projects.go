@@ -537,6 +537,57 @@ func (h *ProjectsHandler) GetProjectREADME(c *gin.Context) {
 	})
 }
 
+// DeleteProjectFile deletes a specific file from a project
+func (h *ProjectsHandler) DeleteProjectFile(c *gin.Context) {
+	projectID := c.Param("id")
+	fileID := c.Param("fileId")
+
+	// Verify project exists
+	var project models.Project
+	if err := database.GetDB().First(&project, projectID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Find and verify the file belongs to this project
+	var file models.ProjectFile
+	if err := database.GetDB().Where("id = ? AND project_id = ?", fileID, projectID).First(&file).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "File not found"})
+		return
+	}
+
+	// Delete the physical file from filesystem
+	fullPath := filepath.Join(project.Path, file.Filename)
+	if err := os.Remove(fullPath); err != nil {
+		// If file doesn't exist on filesystem, log warning but continue with DB deletion
+		if !os.IsNotExist(err) {
+			fmt.Printf("Warning: Failed to delete file from filesystem: %v\n", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete file from filesystem"})
+			return
+		}
+		fmt.Printf("Warning: File %s not found on filesystem, proceeding with database cleanup\n", fullPath)
+	}
+
+	// Delete the database record
+	if err := database.GetDB().Delete(&file).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete file from database"})
+		return
+	}
+
+	// Update project's last_scanned timestamp
+	if err := database.GetDB().Model(&project).Update("last_scanned", time.Now()).Error; err != nil {
+		fmt.Printf("Warning: Failed to update project last_scanned timestamp: %v\n", err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "File deleted successfully",
+		"deleted_file": gin.H{
+			"id":       file.ID,
+			"filename": file.Filename,
+		},
+	})
+}
+
 // GetProjectStats returns statistics for a project
 func (h *ProjectsHandler) GetProjectStats(c *gin.Context) {
 	id := c.Param("id")

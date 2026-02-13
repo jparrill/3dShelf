@@ -146,6 +146,12 @@ export const projectsApi = {
     return response.data
   },
 
+  // Delete a project file
+  deleteProjectFile: async (projectId: number, fileId: number): Promise<{ message: string; deleted_file: { id: number; filename: string } }> => {
+    const response = await api.delete(`/api/projects/${projectId}/files/${fileId}`)
+    return response.data
+  },
+
   // Health check
   healthCheck: async (): Promise<{ status: string; project_count: number }> => {
     const response = await api.get('/api/health')

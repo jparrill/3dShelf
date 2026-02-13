@@ -86,6 +86,7 @@ func main() {
 			projects.GET("/:id/files", projectsHandler.GetProjectFiles)
 			projects.POST("/:id/files/check-conflicts", projectsHandler.CheckUploadConflicts)
 			projects.POST("/:id/files", projectsHandler.UploadProjectFiles)
+			projects.DELETE("/:id/files/:fileId", projectsHandler.DeleteProjectFile)
 			projects.GET("/:id/readme", projectsHandler.GetProjectREADME)
 			projects.GET("/:id/stats", projectsHandler.GetProjectStats)
 		}
