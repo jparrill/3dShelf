@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {
   Box,
@@ -29,9 +29,19 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel
+  TabPanel,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+  useToast,
+  IconButton,
+  Tooltip
 } from '@chakra-ui/react'
-import { FiArrowLeft, FiRefreshCw, FiFolder, FiUpload } from 'react-icons/fi'
+import { FiArrowLeft, FiRefreshCw, FiFolder, FiUpload, FiTrash2 } from 'react-icons/fi'
 import { Project, ProjectFile, ProjectStats, READMEResponse } from '@/types/project'
 import { projectsApi } from '@/lib/api'
 import { getFileTypeIcon, getFileTypeName, formatFileSize } from '@/utils/fileTypes'
@@ -40,6 +50,8 @@ import { ProjectFileUpload } from '@/components/projects/ProjectFileUpload'
 export default function ProjectDetailPage() {
   const router = useRouter()
   const { id } = router.query
+  const toast = useToast()
+  const { isOpen: isDeleteDialogOpen, onOpen: onDeleteDialogOpen, onClose: onDeleteDialogClose } = useDisclosure()
 
   const [project, setProject] = useState<Project | null>(null)
   const [files, setFiles] = useState<ProjectFile[]>([])
@@ -49,6 +61,8 @@ export default function ProjectDetailPage() {
   const [error, setError] = useState<string | null>(null)
   const [isSyncing, setIsSyncing] = useState(false)
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
+  const [fileToDelete, setFileToDelete] = useState<ProjectFile | null>(null)
+  const [isDeletingFile, setIsDeletingFile] = useState(false)
 
   const projectId = Number(id)
 
@@ -96,6 +110,50 @@ export default function ProjectDetailPage() {
   const handleUploadComplete = async (uploadedFiles: ProjectFile[]) => {
     // Reload project data to show new files
     await loadProjectData()
+  }
+
+  const handleDeleteClick = (file: ProjectFile) => {
+    setFileToDelete(file)
+    onDeleteDialogOpen()
+  }
+
+  const handleDeleteConfirm = async () => {
+    if (!fileToDelete || !projectId) return
+
+    setIsDeletingFile(true)
+    try {
+      await projectsApi.deleteProjectFile(projectId, fileToDelete.id)
+
+      toast({
+        title: "File deleted successfully",
+        description: `${fileToDelete.filename} has been removed from the project`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      })
+
+      // Reload project data to update the file list
+      await loadProjectData()
+
+    } catch (err) {
+      console.error('Error deleting file:', err)
+      toast({
+        title: "Failed to delete file",
+        description: "There was an error deleting the file. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    } finally {
+      setIsDeletingFile(false)
+      setFileToDelete(null)
+      onDeleteDialogClose()
+    }
+  }
+
+  const handleDeleteCancel = () => {
+    setFileToDelete(null)
+    onDeleteDialogClose()
   }
 
   useEffect(() => {
@@ -233,6 +291,7 @@ export default function ProjectDetailPage() {
                             <Th>Type</Th>
                             <Th>Size</Th>
                             <Th>Modified</Th>
+                            <Th width="100px">Actions</Th>
                           </Tr>
                         </Thead>
                         <Tbody>
@@ -253,6 +312,18 @@ export default function ProjectDetailPage() {
                               </Td>
                               <Td>{formatFileSize(file.size)}</Td>
                               <Td>{new Date(file.updated_at).toLocaleDateString()}</Td>
+                              <Td>
+                                <Tooltip label="Delete file" hasArrow>
+                                  <IconButton
+                                    icon={<Icon as={FiTrash2} />}
+                                    aria-label="Delete file"
+                                    size="sm"
+                                    variant="ghost"
+                                    colorScheme="red"
+                                    onClick={() => handleDeleteClick(file)}
+                                  />
+                                </Tooltip>
+                              </Td>
                             </Tr>
                           ))}
                         </Tbody>
@@ -306,6 +377,44 @@ export default function ProjectDetailPage() {
           </Tabs>
         </Stack>
       </Container>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog
+        isOpen={isDeleteDialogOpen}
+        leastDestructiveRef={React.useRef(null)}
+        onClose={handleDeleteCancel}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete File
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to delete <strong>{fileToDelete?.filename}</strong>?
+              <br />
+              <Text mt={2} color="red.600" fontSize="sm">
+                This action cannot be undone. The file will be permanently removed from the project and filesystem.
+              </Text>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={React.useRef(null)} onClick={handleDeleteCancel}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={handleDeleteConfirm}
+                ml={3}
+                isLoading={isDeletingFile}
+                loadingText="Deleting..."
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
 
       {/* Upload Modal */}
       {project && (
