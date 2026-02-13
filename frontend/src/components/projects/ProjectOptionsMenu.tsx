@@ -36,7 +36,7 @@ export function ProjectOptionsMenu({ project, onRename, onDelete }: ProjectOptio
       <MenuButton
         as={IconButton}
         aria-label="Project options"
-        icon={<FiSettings />}
+        icon={<FiSettings fontSize="20px" />}
         size="xs"
         variant="ghost"
         onClick={handleMenuButtonClick}
