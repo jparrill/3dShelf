@@ -37,9 +37,12 @@ export function ProjectOptionsMenu({ project, onRename, onDelete }: ProjectOptio
         as={IconButton}
         aria-label="Project options"
         icon={<FiSettings />}
-        size="sm"
+        size="xs"
         variant="ghost"
         onClick={handleMenuButtonClick}
+        minW="20px"
+        h="20px"
+        w="20px"
         _hover={{
           bg: 'gray.100'
         }}
