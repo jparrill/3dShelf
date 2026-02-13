@@ -670,7 +670,7 @@ func (h *ProjectsHandler) DownloadProjectFile(c *gin.Context) {
 	// Set headers for file download
 	c.Header("Content-Description", "File Transfer")
 	c.Header("Content-Transfer-Encoding", "binary")
-	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", file.Filename))
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", file.Filename))
 	c.Header("Content-Type", "application/octet-stream")
 
 	// Stream the file
@@ -697,7 +697,7 @@ func (h *ProjectsHandler) DownloadProject(c *gin.Context) {
 	// Set headers for ZIP download
 	zipFilename := fmt.Sprintf("%s.zip", strings.ReplaceAll(project.Name, " ", "_"))
 	c.Header("Content-Type", "application/zip")
-	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", zipFilename))
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", zipFilename))
 
 	// Create ZIP writer that writes directly to the response
 	zipWriter := zip.NewWriter(c.Writer)
