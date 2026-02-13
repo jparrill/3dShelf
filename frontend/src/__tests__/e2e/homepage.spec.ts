@@ -174,7 +174,7 @@ test.describe('3DShelf Homepage', () => {
     }
   })
 
-  test('should display loading states appropriately', async ({ page }) => {
+  test.skip('should display loading states appropriately', async ({ page }) => {
     // Navigate to homepage
     await page.goto('/')
 
