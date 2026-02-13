@@ -154,45 +154,37 @@ export const projectsApi = {
 
   // Download a specific project file
   downloadProjectFile: async (projectId: number, fileId: number): Promise<void> => {
-    const response = await api.get(`/api/projects/${projectId}/files/${fileId}/download`, {
-      responseType: 'blob'
-    })
+    // Use fetch instead of axios for better blob header handling
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+    const response = await fetch(`${API_BASE_URL}/api/projects/${projectId}/files/${fileId}/download`)
 
-    // Create blob URL and trigger download
-    const blob = new Blob([response.data])
-    const url = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.status} ${response.statusText}`)
+    }
 
-    // Extract filename from Content-Disposition header or use fallback
-    // Axios normalizes headers to lowercase
-    const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition']
-    console.log('DEBUG: Content-Disposition header:', contentDisposition)
-    console.log('DEBUG: All response headers:', response.headers)
-
+    // Extract filename from Content-Disposition header
+    const contentDisposition = response.headers.get('content-disposition')
     let filename = `file_${fileId}`
-    if (contentDisposition) {
-      console.log('DEBUG: Processing Content-Disposition:', contentDisposition)
 
-      // Try multiple patterns to extract filename
-      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/) // quoted
+    if (contentDisposition) {
+      // Try quoted filename first
+      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/)
       if (filenameMatch) {
         filename = filenameMatch[1]
-        console.log('DEBUG: Extracted quoted filename:', filename)
       } else {
-        // Try unquoted pattern
+        // Try unquoted filename
         filenameMatch = contentDisposition.match(/filename=([^;,\s]+)/)
         if (filenameMatch) {
           filename = filenameMatch[1]
-          console.log('DEBUG: Extracted unquoted filename:', filename)
-        } else {
-          console.log('DEBUG: No filename pattern matched')
         }
       }
-    } else {
-      console.log('DEBUG: No Content-Disposition header found')
     }
 
+    // Create blob and trigger download
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
     link.setAttribute('download', filename)
     document.body.appendChild(link)
     link.click()
@@ -202,26 +194,24 @@ export const projectsApi = {
 
   // Download entire project as ZIP
   downloadProject: async (projectId: number): Promise<void> => {
-    const response = await api.get(`/api/projects/${projectId}/download`, {
-      responseType: 'blob'
-    })
+    // Use fetch instead of axios for better blob header handling
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+    const response = await fetch(`${API_BASE_URL}/api/projects/${projectId}/download`)
 
-    // Create blob URL and trigger download
-    const blob = new Blob([response.data])
-    const url = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.status} ${response.statusText}`)
+    }
 
-    // Extract filename from Content-Disposition header or use fallback
-    const contentDisposition = response.headers['content-disposition'] || response.headers['Content-Disposition']
+    // Extract filename from Content-Disposition header
+    const contentDisposition = response.headers.get('content-disposition')
     let filename = `project_${projectId}.zip`
     if (contentDisposition) {
-      // Try multiple patterns to extract filename
-      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/) // quoted
+      // Try quoted filename first
+      let filenameMatch = contentDisposition.match(/filename="([^"]+)"/)
       if (filenameMatch) {
         filename = filenameMatch[1]
       } else {
-        // Try unquoted pattern
+        // Try unquoted filename
         filenameMatch = contentDisposition.match(/filename=([^;,\s]+)/)
         if (filenameMatch) {
           filename = filenameMatch[1]
@@ -229,6 +219,11 @@ export const projectsApi = {
       }
     }
 
+    // Create blob and trigger download
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
     link.setAttribute('download', filename)
     document.body.appendChild(link)
     link.click()
