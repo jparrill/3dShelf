@@ -7,6 +7,12 @@ import { Project } from '@/types/project'
 import { projectsApi } from '@/lib/api'
 import theme from '@/lib/theme'
 
+// Mock scrollTo function for tests
+Object.defineProperty(HTMLElement.prototype, 'scrollTo', {
+  value: jest.fn(),
+  writable: true
+})
+
 // Mock the API
 jest.mock('@/lib/api')
 const mockProjectsApi = projectsApi as jest.Mocked<typeof projectsApi>
@@ -99,7 +105,7 @@ describe('DeleteProjectModal', () => {
     expect(screen.getByText('Test description')).toBeInTheDocument()
     expect(screen.getByText('2 archivos')).toBeInTheDocument()
     expect(screen.getByText('healthy')).toBeInTheDocument()
-    expect(screen.getByText('/test/path')).toBeInTheDocument()
+    expect(screen.getByText('Ubicación: /test/path')).toBeInTheDocument()
   })
 
   it('shows warning messages about irreversible action', () => {
@@ -113,9 +119,11 @@ describe('DeleteProjectModal', () => {
     )
 
     expect(screen.getByText('¡Esta acción es irreversible!')).toBeInTheDocument()
-    expect(screen.getByText('Se eliminará el directorio del proyecto del sistema de archivos')).toBeInTheDocument()
-    expect(screen.getByText('Se eliminarán todos los archivos contenidos (STL, 3MF, G-code, etc.)')).toBeInTheDocument()
-    expect(screen.getByText('Se removerán todos los registros de la base de datos')).toBeInTheDocument()
+    // Use partial text matching for multiline content
+    expect(screen.getByText(/Se eliminará el directorio del proyecto/)).toBeInTheDocument()
+    expect(screen.getByText(/Se eliminarán todos los archivos/)).toBeInTheDocument()
+    expect(screen.getByText(/Se removerán todos los registros/)).toBeInTheDocument()
+    expect(screen.getByText(/Esta operación NO se puede deshacer/)).toBeInTheDocument()
   })
 
   it('shows correct file count', () => {

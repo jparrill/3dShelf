@@ -115,8 +115,16 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const nameInput = screen.getByLabelText('Nuevo nombre')
-    const descriptionInput = screen.getByLabelText('Descripción')
+    await waitFor(() => {
+      const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
+      const descriptionInput = screen.getByPlaceholderText('Descripción del proyecto (opcional)')
+
+      expect(nameInput).toBeInTheDocument()
+      expect(descriptionInput).toBeInTheDocument()
+    })
+
+    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
+    const descriptionInput = screen.getByPlaceholderText('Descripción del proyecto (opcional)')
 
     await user.clear(nameInput)
     await user.type(nameInput, 'New Project Name')
@@ -138,7 +146,12 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const nameInput = screen.getByLabelText('Nuevo nombre')
+    await waitFor(() => {
+      const submitButton = screen.getByText('Renombrar')
+      expect(submitButton).toBeInTheDocument()
+    })
+
+    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
     const submitButton = screen.getByText('Renombrar')
 
     await user.clear(nameInput)
@@ -161,8 +174,12 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const nameInput = screen.getByLabelText('Nuevo nombre')
-    const descriptionInput = screen.getByLabelText('Descripción')
+    await waitFor(() => {
+      expect(screen.getByText('Renombrar')).toBeInTheDocument()
+    })
+
+    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
+    const descriptionInput = screen.getByPlaceholderText('Descripción del proyecto (opcional)')
     const submitButton = screen.getByText('Renombrar')
 
     await user.clear(nameInput)
@@ -210,7 +227,11 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const nameInput = screen.getByLabelText('Nuevo nombre')
+    await waitFor(() => {
+      expect(screen.getByText('Renombrar')).toBeInTheDocument()
+    })
+
+    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
     const submitButton = screen.getByText('Renombrar')
 
     await user.clear(nameInput)
@@ -257,7 +278,11 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const nameInput = screen.getByLabelText('Nuevo nombre')
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')).toBeInTheDocument()
+    })
+
+    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
     await user.clear(nameInput)
     await user.type(nameInput, 'Modified Name')
 
