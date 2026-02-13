@@ -261,7 +261,7 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     <Modal isOpen={isOpen} onClose={handleClose} size="xl" closeOnOverlayClick={!isUploading}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Upload Files</ModalHeader>
+        <ModalHeader id="upload-files-modal-header">Upload Files</ModalHeader>
         {!isUploading && <ModalCloseButton />}
 
         <ModalBody>

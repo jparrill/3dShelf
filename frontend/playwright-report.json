@@ -1,0 +1,3017 @@
+{
+  "config": {
+    "configFile": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/playwright.config.ts",
+    "rootDir": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 7
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 7
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "playwright-results.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 7,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "comprehensive-workflow.spec.ts",
+      "file": "comprehensive-workflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Comprehensive 3D Organizer Workflows",
+          "file": "comprehensive-workflow.spec.ts",
+          "line": 18,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Complete workflow: Project creation → File upload → Conflict resolution (All paths)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                        "line": 33,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:24.914Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                            "line": 33,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c236a7fffc0db8f9f2ea-66ff108065e20c055da5",
+              "file": "comprehensive-workflow.spec.ts",
+              "line": 33,
+              "column": 8
+            },
+            {
+              "title": "Error handling and edge cases",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 193,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                          "column": 16,
+                          "line": 23
+                        },
+                        "snippet": "  21 |   test.beforeEach(async ({ page }) => {\n  22 |     fileManager = new TestFileManager('comprehensive-tests')\n> 23 |     await page.goto('/')\n     |                ^\n  24 |\n  25 |     // Wait for the application to load\n  26 |     await expect(page.getByText('3DShelf')).toBeVisible()"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                            "column": 16,
+                            "line": 23
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  21 |   test.beforeEach(async ({ page }) => {\n  22 |     fileManager = new TestFileManager('comprehensive-tests')\n> 23 |     await page.goto('/')\n     |                ^\n  24 |\n  25 |     // Wait for the application to load\n  26 |     await expect(page.getByText('3DShelf')).toBeVisible()\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.406Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/comprehensive-workflow-Com-e03b0-ror-handling-and-edge-cases-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                        "column": 16,
+                        "line": 23
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c236a7fffc0db8f9f2ea-b255d7a140febfe20df7",
+              "file": "comprehensive-workflow.spec.ts",
+              "line": 250,
+              "column": 7
+            },
+            {
+              "title": "Accessibility and usability testing",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 198,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                          "column": 16,
+                          "line": 23
+                        },
+                        "snippet": "  21 |   test.beforeEach(async ({ page }) => {\n  22 |     fileManager = new TestFileManager('comprehensive-tests')\n> 23 |     await page.goto('/')\n     |                ^\n  24 |\n  25 |     // Wait for the application to load\n  26 |     await expect(page.getByText('3DShelf')).toBeVisible()"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                            "column": 16,
+                            "line": 23
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  21 |   test.beforeEach(async ({ page }) => {\n  22 |     fileManager = new TestFileManager('comprehensive-tests')\n> 23 |     await page.goto('/')\n     |                ^\n  24 |\n  25 |     // Wait for the application to load\n  26 |     await expect(page.getByText('3DShelf')).toBeVisible()\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts:23:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.406Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/comprehensive-workflow-Com-806f8-ility-and-usability-testing-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                        "column": 16,
+                        "line": 23
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c236a7fffc0db8f9f2ea-c7fad6d124a6ea80434e",
+              "file": "comprehensive-workflow.spec.ts",
+              "line": 342,
+              "column": 7
+            },
+            {
+              "title": "Performance and loading states",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                        "line": 418,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:24.915Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/comprehensive-workflow.spec.ts",
+                            "line": 418,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c236a7fffc0db8f9f2ea-be39cd517a8702eebee6",
+              "file": "comprehensive-workflow.spec.ts",
+              "line": 418,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "file-upload-and-conflicts.spec.ts",
+      "file": "file-upload-and-conflicts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "File Upload and Conflict Resolution",
+          "file": "file-upload-and-conflicts.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should upload new files to existing project successfully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 200,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:48:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                          "column": 16,
+                          "line": 48
+                        },
+                        "snippet": "  46 |     fileManager = new TestFileManager('upload-conflicts')\n  47 |     // Ensure we're starting fresh\n> 48 |     await page.goto('/')\n     |                ^\n  49 |   })\n  50 |\n  51 |   test.afterEach(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "column": 16,
+                            "line": 48
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  46 |     fileManager = new TestFileManager('upload-conflicts')\n  47 |     // Ensure we're starting fresh\n> 48 |     await page.goto('/')\n     |                ^\n  49 |   })\n  50 |\n  51 |   test.afterEach(() => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:48:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.406Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/file-upload-and-conflicts--780b5-isting-project-successfully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "column": 16,
+                        "line": 48
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-86eddfe86853a049f107",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 55,
+              "column": 7
+            },
+            {
+              "title": "should handle file conflicts with skip resolution",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "line": 126,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:24.915Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "line": 126,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-d4c3d32793a87618e9d5",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 126,
+              "column": 8
+            },
+            {
+              "title": "should handle file conflicts with overwrite resolution",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "line": 212,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:24.915Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "line": 212,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-34356657195377da5408",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 212,
+              "column": 8
+            },
+            {
+              "title": "should handle file conflicts with rename (upload + timestamp) resolution",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "line": 270,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:24.915Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "line": 270,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-310316023adbef6471b6",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 270,
+              "column": 8
+            },
+            {
+              "title": "should handle mixed conflicts with different resolutions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "line": 349,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:24.915Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "line": 349,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-88638040afb851704eb9",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 349,
+              "column": 8
+            },
+            {
+              "title": "should handle upload cancellation",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 200,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:48:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                          "column": 16,
+                          "line": 48
+                        },
+                        "snippet": "  46 |     fileManager = new TestFileManager('upload-conflicts')\n  47 |     // Ensure we're starting fresh\n> 48 |     await page.goto('/')\n     |                ^\n  49 |   })\n  50 |\n  51 |   test.afterEach(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "column": 16,
+                            "line": 48
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  46 |     fileManager = new TestFileManager('upload-conflicts')\n  47 |     // Ensure we're starting fresh\n> 48 |     await page.goto('/')\n     |                ^\n  49 |   })\n  50 |\n  51 |   test.afterEach(() => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:48:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.410Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/file-upload-and-conflicts--e7f61--handle-upload-cancellation-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "column": 16,
+                        "line": 48
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-a454d0d3fcc93fadd22b",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 477,
+              "column": 7
+            },
+            {
+              "title": "should validate file types during upload",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 194,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:48:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                          "column": 16,
+                          "line": 48
+                        },
+                        "snippet": "  46 |     fileManager = new TestFileManager('upload-conflicts')\n  47 |     // Ensure we're starting fresh\n> 48 |     await page.goto('/')\n     |                ^\n  49 |   })\n  50 |\n  51 |   test.afterEach(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                            "column": 16,
+                            "line": 48
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  46 |     fileManager = new TestFileManager('upload-conflicts')\n  47 |     // Ensure we're starting fresh\n> 48 |     await page.goto('/')\n     |                ^\n  49 |   })\n  50 |\n  51 |   test.afterEach(() => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts:48:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.405Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/file-upload-and-conflicts--6da05-te-file-types-during-upload-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/file-upload-and-conflicts.spec.ts",
+                        "column": 16,
+                        "line": 48
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d0b58261a17baa3a274d-c2f1084d75eb8a1904a1",
+              "file": "file-upload-and-conflicts.spec.ts",
+              "line": 508,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "homepage.spec.ts",
+      "file": "homepage.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "3DShelf Homepage",
+          "file": "homepage.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display the main header and navigation",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 194,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.402Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--ae9ce--main-header-and-navigation-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--ae9ce--main-header-and-navigation-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-cc5eb8ed255e0c4a5aff",
+              "file": "homepage.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "should load and display project list",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 199,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:25.406Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--e9cb1-ad-and-display-project-list-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-ac0baa3a3006c4b07107",
+              "file": "homepage.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "should perform search functionality",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 189,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.783Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--6e7d7-erform-search-functionality-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--6e7d7-erform-search-functionality-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-ea10981f0ee0e6c6875e",
+              "file": "homepage.spec.ts",
+              "line": 33,
+              "column": 7
+            },
+            {
+              "title": "should handle empty search",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 215,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.785Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage-should-handle-empty-search-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage-should-handle-empty-search-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-e3c271774de33f7ce828",
+              "file": "homepage.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "should navigate to project detail when clicking project",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 209,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.783Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--90eda-etail-when-clicking-project-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-c0c3498d9fd1e11193ba",
+              "file": "homepage.spec.ts",
+              "line": 71,
+              "column": 7
+            },
+            {
+              "title": "should handle scan projects functionality",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 197,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.871Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--1a175-scan-projects-functionality-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--1a175-scan-projects-functionality-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-99174dad00d4c8baff2c",
+              "file": "homepage.spec.ts",
+              "line": 96,
+              "column": 7
+            },
+            {
+              "title": "should be responsive on mobile viewport",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 150,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.887Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--a0893-sponsive-on-mobile-viewport-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-33f43da3f6625bf1b963",
+              "file": "homepage.spec.ts",
+              "line": 118,
+              "column": 7
+            },
+            {
+              "title": "should handle network errors gracefully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 199,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.877Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--8c0ac-e-network-errors-gracefully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-39f06fd638e83720dac6",
+              "file": "homepage.spec.ts",
+              "line": 137,
+              "column": 7
+            },
+            {
+              "title": "should display loading states appropriately",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "line": 177,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.405Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "line": 177,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-974abc5257ed1a8a44a1",
+              "file": "homepage.spec.ts",
+              "line": 177,
+              "column": 8
+            },
+            {
+              "title": "should maintain state during page interactions",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 202,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:26.881Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--42997-te-during-page-interactions-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--42997-te-during-page-interactions-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-2a121dcf1d1c42e39515",
+              "file": "homepage.spec.ts",
+              "line": 193,
+              "column": 7
+            },
+            {
+              "title": "should have proper accessibility features",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 175,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.111Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage--a67e3-oper-accessibility-features-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-46792700c5a41d6bf8ef",
+              "file": "homepage.spec.ts",
+              "line": 214,
+              "column": 7
+            },
+            {
+              "title": "should handle keyboard navigation",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 163,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to the homepage\n> 6 |     await page.goto('/')\n    |                ^\n  7 |   })\n  8 |\n  9 |   test('should display the main header and navigation', async ({ page }) => {\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.183Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/homepage-3DShelf-Homepage-should-handle-keyboard-navigation-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/homepage.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "84e7eb052e8cbae1c9f0-02044733f0d06c2ce479",
+              "file": "homepage.spec.ts",
+              "line": 234,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "project-creation.spec.ts",
+      "file": "project-creation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Project Creation",
+          "file": "project-creation.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should create project without files successfully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 156,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                          "column": 16,
+                          "line": 25
+                        },
+                        "snippet": "  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.194Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-78a94--without-files-successfully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-78a94--without-files-successfully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                        "column": 16,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7bb37ea1e0933e6d58e3-e15ec41342ae8ceda2ce",
+              "file": "project-creation.spec.ts",
+              "line": 30,
+              "column": 7
+            },
+            {
+              "title": "should create project with files successfully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 199,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                          "column": 16,
+                          "line": 25
+                        },
+                        "snippet": "  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.188Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-401f3-ect-with-files-successfully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                        "column": 16,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7bb37ea1e0933e6d58e3-d43c450d2723c35a35b7",
+              "file": "project-creation.spec.ts",
+              "line": 63,
+              "column": 7
+            },
+            {
+              "title": "should validate required fields in project creation",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 187,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                          "column": 16,
+                          "line": 25
+                        },
+                        "snippet": "  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.196Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-5878c--fields-in-project-creation-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-5878c--fields-in-project-creation-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                        "column": 16,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7bb37ea1e0933e6d58e3-c39ae5543cc7144ce6b3",
+              "file": "project-creation.spec.ts",
+              "line": 150,
+              "column": 7
+            },
+            {
+              "title": "should handle file selection and removal in project creation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "location": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                        "line": 180,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:27.735Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                            "line": 180,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7bb37ea1e0933e6d58e3-87533de5ee7879a4e1d0",
+              "file": "project-creation.spec.ts",
+              "line": 180,
+              "column": 8
+            },
+            {
+              "title": "should handle modal cancel functionality",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 179,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                          "column": 16,
+                          "line": 25
+                        },
+                        "snippet": "  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.210Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-5d114--modal-cancel-functionality-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-5d114--modal-cancel-functionality-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                        "column": 16,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7bb37ea1e0933e6d58e3-50d4669681458f064c44",
+              "file": "project-creation.spec.ts",
+              "line": 224,
+              "column": 7
+            },
+            {
+              "title": "should handle file upload errors gracefully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 157,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                          "column": 16,
+                          "line": 25
+                        },
+                        "snippet": "  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  23 | test.describe('Project Creation', () => {\n  24 |   test.beforeEach(async ({ page }) => {\n> 25 |     await page.goto('/')\n     |                ^\n  26 |     // Wait for the header to be visible (contains 3DShelf heading)\n  27 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  28 |   })\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts:25:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:28.271Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-creation-Project-C-986d6-le-upload-errors-gracefully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-creation.spec.ts",
+                        "column": 16,
+                        "line": 25
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7bb37ea1e0933e6d58e3-5b85fc18e8fada522d05",
+              "file": "project-creation.spec.ts",
+              "line": 245,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "project-details.spec.ts",
+      "file": "project-details.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Project Details Page",
+          "file": "project-details.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate to project details from homepage",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 160,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.479Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-6215c-oject-details-from-homepage-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-6215c-oject-details-from-homepage-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-e425eb4a814e4f25bdcf",
+              "file": "project-details.spec.ts",
+              "line": 10,
+              "column": 7
+            },
+            {
+              "title": "should display project information correctly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 156,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.502Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-20dbd-oject-information-correctly-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-20dbd-oject-information-correctly-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-c637ac2c2ebcb6611930",
+              "file": "project-details.spec.ts",
+              "line": 29,
+              "column": 7
+            },
+            {
+              "title": "should display project files if available",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 23,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 152,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.517Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-27d41--project-files-if-available-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-27d41--project-files-if-available-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-abdd2e684fd89d6aae95",
+              "file": "project-details.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "should show project statistics",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 24,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 166,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.526Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-964e0-uld-show-project-statistics-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-964e0-uld-show-project-statistics-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-8447cc069770a31394b6",
+              "file": "project-details.spec.ts",
+              "line": 71,
+              "column": 7
+            },
+            {
+              "title": "should handle project README content",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 25,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 165,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.574Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-dbb7d-ndle-project-README-content-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-dbb7d-ndle-project-README-content-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-340793777190b4c06806",
+              "file": "project-details.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "should provide navigation back to homepage",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 26,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 163,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.587Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-c80ab-navigation-back-to-homepage-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-c80ab-navigation-back-to-homepage-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-c5f169ea174ed3b6b309",
+              "file": "project-details.spec.ts",
+              "line": 109,
+              "column": 7
+            },
+            {
+              "title": "should handle non-existent project gracefully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 27,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 171,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:29.606Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-cb6cf-existent-project-gracefully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-b2355b13b4b0d6457e1f",
+              "file": "project-details.spec.ts",
+              "line": 134,
+              "column": 7
+            },
+            {
+              "title": "should be responsive on mobile devices",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 28,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 136,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.733Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-7b250-esponsive-on-mobile-devices-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-7b250-esponsive-on-mobile-devices-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-ab99dd62c6dc6783a21c",
+              "file": "project-details.spec.ts",
+              "line": 170,
+              "column": 7
+            },
+            {
+              "title": "should handle loading states appropriately",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 29,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 148,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.775Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-16485-oading-states-appropriately-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-16485-oading-states-appropriately-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-3897fd9f91bf92a57a72",
+              "file": "project-details.spec.ts",
+              "line": 193,
+              "column": 7
+            },
+            {
+              "title": "should handle API errors gracefully",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 30,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 148,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.805Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-efe0c-andle-API-errors-gracefully-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-fda77cd3903565110d06",
+              "file": "project-details.spec.ts",
+              "line": 214,
+              "column": 7
+            },
+            {
+              "title": "should display file type icons and information",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 31,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 152,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.834Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-e8cbe--type-icons-and-information-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-e8cbe--type-icons-and-information-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-dcab9c7d3ec74246ac93",
+              "file": "project-details.spec.ts",
+              "line": 251,
+              "column": 7
+            },
+            {
+              "title": "should have proper accessibility features",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 32,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 133,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                          "column": 16,
+                          "line": 6
+                        },
+                        "snippet": "  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                            "column": 16,
+                            "line": 6
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  4 |   test.beforeEach(async ({ page }) => {\n  5 |     // Navigate to homepage first\n> 6 |     await page.goto('/')\n    |                ^\n  7 |     await page.waitForLoadState('networkidle')\n  8 |   })\n  9 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts:6:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.926Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-dada6-oper-accessibility-features-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/project-details-Project-De-dada6-oper-accessibility-features-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/project-details.spec.ts",
+                        "column": 16,
+                        "line": 6
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2a89ccdc3b6a8225cb2-53b608da21f69e354c06",
+              "file": "project-details.spec.ts",
+              "line": 272,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "simple-test.spec.ts",
+      "file": "simple-test.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Simple E2E Tests",
+          "file": "simple-test.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should create project without files",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 33,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 133,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:5:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts",
+                          "column": 16,
+                          "line": 5
+                        },
+                        "snippet": "  3 | test.describe('Simple E2E Tests', () => {\n  4 |   test.beforeEach(async ({ page }) => {\n> 5 |     await page.goto('/')\n    |                ^\n  6 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  7 |   })\n  8 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts",
+                            "column": 16,
+                            "line": 5
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  3 | test.describe('Simple E2E Tests', () => {\n  4 |   test.beforeEach(async ({ page }) => {\n> 5 |     await page.goto('/')\n    |                ^\n  6 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  7 |   })\n  8 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:5:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.920Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/simple-test-Simple-E2E-Tes-015f0-reate-project-without-files-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/simple-test-Simple-E2E-Tes-015f0-reate-project-without-files-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts",
+                        "column": 16,
+                        "line": 5
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e33182337be27a39af1d-7de046d0ed85e8a44e42",
+              "file": "simple-test.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "should navigate to homepage",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 34,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 149,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:5:16",
+                        "location": {
+                          "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts",
+                          "column": 16,
+                          "line": 5
+                        },
+                        "snippet": "  3 | test.describe('Simple E2E Tests', () => {\n  4 |   test.beforeEach(async ({ page }) => {\n> 5 |     await page.goto('/')\n    |                ^\n  6 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  7 |   })\n  8 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts",
+                            "column": 16,
+                            "line": 5
+                          },
+                          "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3000/\", waiting until \"load\"\u001b[22m\n\n\n  3 | test.describe('Simple E2E Tests', () => {\n  4 |   test.beforeEach(async ({ page }) => {\n> 5 |     await page.goto('/')\n    |                ^\n  6 |     await expect(page.getByText('3DShelf')).toBeVisible()\n  7 |   })\n  8 |\n    at /Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts:5:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-13T20:07:30.946Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/simple-test-Simple-E2E-Tests-should-navigate-to-homepage-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/test-results/simple-test-Simple-E2E-Tests-should-navigate-to-homepage-chromium/video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/jparrill/Projects/.vibe-kanban-workspaces/ca5e-test-crea-test-e/3d-organizer/frontend/src/__tests__/e2e/simple-test.spec.ts",
+                        "column": 16,
+                        "line": 5
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e33182337be27a39af1d-802aeb7fad6080abd41f",
+              "file": "simple-test.spec.ts",
+              "line": 32,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-02-13T20:07:24.893Z",
+    "duration": 6824.324,
+    "expected": 0,
+    "skipped": 8,
+    "unexpected": 35,
+    "flaky": 0
+  }
+}

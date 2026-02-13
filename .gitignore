@@ -121,4 +121,10 @@ pids
 # Backup files
 *.bak
 *.backup
+
+# Playwright test reports and results
+frontend/playwright-report.json
+frontend/playwright-results.xml
+frontend/test-results/
+frontend/playwright-report/
 *~
