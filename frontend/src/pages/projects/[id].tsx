@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import {
   Box,
@@ -63,6 +63,7 @@ export default function ProjectDetailPage() {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
   const [fileToDelete, setFileToDelete] = useState<ProjectFile | null>(null)
   const [isDeletingFile, setIsDeletingFile] = useState(false)
+  const cancelRef = useRef<HTMLButtonElement>(null)
 
   const projectId = Number(id)
 
@@ -381,7 +382,7 @@ export default function ProjectDetailPage() {
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={isDeleteDialogOpen}
-        leastDestructiveRef={React.useRef(null)}
+        leastDestructiveRef={cancelRef}
         onClose={handleDeleteCancel}
       >
         <AlertDialogOverlay>
@@ -399,7 +400,7 @@ export default function ProjectDetailPage() {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={React.useRef(null)} onClick={handleDeleteCancel}>
+              <Button ref={cancelRef} onClick={handleDeleteCancel}>
                 Cancel
               </Button>
               <Button
