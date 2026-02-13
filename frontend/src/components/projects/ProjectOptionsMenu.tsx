@@ -43,6 +43,10 @@ export function ProjectOptionsMenu({ project, onRename, onDelete }: ProjectOptio
         minW="20px"
         h="20px"
         w="20px"
+        p={0}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         _hover={{
           bg: 'gray.100'
         }}
