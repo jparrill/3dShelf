@@ -164,22 +164,34 @@ export const projectsApi = {
 
     // Extract filename from Content-Disposition header
     const contentDisposition = response.headers.get('content-disposition')
+    console.log('🔍 DEBUG FILE - Content-Disposition:', contentDisposition)
+    console.log('🔍 DEBUG FILE - All headers:', Object.fromEntries(response.headers.entries()))
+
     let filename = `file_${fileId}`
 
     if (contentDisposition) {
+      console.log('🔍 DEBUG FILE - Processing header:', contentDisposition)
       // More robust filename extraction
       // First try: filename="name" or filename='name' (quoted)
       let filenameMatch = contentDisposition.match(/filename[*]?=['"]([^'"]+)['"]/)
       if (filenameMatch) {
         filename = filenameMatch[1]
+        console.log('✅ DEBUG FILE - Extracted with quotes:', filename)
       } else {
         // Second try: filename=name (unquoted, until semicolon or end)
         filenameMatch = contentDisposition.match(/filename[*]?=([^;,\s]+)/)
         if (filenameMatch) {
           filename = filenameMatch[1]
+          console.log('✅ DEBUG FILE - Extracted without quotes:', filename)
+        } else {
+          console.log('❌ DEBUG FILE - No match, using fallback:', filename)
         }
       }
+    } else {
+      console.log('❌ DEBUG FILE - No Content-Disposition header')
     }
+
+    console.log('🎯 DEBUG FILE - Final filename:', filename)
 
     // Create blob and trigger download
     const blob = await response.blob()
@@ -205,22 +217,33 @@ export const projectsApi = {
 
     // Extract filename from Content-Disposition header
     const contentDisposition = response.headers.get('content-disposition')
+    console.log('🔍 DEBUG PROJECT - Content-Disposition:', contentDisposition)
+    console.log('🔍 DEBUG PROJECT - All headers:', Object.fromEntries(response.headers.entries()))
 
     let filename = `project_${projectId}.zip`
     if (contentDisposition) {
+      console.log('🔍 DEBUG PROJECT - Processing header:', contentDisposition)
       // More robust filename extraction
       // First try: filename="name" or filename='name' (quoted)
       let filenameMatch = contentDisposition.match(/filename[*]?=['"]([^'"]+)['"]/)
       if (filenameMatch) {
         filename = filenameMatch[1]
+        console.log('✅ DEBUG PROJECT - Extracted with quotes:', filename)
       } else {
         // Second try: filename=name (unquoted, until semicolon or end)
         filenameMatch = contentDisposition.match(/filename[*]?=([^;,\s]+)/)
         if (filenameMatch) {
           filename = filenameMatch[1]
+          console.log('✅ DEBUG PROJECT - Extracted without quotes:', filename)
+        } else {
+          console.log('❌ DEBUG PROJECT - No match, using fallback:', filename)
         }
       }
+    } else {
+      console.log('❌ DEBUG PROJECT - No Content-Disposition header')
     }
+
+    console.log('🎯 DEBUG PROJECT - Final filename:', filename)
 
     // Create blob and trigger download
     const blob = await response.blob()
