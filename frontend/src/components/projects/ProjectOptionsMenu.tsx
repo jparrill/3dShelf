@@ -3,8 +3,8 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  IconButton,
-  useDisclosure,
+  Box,
+  Icon,
   Text
 } from '@chakra-ui/react'
 import { FiSettings, FiEdit2, FiTrash2 } from 'react-icons/fi'
@@ -34,26 +34,24 @@ export function ProjectOptionsMenu({ project, onRename, onDelete }: ProjectOptio
   return (
     <Menu>
       <MenuButton
-        as={IconButton}
-        aria-label="Project options"
-        icon={<FiSettings fontSize="20px" />}
-        size="xs"
-        variant="ghost"
+        as={Box}
         onClick={handleMenuButtonClick}
-        minW="20px"
-        h="20px"
-        w="20px"
-        p={0}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
+        cursor="pointer"
+        borderRadius="md"
+        p={1}
         _hover={{
           bg: 'gray.100'
         }}
         _active={{
           bg: 'gray.200'
         }}
-      />
+      >
+        <Icon
+          as={FiSettings}
+          boxSize={5}
+          color="gray.600"
+        />
+      </MenuButton>
       <MenuList>
         <MenuItem icon={<FiEdit2 />} onClick={handleRename}>
           <Text>Renombrar proyecto</Text>
