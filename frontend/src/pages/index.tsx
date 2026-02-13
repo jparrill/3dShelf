@@ -9,6 +9,8 @@ import { useRouter } from 'next/router'
 import { Header } from '@/components/layout/Header'
 import { ProjectGrid } from '@/components/projects/ProjectGrid'
 import { CreateProjectModal } from '@/components/projects/CreateProjectModal'
+import { RenameProjectModal } from '@/components/projects/RenameProjectModal'
+import { DeleteProjectModal } from '@/components/projects/DeleteProjectModal'
 import { Project } from '@/types/project'
 import { projectsApi } from '@/lib/api'
 
@@ -18,6 +20,9 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
   const [currentQuery, setCurrentQuery] = useState('')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [isRenameModalOpen, setIsRenameModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const router = useRouter()
   const toast = useToast()
@@ -78,6 +83,28 @@ export default function HomePage() {
     })
   }
 
+  const handleRenameProject = (project: Project) => {
+    setSelectedProject(project)
+    setIsRenameModalOpen(true)
+  }
+
+  const handleDeleteProject = (project: Project) => {
+    setSelectedProject(project)
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleRenameSuccess = () => {
+    // Reload projects to reflect changes
+    loadProjects(currentQuery)
+  }
+
+  const handleDeleteSuccess = () => {
+    // Remove the deleted project from the list
+    if (selectedProject) {
+      setProjects(prev => prev.filter(p => p.id !== selectedProject.id))
+    }
+  }
+
   return (
     <Box minH="100vh" bg="gray.50">
       <Header
@@ -92,6 +119,8 @@ export default function HomePage() {
           isLoading={isLoading}
           error={error}
           onProjectClick={handleProjectClick}
+          onProjectRename={handleRenameProject}
+          onProjectDelete={handleDeleteProject}
         />
       </Container>
 
@@ -99,6 +128,20 @@ export default function HomePage() {
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onProjectCreated={handleProjectCreated}
+      />
+
+      <RenameProjectModal
+        isOpen={isRenameModalOpen}
+        onClose={() => setIsRenameModalOpen(false)}
+        project={selectedProject}
+        onSuccess={handleRenameSuccess}
+      />
+
+      <DeleteProjectModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        project={selectedProject}
+        onSuccess={handleDeleteSuccess}
       />
     </Box>
   )

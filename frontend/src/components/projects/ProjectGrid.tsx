@@ -17,9 +17,11 @@ interface ProjectGridProps {
   isLoading: boolean
   error: string | null
   onProjectClick: (project: Project) => void
+  onProjectRename?: (project: Project) => void
+  onProjectDelete?: (project: Project) => void
 }
 
-export function ProjectGrid({ projects, isLoading, error, onProjectClick }: ProjectGridProps) {
+export function ProjectGrid({ projects, isLoading, error, onProjectClick, onProjectRename, onProjectDelete }: ProjectGridProps) {
   if (isLoading) {
     return (
       <Center py={20}>
@@ -65,6 +67,8 @@ export function ProjectGrid({ projects, isLoading, error, onProjectClick }: Proj
           key={project.id}
           project={project}
           onClick={() => onProjectClick(project)}
+          onRename={onProjectRename}
+          onDelete={onProjectDelete}
         />
       ))}
     </SimpleGrid>

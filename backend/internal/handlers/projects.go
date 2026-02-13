@@ -642,6 +642,142 @@ func (h *ProjectsHandler) SearchProjects(c *gin.Context) {
 	})
 }
 
+// UpdateProjectRequest represents the request body for updating a project
+type UpdateProjectRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+}
+
+// UpdateProject updates a project's name and/or description, and renames the directory if needed
+func (h *ProjectsHandler) UpdateProject(c *gin.Context) {
+	id := c.Param("id")
+
+	var req UpdateProjectRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Get the existing project
+	var project models.Project
+	if err := database.GetDB().First(&project, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Check if name is changing
+	nameChanged := project.Name != req.Name
+
+	// If name is changing, validate new name and prepare for directory rename
+	var newPath string
+	if nameChanged {
+		// Sanitize new project name (same logic as CreateProject)
+		safeName := strings.ReplaceAll(req.Name, "/", "_")
+		safeName = strings.ReplaceAll(safeName, " ", "_")
+		newPath = filepath.Join(filepath.Dir(project.Path), safeName)
+
+		// Check if new directory would conflict
+		if _, err := os.Stat(newPath); err == nil {
+			c.JSON(http.StatusConflict, gin.H{"error": "A project with this name already exists"})
+			return
+		}
+
+		// Check if another project in DB has the same name
+		var existingProject models.Project
+		if err := database.GetDB().Where("name = ? AND id != ?", req.Name, project.ID).First(&existingProject).Error; err == nil {
+			c.JSON(http.StatusConflict, gin.H{"error": "A project with this name already exists"})
+			return
+		}
+	}
+
+	// Update project in database first
+	project.Name = req.Name
+	project.Description = req.Description
+	project.UpdatedAt = time.Now()
+
+	if err := database.GetDB().Save(&project).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update project"})
+		return
+	}
+
+	// If name changed, rename the directory
+	if nameChanged {
+		if err := os.Rename(project.Path, newPath); err != nil {
+			// Rollback database changes
+			database.GetDB().Model(&project).Updates(map[string]interface{}{
+				"name":        project.Name, // Original name
+				"description": project.Description,
+			})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to rename project directory"})
+			return
+		}
+
+		// Update path in database and all associated files
+		oldPath := project.Path
+		project.Path = newPath
+
+		if err := database.GetDB().Save(&project).Error; err != nil {
+			// Try to rollback directory rename
+			os.Rename(newPath, oldPath)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update project path"})
+			return
+		}
+
+		// Update file paths for all associated files
+		if err := database.GetDB().Model(&models.ProjectFile{}).
+			Where("project_id = ?", project.ID).
+			Update("filepath", fmt.Sprintf("REPLACE(filepath, '%s', '%s')", oldPath, newPath)).Error; err != nil {
+			fmt.Printf("Warning: Failed to update file paths for project %d: %v\n", project.ID, err)
+		}
+	}
+
+	// Return updated project with files
+	if err := database.GetDB().Preload("Files").First(&project, id).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch updated project"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Project updated successfully",
+		"project": project,
+	})
+}
+
+// DeleteProject deletes a project completely (directory and database entries)
+func (h *ProjectsHandler) DeleteProject(c *gin.Context) {
+	id := c.Param("id")
+
+	// Get the project
+	var project models.Project
+	if err := database.GetDB().Preload("Files").First(&project, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
+		return
+	}
+
+	// Delete all files from database first
+	if err := database.GetDB().Where("project_id = ?", project.ID).Delete(&models.ProjectFile{}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete project files from database"})
+		return
+	}
+
+	// Delete project from database
+	if err := database.GetDB().Delete(&project).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete project from database"})
+		return
+	}
+
+	// Remove directory from filesystem
+	if err := os.RemoveAll(project.Path); err != nil {
+		fmt.Printf("Warning: Failed to remove project directory %s: %v\n", project.Path, err)
+		// Don't return error here as database cleanup was successful
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":         "Project deleted successfully",
+		"deleted_project": gin.H{"id": project.ID, "name": project.Name, "path": project.Path},
+	})
+}
+
 // DownloadProjectFile downloads a specific file from a project
 func (h *ProjectsHandler) DownloadProjectFile(c *gin.Context) {
 	projectID := c.Param("id")

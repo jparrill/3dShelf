@@ -13,10 +13,13 @@ import {
 import { FiFolder, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi'
 import { Project, ProjectStatus } from '@/types/project'
 import { getFileTypeIcon } from '@/utils/fileTypes'
+import { ProjectOptionsMenu } from './ProjectOptionsMenu'
 
 interface ProjectCardProps {
   project: Project
   onClick: () => void
+  onRename?: (project: Project) => void
+  onDelete?: (project: Project) => void
 }
 
 function getStatusIcon(status: ProjectStatus) {
@@ -45,7 +48,7 @@ function getStatusColor(status: ProjectStatus) {
   }
 }
 
-export function ProjectCard({ project, onClick }: ProjectCardProps) {
+export function ProjectCard({ project, onClick, onRename, onDelete }: ProjectCardProps) {
   const statusConfig = getStatusIcon(project.status)
   const statusColor = getStatusColor(project.status)
 
@@ -70,7 +73,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
       <CardBody>
         <Stack spacing={4}>
           <Flex justify="space-between" align="flex-start">
-            <Box>
+            <Box flex="1" pr={2}>
               <Heading size="md" mb={2} color="gray.800">
                 {project.name}
               </Heading>
@@ -79,15 +82,24 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
               </Text>
             </Box>
 
-            <Tooltip label={`Status: ${project.status}`}>
-              <Box>
-                <Icon
-                  as={statusConfig.icon}
-                  color={statusConfig.color}
-                  boxSize={5}
+            <Flex align="center" gap={2}>
+              <Tooltip label={`Status: ${project.status}`}>
+                <Box>
+                  <Icon
+                    as={statusConfig.icon}
+                    color={statusConfig.color}
+                    boxSize={5}
+                  />
+                </Box>
+              </Tooltip>
+              {(onRename || onDelete) && (
+                <ProjectOptionsMenu
+                  project={project}
+                  onRename={onRename || (() => {})}
+                  onDelete={onDelete || (() => {})}
                 />
-              </Box>
-            </Tooltip>
+              )}
+            </Flex>
           </Flex>
 
           <Flex justify="space-between" align="center">
