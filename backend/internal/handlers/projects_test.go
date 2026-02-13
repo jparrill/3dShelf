@@ -116,6 +116,8 @@ func setupRouter(tmpDir string) *gin.Engine {
 		api.POST("/projects/scan", handler.ScanProjects)
 		api.GET("/projects/search", handler.SearchProjects)
 		api.GET("/projects/:id", handler.GetProject)
+		api.PUT("/projects/:id", handler.UpdateProject)
+		api.DELETE("/projects/:id", handler.DeleteProject)
 		api.PUT("/projects/:id/sync", handler.SyncProject)
 		api.GET("/projects/:id/files", handler.GetProjectFiles)
 		api.POST("/projects/:id/files", handler.UploadProjectFiles)
@@ -998,6 +1000,231 @@ func TestUploadProjectFiles(t *testing.T) {
 
 		if w.Code != http.StatusBadRequest {
 			t.Errorf("Expected status %d, got %d", http.StatusBadRequest, w.Code)
+		}
+	})
+}
+
+// TestUpdateProject tests the UpdateProject handler
+func TestUpdateProject(t *testing.T) {
+	// Create test database
+	db := setupTestDB(t)
+
+	// Create temporary directory
+	tempDir, err := os.MkdirTemp("", "TestUpdateProject")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// Setup router with handlers
+	router := setupRouter(tempDir)
+
+	// Create test project
+	project := models.Project{
+		Name:        "Original Project",
+		Description: "Original description",
+		Path:        filepath.Join(tempDir, "Original_Project"),
+	}
+	if err := db.Create(&project).Error; err != nil {
+		t.Fatalf("Failed to create test project: %v", err)
+	}
+
+	// Create the project directory
+	if err := os.MkdirAll(project.Path, 0755); err != nil {
+		t.Fatalf("Failed to create project directory: %v", err)
+	}
+
+	t.Run("Update project name and description", func(t *testing.T) {
+		updateData := map[string]interface{}{
+			"name":        "Updated Project Name",
+			"description": "Updated description",
+		}
+		jsonData, _ := json.Marshal(updateData)
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("PUT", "/api/projects/"+strconv.Itoa(int(project.ID)), strings.NewReader(string(jsonData)))
+		req.Header.Set("Content-Type", "application/json")
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusOK {
+			t.Errorf("Expected status %d, got %d. Body: %s", http.StatusOK, w.Code, w.Body.String())
+		}
+
+		var response map[string]interface{}
+		if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+			t.Errorf("Failed to unmarshal response: %v", err)
+		}
+
+		// Check response
+		if message, ok := response["message"].(string); !ok || message != "Project updated successfully" {
+			t.Errorf("Expected success message, got: %v", response["message"])
+		}
+
+		// Verify database update
+		var updatedProject models.Project
+		if err := db.First(&updatedProject, project.ID).Error; err != nil {
+			t.Errorf("Failed to fetch updated project: %v", err)
+		}
+
+		if updatedProject.Name != "Updated Project Name" {
+			t.Errorf("Expected name 'Updated Project Name', got '%s'", updatedProject.Name)
+		}
+
+		if updatedProject.Description != "Updated description" {
+			t.Errorf("Expected description 'Updated description', got '%s'", updatedProject.Description)
+		}
+
+		// Verify directory was renamed
+		newPath := filepath.Join(tempDir, "Updated_Project_Name")
+		if _, err := os.Stat(newPath); os.IsNotExist(err) {
+			t.Error("Expected new directory to exist after rename")
+		}
+
+		if _, err := os.Stat(project.Path); !os.IsNotExist(err) {
+			t.Error("Expected old directory to be removed after rename")
+		}
+	})
+
+	t.Run("Update non-existent project", func(t *testing.T) {
+		updateData := map[string]interface{}{
+			"name":        "Updated Name",
+			"description": "Updated description",
+		}
+		jsonData, _ := json.Marshal(updateData)
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("PUT", "/api/projects/999", strings.NewReader(string(jsonData)))
+		req.Header.Set("Content-Type", "application/json")
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusNotFound {
+			t.Errorf("Expected status %d, got %d", http.StatusNotFound, w.Code)
+		}
+	})
+
+	t.Run("Update with invalid JSON", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("PUT", "/api/projects/"+strconv.Itoa(int(project.ID)), strings.NewReader("invalid json"))
+		req.Header.Set("Content-Type", "application/json")
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusBadRequest {
+			t.Errorf("Expected status %d, got %d", http.StatusBadRequest, w.Code)
+		}
+	})
+
+	t.Run("Update with empty name", func(t *testing.T) {
+		updateData := map[string]interface{}{
+			"name":        "",
+			"description": "Some description",
+		}
+		jsonData, _ := json.Marshal(updateData)
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("PUT", "/api/projects/"+strconv.Itoa(int(project.ID)), strings.NewReader(string(jsonData)))
+		req.Header.Set("Content-Type", "application/json")
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusBadRequest {
+			t.Errorf("Expected status %d, got %d", http.StatusBadRequest, w.Code)
+		}
+	})
+}
+
+// TestDeleteProject tests the DeleteProject handler
+func TestDeleteProject(t *testing.T) {
+	// Create test database
+	db := setupTestDB(t)
+
+	// Create temporary directory
+	tempDir, err := os.MkdirTemp("", "TestDeleteProject")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// Setup router with handlers
+	router := setupRouter(tempDir)
+
+	// Create test project
+	project := models.Project{
+		Name:        "Test Project",
+		Description: "Test description",
+		Path:        filepath.Join(tempDir, "Test_Project"),
+	}
+	if err := db.Create(&project).Error; err != nil {
+		t.Fatalf("Failed to create test project: %v", err)
+	}
+
+	// Create the project directory
+	if err := os.MkdirAll(project.Path, 0755); err != nil {
+		t.Fatalf("Failed to create project directory: %v", err)
+	}
+
+	// Create test file
+	testFile := models.ProjectFile{
+		ProjectID: project.ID,
+		Filename:  "test.stl",
+		Filepath:  filepath.Join(project.Path, "test.stl"),
+		FileType:  "stl",
+		Size:      100,
+	}
+	if err := db.Create(&testFile).Error; err != nil {
+		t.Fatalf("Failed to create test file record: %v", err)
+	}
+
+	// Create physical file
+	if err := os.WriteFile(testFile.Filepath, []byte("test content"), 0644); err != nil {
+		t.Fatalf("Failed to create physical test file: %v", err)
+	}
+
+	t.Run("Delete existing project", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("DELETE", "/api/projects/"+strconv.Itoa(int(project.ID)), nil)
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusOK {
+			t.Errorf("Expected status %d, got %d. Body: %s", http.StatusOK, w.Code, w.Body.String())
+		}
+
+		var response map[string]interface{}
+		if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+			t.Errorf("Failed to unmarshal response: %v", err)
+		}
+
+		// Check response
+		if message, ok := response["message"].(string); !ok || message != "Project deleted successfully" {
+			t.Errorf("Expected success message, got: %v", response["message"])
+		}
+
+		// Verify project was deleted from database
+		var deletedProject models.Project
+		if err := db.First(&deletedProject, project.ID).Error; err == nil {
+			t.Error("Expected project to be deleted from database")
+		}
+
+		// Verify files were deleted from database
+		var files []models.ProjectFile
+		if err := db.Where("project_id = ?", project.ID).Find(&files).Error; err != nil {
+			t.Errorf("Failed to query files: %v", err)
+		}
+		if len(files) > 0 {
+			t.Errorf("Expected no files to remain, but found %d", len(files))
+		}
+
+		// Verify directory was deleted
+		if _, err := os.Stat(project.Path); !os.IsNotExist(err) {
+			t.Error("Expected project directory to be deleted")
+		}
+	})
+
+	t.Run("Delete non-existent project", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("DELETE", "/api/projects/999", nil)
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusNotFound {
+			t.Errorf("Expected status %d, got %d", http.StatusNotFound, w.Code)
 		}
 	})
 }
