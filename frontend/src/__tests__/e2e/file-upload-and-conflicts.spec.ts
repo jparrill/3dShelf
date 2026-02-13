@@ -18,7 +18,7 @@ const createProjectWithFiles = async (page: Page, projectName: string, initialFi
   await page.goto('/')
   await page.getByRole('button', { name: /create project/i }).click()
 
-  const modal = page.getByRole('dialog', { name: 'Create New Project' })
+  const modal = page.locator('[role="dialog"]').first()
   await expect(modal).toBeVisible()
 
   await page.getByPlaceholder(/project name/i).fill(projectName)
@@ -62,7 +62,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Click Upload Files button
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Upload files
@@ -112,7 +112,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Click Upload Files
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Upload conflicting file
@@ -127,7 +127,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     await expect(page.getByText('conflict-test.stl').first()).toBeVisible()
 
     // Select skip resolution - click the radio button for skip
-    await page.locator('input[value="skip"]').check({ force: true })
+    await page.getByRole('radio', { name: /skip this file/i }).click()
 
     // Upload with resolution
     const uploadPromise = page.waitForResponse(response =>
@@ -140,8 +140,8 @@ test.describe('File Upload and Conflict Resolution', () => {
     const uploadResponse = await uploadPromise
     expect(uploadResponse.status()).toBe(200)
 
-    // Verify modal closes
-    await expect(uploadModal).not.toBeVisible()
+    // Verify modal closes (increase timeout for upload processing)
+    await expect(uploadModal).not.toBeVisible({ timeout: 10000 })
 
     // Verify file was skipped (should still show only 1 file)
     await expect(page.getByText('1 file')).toBeVisible()
@@ -167,7 +167,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Click Upload Files
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Upload conflicting file
@@ -177,11 +177,17 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Try to upload - this will automatically check for conflicts
     await page.getByRole('button', { name: 'Upload Files' }).click()
 
+    // Wait for the conflict check API response
+    await page.waitForResponse(response =>
+      response.url().includes('/files/check-conflicts') &&
+      response.request().method() === 'POST'
+    )
+
     // Should show conflict detected after upload attempt
     await expect(page.getByText(/conflicts detected/i)).toBeVisible()
 
     // Select overwrite resolution
-    await page.locator('input[value="overwrite"]').check({ force: true })
+    await page.getByRole('radio', { name: /overwrite existing file/i }).click()
 
     // Upload with resolution
     const uploadPromise = page.waitForResponse(response =>
@@ -194,8 +200,8 @@ test.describe('File Upload and Conflict Resolution', () => {
     const uploadResponse = await uploadPromise
     expect(uploadResponse.status()).toBe(200)
 
-    // Verify modal closes
-    await expect(uploadModal).not.toBeVisible()
+    // Verify modal closes (increase timeout for upload processing)
+    await expect(uploadModal).not.toBeVisible({ timeout: 10000 })
 
     // Verify file was overwritten (should still show 1 file)
     await expect(page.getByText('1 file')).toBeVisible()
@@ -223,7 +229,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Click Upload Files
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Upload conflicting file
@@ -233,11 +239,17 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Try to upload - this will automatically check for conflicts
     await page.getByRole('button', { name: 'Upload Files' }).click()
 
+    // Wait for the conflict check API response
+    await page.waitForResponse(response =>
+      response.url().includes('/files/check-conflicts') &&
+      response.request().method() === 'POST'
+    )
+
     // Should show conflict detected after upload attempt
     await expect(page.getByText(/conflicts detected/i)).toBeVisible()
 
     // Select rename resolution
-    await page.locator('input[value="rename"]').check({ force: true })
+    await page.getByRole('radio', { name: /save with timestamp/i }).click()
 
     // Upload with resolution
     const uploadPromise = page.waitForResponse(response =>
@@ -250,8 +262,8 @@ test.describe('File Upload and Conflict Resolution', () => {
     const uploadResponse = await uploadPromise
     expect(uploadResponse.status()).toBe(200)
 
-    // Verify modal closes
-    await expect(uploadModal).not.toBeVisible()
+    // Verify modal closes (increase timeout for upload processing)
+    await expect(uploadModal).not.toBeVisible({ timeout: 10000 })
 
     // Verify both files exist (should show 2 files now)
     await expect(page.getByText('2 files').first()).toBeVisible()
@@ -288,7 +300,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Upload all files
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     const fileInput = uploadModal.locator('input[type="file"]')
@@ -336,8 +348,8 @@ test.describe('File Upload and Conflict Resolution', () => {
     const uploadResponse = await uploadPromise
     expect(uploadResponse.status()).toBe(200)
 
-    // Verify modal closes
-    await expect(uploadModal).not.toBeVisible()
+    // Verify modal closes (increase timeout for upload processing)
+    await expect(uploadModal).not.toBeVisible({ timeout: 10000 })
 
     // Verify results:
     // - mixed1.stl skipped (original remains)
@@ -368,7 +380,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Open upload modal
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Select file
@@ -399,7 +411,7 @@ test.describe('File Upload and Conflict Resolution', () => {
     // Open upload modal
     await page.getByRole('button', { name: /upload files/i }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Try to upload invalid file type

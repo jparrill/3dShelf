@@ -418,7 +418,7 @@ test.describe('Comprehensive 3D Organizer Workflows', () => {
       await fileInput.setInputFiles(filePaths)
 
       // Submit and monitor for loading states
-      const submitButton = page.getByRole('button', { name: /create project/i }).nth(1)
+      const submitButton = modal.getByRole('button', { name: /create project/i })
 
       // Check if button shows loading state
       await submitButton.click()

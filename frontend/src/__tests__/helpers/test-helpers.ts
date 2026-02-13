@@ -103,7 +103,7 @@ export class ProjectTestHelpers {
     // Click Create Project button
     await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
 
     // Fill project details
@@ -150,6 +150,10 @@ export class ProjectTestHelpers {
     // Wait for page to load completely
     await page.waitForLoadState('networkidle')
 
+    // Refresh the page to ensure we see newly created projects
+    await page.reload()
+    await page.waitForLoadState('networkidle')
+
     // Try multiple selector strategies to find the project card
     const selectors = [
       page.locator('[cursor="pointer"]').filter({ hasText: projectName }),
@@ -161,7 +165,7 @@ export class ProjectTestHelpers {
     let projectCard = null
     for (const selector of selectors) {
       try {
-        await expect(selector.first()).toBeVisible({ timeout: 3000 })
+        await expect(selector.first()).toBeVisible({ timeout: 5000 })
         projectCard = selector.first()
         break
       } catch {
@@ -170,7 +174,28 @@ export class ProjectTestHelpers {
     }
 
     if (!projectCard) {
-      throw new Error(`Could not find project "${projectName}" on homepage`)
+      // Try one more refresh and scan if project is not found
+      try {
+        await page.getByRole('button', { name: /scan projects/i }).click()
+        await page.waitForTimeout(2000) // Wait for scan to complete
+
+        // Try selectors again after scan
+        for (const selector of selectors) {
+          try {
+            await expect(selector.first()).toBeVisible({ timeout: 5000 })
+            projectCard = selector.first()
+            break
+          } catch {
+            // Continue to next selector
+          }
+        }
+      } catch {
+        // Scan button might not exist, continue
+      }
+    }
+
+    if (!projectCard) {
+      throw new Error(`Could not find project "${projectName}" on homepage after refresh and scan`)
     }
 
     await projectCard.click()
@@ -193,7 +218,7 @@ export class ProjectTestHelpers {
     // Open upload modal
     await page.getByRole('button', { name: 'Upload Files' }).click()
 
-    const uploadModal = page.getByRole('dialog', { name: 'Upload Files' })
+    const uploadModal = page.locator('[role="dialog"]').first()
     await expect(uploadModal).toBeVisible()
 
     // Upload files

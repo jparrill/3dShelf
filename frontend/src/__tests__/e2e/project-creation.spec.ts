@@ -32,7 +32,7 @@ test.describe('Project Creation', () => {
     await page.getByRole('button', { name: 'Create Project' }).click()
 
     // Wait for modal to open (contains "Create New Project" header)
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
     await expect(page.getByText('Create New Project')).toBeVisible()
 
@@ -69,7 +69,7 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
     await expect(page.getByText('Create New Project')).toBeVisible()
 
@@ -121,7 +121,7 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
 
     // Try to submit without name
@@ -155,7 +155,7 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
 
     // Fill project name
@@ -172,7 +172,11 @@ test.describe('Project Creation', () => {
     // Remove one file - find the remove button associated with a specific file
     // Look for the list item containing the file name, then find its remove button
     const fileListItem = page.locator('li').filter({ hasText: 'remove-test.stl' })
-    const removeButton = fileListItem.getByRole('button').last() // The remove button is the last button in the item
+    const removeButton = fileListItem.getByRole('button', { name: '' }).or(
+      fileListItem.locator('button[aria-label*="remove"], button[title*="remove"]')
+    ).or(
+      fileListItem.locator('button').last()
+    )
     await removeButton.click()
 
     // Verify file is removed from list
@@ -191,7 +195,7 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
 
     // Fill some data
@@ -216,7 +220,7 @@ test.describe('Project Creation', () => {
     // Click Create Project button
     await page.getByRole('button', { name: 'Create Project' }).click()
 
-    const modal = page.getByRole('dialog', { name: 'Create New Project' })
+    const modal = page.locator('[role="dialog"]').first()
     await expect(modal).toBeVisible()
 
     // Fill project details

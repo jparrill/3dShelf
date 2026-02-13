@@ -192,7 +192,7 @@ export function CreateProjectModal({ isOpen, onClose, onProjectCreated }: Create
     <Modal isOpen={isOpen} onClose={handleClose} size="xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create New Project</ModalHeader>
+        <ModalHeader id="create-project-modal-header">Create New Project</ModalHeader>
         <ModalCloseButton isDisabled={isCreating} />
 
         <ModalBody>
