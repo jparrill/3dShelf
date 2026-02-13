@@ -50,6 +50,8 @@ func main() {
 	corsConfig.AllowAllOrigins = true
 	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	corsConfig.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
+	// IMPORTANT: Expose Content-Disposition header for file downloads
+	corsConfig.ExposeHeaders = []string{"Content-Disposition"}
 	router.Use(cors.New(corsConfig))
 
 	// Add debugging middleware for file uploads
