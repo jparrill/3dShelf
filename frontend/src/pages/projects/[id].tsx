@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
+import React from 'react'
 import {
   Box,
   Container,
@@ -36,185 +35,40 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useDisclosure,
-  useToast,
   IconButton,
   Tooltip,
   HStack
 } from '@chakra-ui/react'
 import { FiArrowLeft, FiRefreshCw, FiFolder, FiUpload, FiTrash2, FiDownload } from 'react-icons/fi'
-import { Project, ProjectFile, ProjectStats, READMEResponse } from '@/types/project'
-import { projectsApi } from '@/lib/api'
 import { getFileTypeIcon, getFileTypeName, formatFileSize } from '@/utils/fileTypes'
+import { getProjectStatusColor } from '@/utils/statusColors'
 import { ProjectFileUpload } from '@/components/projects/ProjectFileUpload'
+import { useProjectDetail } from '@/hooks/useProjectDetail'
 
 export default function ProjectDetailPage() {
-  const router = useRouter()
-  const { id } = router.query
-  const toast = useToast()
-  const { isOpen: isDeleteDialogOpen, onOpen: onDeleteDialogOpen, onClose: onDeleteDialogClose } = useDisclosure()
-
-  const [project, setProject] = useState<Project | null>(null)
-  const [files, setFiles] = useState<ProjectFile[]>([])
-  const [stats, setStats] = useState<ProjectStats | null>(null)
-  const [readme, setReadme] = useState<READMEResponse | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [isSyncing, setIsSyncing] = useState(false)
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
-  const [fileToDelete, setFileToDelete] = useState<ProjectFile | null>(null)
-  const [isDeletingFile, setIsDeletingFile] = useState(false)
-  const cancelRef = useRef<HTMLButtonElement>(null)
-
-  const projectId = Number(id)
-
-  const loadProjectData = async () => {
-    if (!projectId) return
-
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      const [projectData, filesData, statsData, readmeData] = await Promise.all([
-        projectsApi.getProject(projectId),
-        projectsApi.getProjectFiles(projectId),
-        projectsApi.getProjectStats(projectId),
-        projectsApi.getProjectREADME(projectId)
-      ])
-
-      setProject(projectData)
-      setFiles(filesData.files)
-      setStats(statsData)
-      setReadme(readmeData)
-    } catch (err) {
-      setError('Failed to load project details')
-      console.error('Error loading project:', err)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleSync = async () => {
-    if (!projectId) return
-
-    setIsSyncing(true)
-    try {
-      await projectsApi.syncProject(projectId)
-      await loadProjectData() // Reload data after sync
-    } catch (err) {
-      setError('Failed to sync project')
-      console.error('Error syncing project:', err)
-    } finally {
-      setIsSyncing(false)
-    }
-  }
-
-  const handleUploadComplete = async (uploadedFiles: ProjectFile[]) => {
-    // Reload project data to show new files
-    await loadProjectData()
-  }
-
-  const handleDeleteClick = (file: ProjectFile) => {
-    setFileToDelete(file)
-    onDeleteDialogOpen()
-  }
-
-  const handleDeleteConfirm = async () => {
-    if (!fileToDelete || !projectId) return
-
-    setIsDeletingFile(true)
-    try {
-      await projectsApi.deleteProjectFile(projectId, fileToDelete.id)
-
-      toast({
-        title: "File deleted successfully",
-        description: `${fileToDelete.filename} has been removed from the project`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      })
-
-      // Reload project data to update the file list
-      await loadProjectData()
-
-    } catch (err) {
-      console.error('Error deleting file:', err)
-      toast({
-        title: "Failed to delete file",
-        description: "There was an error deleting the file. Please try again.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      })
-    } finally {
-      setIsDeletingFile(false)
-      setFileToDelete(null)
-      onDeleteDialogClose()
-    }
-  }
-
-  const handleDeleteCancel = () => {
-    setFileToDelete(null)
-    onDeleteDialogClose()
-  }
-
-  const handleDownloadFile = async (file: ProjectFile) => {
-    if (!projectId) return
-
-    try {
-      await projectsApi.downloadProjectFile(projectId, file.id)
-
-      toast({
-        title: "File download started",
-        description: `${file.filename} is being downloaded`,
-        status: "info",
-        duration: 3000,
-        isClosable: true,
-      })
-
-    } catch (err) {
-      console.error('Error downloading file:', err)
-      toast({
-        title: "Failed to download file",
-        description: "There was an error downloading the file. Please try again.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      })
-    }
-  }
-
-  const handleDownloadProject = async () => {
-    if (!projectId) return
-
-    try {
-      await projectsApi.downloadProject(projectId)
-
-      toast({
-        title: "Project download started",
-        description: `${project?.name || 'Project'} is being downloaded as ZIP`,
-        status: "info",
-        duration: 3000,
-        isClosable: true,
-      })
-
-    } catch (err) {
-      console.error('Error downloading project:', err)
-      toast({
-        title: "Failed to download project",
-        description: "There was an error downloading the project. Please try again.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      })
-    }
-  }
-
-  useEffect(() => {
-    if (projectId) {
-      loadProjectData()
-    }
-  }, [projectId])
+  const {
+    project,
+    files,
+    stats,
+    readme,
+    isLoading,
+    error,
+    isSyncing,
+    isUploadModalOpen,
+    setIsUploadModalOpen,
+    isDeleteDialogOpen,
+    fileToDelete,
+    isDeletingFile,
+    cancelRef,
+    handleSync,
+    handleUploadComplete,
+    handleDeleteClick,
+    handleDeleteConfirm,
+    handleDeleteCancel,
+    handleDownloadFile,
+    handleDownloadProject,
+    router,
+  } = useProjectDetail()
 
   if (isLoading) {
     return (
@@ -262,7 +116,7 @@ export default function ProjectDetailPage() {
               <Heading size="lg" color="gray.800">
                 {project.name}
               </Heading>
-              <Badge colorScheme={project.status === 'healthy' ? 'green' : project.status === 'inconsistent' ? 'yellow' : 'red'}>
+              <Badge colorScheme={getProjectStatusColor(project.status)}>
                 {project.status}
               </Badge>
             </Flex>

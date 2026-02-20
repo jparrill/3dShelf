@@ -13,6 +13,7 @@ import {
 import { FiFolder, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi'
 import { Project, ProjectStatus } from '@/types/project'
 import { getFileTypeIcon } from '@/utils/fileTypes'
+import { getProjectStatusColor } from '@/utils/statusColors'
 import { ProjectOptionsMenu } from './ProjectOptionsMenu'
 
 interface ProjectCardProps {
@@ -35,22 +36,9 @@ function getStatusIcon(status: ProjectStatus) {
   }
 }
 
-function getStatusColor(status: ProjectStatus) {
-  switch (status) {
-    case 'healthy':
-      return 'green'
-    case 'inconsistent':
-      return 'yellow'
-    case 'error':
-      return 'red'
-    default:
-      return 'gray'
-  }
-}
-
 export function ProjectCard({ project, onClick, onRename, onDelete }: ProjectCardProps) {
   const statusConfig = getStatusIcon(project.status)
-  const statusColor = getStatusColor(project.status)
+  const statusColor = getProjectStatusColor(project.status)
 
   const fileTypeCounts = project.files?.reduce((acc, file) => {
     acc[file.file_type] = (acc[file.file_type] || 0) + 1

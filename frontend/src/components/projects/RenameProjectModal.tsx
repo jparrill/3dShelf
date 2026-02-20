@@ -18,6 +18,7 @@ import {
 import { useState, useEffect } from 'react'
 import { Project } from '@/types/project'
 import { projectsApi } from '@/lib/api'
+import { showSuccessToast, showErrorToast } from '@/utils/toast'
 
 interface RenameProjectModalProps {
   isOpen: boolean
@@ -51,13 +52,8 @@ export function RenameProjectModal({ isOpen, onClose, project, onSuccess }: Rena
     try {
       await projectsApi.updateProject(project.id, name.trim(), description.trim())
 
-      toast({
-        title: 'Proyecto actualizado',
-        description: `El proyecto "${project.name}" ha sido renombrado a "${name.trim()}"`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
+      showSuccessToast(toast, 'Project updated', `Project "${project.name}" has been renamed to "${name.trim()}"`)
+
 
       onSuccess()
       onClose()
@@ -66,15 +62,9 @@ export function RenameProjectModal({ isOpen, onClose, project, onSuccess }: Rena
     } catch (error: any) {
       console.error('Error updating project:', error)
 
-      const errorMessage = error.response?.data?.error || 'Error al actualizar el proyecto'
+      const errorMessage = error.response?.data?.error || 'An error occurred while updating the project'
 
-      toast({
-        title: 'Error al actualizar proyecto',
-        description: errorMessage,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
+      showErrorToast(toast, 'Failed to update project', errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -93,31 +83,31 @@ export function RenameProjectModal({ isOpen, onClose, project, onSuccess }: Rena
       <ModalOverlay />
       <ModalContent>
         <form onSubmit={handleSubmit}>
-          <ModalHeader>Renombrar Proyecto</ModalHeader>
+          <ModalHeader>Rename Project</ModalHeader>
           <ModalCloseButton isDisabled={isLoading} />
 
           <ModalBody>
             <VStack spacing={4}>
               <Text fontSize="sm" color="gray.600" textAlign="center">
-                Está renombrando el proyecto: <strong>{project?.name}</strong>
+                Renaming project: <strong>{project?.name}</strong>
               </Text>
 
               <FormControl isRequired>
-                <FormLabel>Nuevo nombre</FormLabel>
+                <FormLabel>New name</FormLabel>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Ingrese el nuevo nombre del proyecto"
+                  placeholder="Enter the new project name"
                   isDisabled={isLoading}
                 />
               </FormControl>
 
               <FormControl>
-                <FormLabel>Descripción</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Descripción del proyecto (opcional)"
+                  placeholder="Project description (optional)"
                   isDisabled={isLoading}
                   resize="vertical"
                   minH="80px"
@@ -125,7 +115,7 @@ export function RenameProjectModal({ isOpen, onClose, project, onSuccess }: Rena
               </FormControl>
 
               <Text fontSize="xs" color="gray.500" textAlign="center">
-                El directorio del proyecto también será renombrado para reflejar el nuevo nombre.
+                The project directory will also be renamed to reflect the new name.
               </Text>
             </VStack>
           </ModalBody>
@@ -137,16 +127,16 @@ export function RenameProjectModal({ isOpen, onClose, project, onSuccess }: Rena
               onClick={handleClose}
               isDisabled={isLoading}
             >
-              Cancelar
+              Cancel
             </Button>
             <Button
               colorScheme="blue"
               type="submit"
               isLoading={isLoading}
-              loadingText="Renombrando..."
+              loadingText="Renaming..."
               isDisabled={!name.trim()}
             >
-              Renombrar
+              Rename
             </Button>
           </ModalFooter>
         </form>

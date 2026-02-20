@@ -11,30 +11,15 @@ import {
   ModalCloseButton,
   VStack,
   HStack,
-  Text,
-  Progress,
-  Alert,
-  AlertIcon,
-  Badge,
-  Card,
-  CardBody,
-  Divider,
   useToast,
   Icon,
-  Flex,
-  Radio,
-  RadioGroup,
-  Stack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon
 } from '@chakra-ui/react'
-import { FiUpload, FiFile, FiAlertTriangle, FiCheck, FiX } from 'react-icons/fi'
+import { FiUpload, FiFile } from 'react-icons/fi'
 import { ProjectFile, UploadTask, FileConflict, ConflictResolution } from '@/types/project'
 import { projectsApi } from '@/lib/api'
-import { formatFileSize } from '@/utils/fileTypes'
+import { showSuccessToast, showErrorToast } from '@/utils/toast'
+import { FileConflictResolver } from './FileConflictResolver'
+import { UploadProgressList } from './UploadProgressList'
 
 interface ProjectFileUploadProps {
   projectId: number
@@ -58,7 +43,6 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null)
   const toast = useToast()
 
-  // Reset state when modal is closed
   const handleClose = () => {
     if (!isUploading) {
       setSelectedFiles([])
@@ -70,7 +54,6 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     }
   }
 
-  // Handle file selection
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     if (!files) return
@@ -78,7 +61,6 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     const fileArray = Array.from(files)
     setSelectedFiles(fileArray)
 
-    // Create upload tasks
     const tasks: UploadTask[] = fileArray.map((file, index) => ({
       id: `${Date.now()}-${index}`,
       filename: file.name,
@@ -89,101 +71,61 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     setUploadTasks(tasks)
   }
 
-  // Check for conflicts before upload
   const checkConflicts = async () => {
     try {
       const filenames = selectedFiles.map(file => file.name)
 
-      // Validate filenames array
       if (!filenames || filenames.length === 0) {
-        console.error('No filenames to check for conflicts')
-        return true // No conflicts if no files
+        return true
       }
 
-      console.log('Checking conflicts for files:', filenames)
       const response = await projectsApi.checkUploadConflicts(projectId, filenames)
-      console.log('Conflict check response:', response)
 
       if (response.conflicts && response.conflicts.length > 0) {
-        console.log('Conflicts detected, showing conflict UI')
-        console.log('Conflicts found:', response.conflicts)
         setConflicts(response.conflicts)
         setShowConflicts(true)
-        console.log('showConflicts set to true, conflicts state updated')
+        setResolutions({})
 
-        // Initialize resolutions - no default value to force user choice
-        const defaultResolutions: Record<string, ConflictResolution> = {}
-        // Don't set default values - user must choose explicitly
-        setResolutions(defaultResolutions)
-
-        // Update upload tasks with conflicts
         setUploadTasks(prev => prev.map(task => {
           const conflict = response.conflicts.find(c => c.filename === task.filename)
           return conflict ? { ...task, conflict } : task
         }))
 
-        return false // Has conflicts, need resolution
+        return false
       }
 
-      console.log('No conflicts found, can proceed with upload')
-      return true // No conflicts, can proceed
+      return true
     } catch (error) {
-      toast({
-        title: 'Error checking conflicts',
-        description: 'Failed to check for file conflicts',
-        status: 'error',
-        duration: 5000
-      })
+      showErrorToast(toast, 'Error checking conflicts', 'Failed to check for file conflicts')
       return false
     }
   }
 
-  // Handle upload
   const handleUpload = async () => {
     if (selectedFiles.length === 0) return
 
-    console.log('handleUpload called - showConflicts:', showConflicts, 'resolutions:', resolutions)
-
-    // Check for conflicts first if we haven't already
     if (!showConflicts) {
-      console.log('No conflicts shown yet, checking for conflicts...')
       const canProceed = await checkConflicts()
-      console.log('checkConflicts returned:', canProceed)
-      if (!canProceed) {
-        // Conflicts were found and are now being shown, don't proceed with upload
-        console.log('Conflicts found, stopping upload to show resolution UI')
-        return
-      }
-      console.log('No conflicts, proceeding with upload...')
+      if (!canProceed) return
     }
 
     setIsUploading(true)
 
     try {
-      // Create FormData directly with selected files and resolutions
       const formData = new FormData()
 
       selectedFiles.forEach(file => {
         formData.append('files', file)
       })
 
-      // Add conflict resolutions if provided
       if (resolutions && Object.keys(resolutions).length > 0) {
-        console.log('Adding conflict resolutions to FormData:', resolutions)
         for (const [filename, resolution] of Object.entries(resolutions)) {
-          console.log(`Adding resolution_${filename} = ${resolution}`)
           formData.append(`resolution_${filename}`, resolution)
         }
-      } else {
-        console.log('No conflict resolutions to add')
       }
 
-      // Upload with resolutions using direct API call
-      console.log('Uploading FormData to backend...')
       const response = await projectsApi.uploadFormData(projectId, formData)
-      console.log('Upload response received:', response)
 
-      // Update task statuses
       setUploadTasks(prev => prev.map(task => {
         if (response.uploaded_files.some(f => f.filename === task.filename)) {
           return { ...task, status: 'completed', progress: 100 }
@@ -196,32 +138,18 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
         return task
       }))
 
-      // Show success toast
-      toast({
-        title: 'Upload completed',
-        description: `${response.uploaded_count} files uploaded successfully`,
-        status: 'success',
-        duration: 3000
-      })
+      showSuccessToast(toast, 'Upload completed', `${response.uploaded_count} files uploaded successfully`)
 
-      // Call onUploadComplete with uploaded files
       onUploadComplete(response.uploaded_files)
 
-      // Close modal after short delay
       setTimeout(() => {
         handleClose()
       }, 2000)
 
     } catch (error) {
       console.error('Upload error:', error)
-      toast({
-        title: 'Upload failed',
-        description: 'Failed to upload files',
-        status: 'error',
-        duration: 5000
-      })
+      showErrorToast(toast, 'Upload failed', 'Failed to upload files')
 
-      // Mark all tasks as failed
       setUploadTasks(prev => prev.map(task => ({
         ...task,
         status: 'failed',
@@ -233,29 +161,9 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
     }
   }
 
-  // Get status color for upload task
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed': return 'green'
-      case 'failed': return 'red'
-      case 'skipped': return 'yellow'
-      case 'uploading': return 'blue'
-      default: return 'gray'
-    }
+  const handleResolutionChange = (filename: string, resolution: ConflictResolution) => {
+    setResolutions(prev => ({ ...prev, [filename]: resolution }))
   }
-
-  // Get status icon for upload task
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed': return FiCheck
-      case 'failed': return FiX
-      case 'skipped': return FiX
-      case 'uploading': return FiUpload
-      default: return FiFile
-    }
-  }
-
-  console.log('Render - showConflicts:', showConflicts, 'conflicts.length:', conflicts.length, 'resolutions:', resolutions)
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} size="xl" closeOnOverlayClick={!isUploading}>
@@ -290,126 +198,16 @@ export const ProjectFileUpload: React.FC<ProjectFileUploadProps> = ({
 
             {/* Conflict Resolution */}
             {showConflicts && conflicts.length > 0 && (
-              <Box>
-                <Alert status="warning" mb={4}>
-                  <AlertIcon />
-                  <Box>
-                    <Text fontWeight="bold">File Conflicts Detected</Text>
-                    <Text fontSize="sm">
-                      The following files already exist. Choose how to handle each conflict:
-                    </Text>
-                  </Box>
-                </Alert>
-
-                <VStack spacing={3} align="stretch">
-                  {conflicts.map((conflict, index) => (
-                    <Card key={index} variant="outline">
-                      <CardBody>
-                        <VStack spacing={3} align="stretch">
-                          <Flex justify="space-between" align="center">
-                            <HStack>
-                              <Icon as={FiAlertTriangle} color="orange.500" />
-                              <Text fontWeight="medium">{conflict.filename}</Text>
-                            </HStack>
-                            <Badge colorScheme="orange">Conflict</Badge>
-                          </Flex>
-
-                          <Text fontSize="sm" color="gray.600">
-                            {conflict.reason}
-                          </Text>
-
-                          {!resolutions[conflict.filename] && (
-                            <Text fontSize="sm" color="red.500" fontWeight="medium">
-                              Please choose how to handle this conflict
-                            </Text>
-                          )}
-
-                          <RadioGroup
-                            value={resolutions[conflict.filename]}
-                            onChange={(value: ConflictResolution) => {
-                              console.log(`Setting resolution for ${conflict.filename}: ${value}`)
-                              setResolutions(prev => ({ ...prev, [conflict.filename]: value }))
-                            }}
-                          >
-                            <Stack spacing={2}>
-                              <Radio value="overwrite" colorScheme="red">
-                                <Box>
-                                  <Text fontWeight="medium">Overwrite existing file</Text>
-                                  <Text fontSize="sm" color="gray.600">
-                                    Replace the existing file with the new one
-                                  </Text>
-                                </Box>
-                              </Radio>
-                              <Radio value="skip" colorScheme="yellow">
-                                <Box>
-                                  <Text fontWeight="medium">Skip this file</Text>
-                                  <Text fontSize="sm" color="gray.600">
-                                    Keep the existing file, don't upload the new one
-                                  </Text>
-                                </Box>
-                              </Radio>
-                              <Radio value="rename" colorScheme="green">
-                                <Box>
-                                  <Text fontWeight="medium">Save with timestamp</Text>
-                                  <Text fontSize="sm" color="gray.600">
-                                    Add timestamp to filename and save both files
-                                  </Text>
-                                </Box>
-                              </Radio>
-                            </Stack>
-                          </RadioGroup>
-                        </VStack>
-                      </CardBody>
-                    </Card>
-                  ))}
-                </VStack>
-              </Box>
+              <FileConflictResolver
+                conflicts={conflicts}
+                resolutions={resolutions}
+                onResolutionChange={handleResolutionChange}
+              />
             )}
 
             {/* Upload Tasks Progress */}
             {uploadTasks.length > 0 && (
-              <Box>
-                <Text fontSize="lg" fontWeight="medium" mb={3}>
-                  Upload Progress
-                </Text>
-                <VStack spacing={2} align="stretch">
-                  {uploadTasks.map((task) => (
-                    <Card key={task.id} variant="outline">
-                      <CardBody py={3}>
-                        <Flex justify="space-between" align="center" mb={2}>
-                          <HStack>
-                            <Icon
-                              as={getStatusIcon(task.status)}
-                              color={`${getStatusColor(task.status)}.500`}
-                            />
-                            <Text>{task.filename}</Text>
-                            <Text fontSize="sm" color="gray.500">
-                              ({formatFileSize(task.size)})
-                            </Text>
-                          </HStack>
-                          <Badge colorScheme={getStatusColor(task.status)}>
-                            {task.status}
-                          </Badge>
-                        </Flex>
-
-                        {task.status === 'uploading' && (
-                          <Progress
-                            value={task.progress}
-                            colorScheme={getStatusColor(task.status)}
-                            size="sm"
-                          />
-                        )}
-
-                        {task.error && (
-                          <Text fontSize="sm" color="red.500" mt={1}>
-                            {task.error}
-                          </Text>
-                        )}
-                      </CardBody>
-                    </Card>
-                  ))}
-                </VStack>
-              </Box>
+              <UploadProgressList tasks={uploadTasks} />
             )}
           </VStack>
         </ModalBody>

@@ -20,6 +20,8 @@ import {
 import { useState } from 'react'
 import { Project } from '@/types/project'
 import { projectsApi } from '@/lib/api'
+import { showSuccessToast, showErrorToast } from '@/utils/toast'
+import { getProjectStatusColor } from '@/utils/statusColors'
 
 interface DeleteProjectModalProps {
   isOpen: boolean
@@ -42,28 +44,16 @@ export function DeleteProjectModal({ isOpen, onClose, project, onSuccess }: Dele
     try {
       await projectsApi.deleteProject(project.id)
 
-      toast({
-        title: 'Proyecto borrado',
-        description: `El proyecto "${project.name}" y todos sus archivos han sido eliminados permanentemente`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
+      showSuccessToast(toast, 'Project deleted', `Project "${project.name}" and all its files have been permanently deleted`)
 
       onSuccess()
       onClose()
     } catch (error: any) {
       console.error('Error deleting project:', error)
 
-      const errorMessage = error.response?.data?.error || 'Error al borrar el proyecto'
+      const errorMessage = error.response?.data?.error || 'An error occurred while deleting the project'
 
-      toast({
-        title: 'Error al borrar proyecto',
-        description: errorMessage,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
+      showErrorToast(toast, 'Failed to delete project', errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -79,7 +69,7 @@ export function DeleteProjectModal({ isOpen, onClose, project, onSuccess }: Dele
     <Modal isOpen={isOpen} onClose={handleClose} size="md">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader color="red.600">Borrar Proyecto</ModalHeader>
+        <ModalHeader color="red.600">Delete Project</ModalHeader>
         <ModalCloseButton isDisabled={isLoading} />
 
         <ModalBody>
@@ -87,16 +77,16 @@ export function DeleteProjectModal({ isOpen, onClose, project, onSuccess }: Dele
             <Alert status="warning">
               <AlertIcon />
               <VStack align="start" spacing={1}>
-                <AlertTitle>¡Esta acción es irreversible!</AlertTitle>
+                <AlertTitle>This action is irreversible!</AlertTitle>
                 <AlertDescription>
-                  Está a punto de borrar permanentemente el proyecto y todos sus archivos.
+                  You are about to permanently delete this project and all its files.
                 </AlertDescription>
               </VStack>
             </Alert>
 
             <VStack spacing={3} align="start" bg="gray.50" p={4} borderRadius="md">
               <Text fontSize="md" fontWeight="semibold">
-                Proyecto a borrar:
+                Project to delete:
               </Text>
               <Text fontSize="lg" fontWeight="bold" color="red.600">
                 {project?.name}
@@ -109,15 +99,15 @@ export function DeleteProjectModal({ isOpen, onClose, project, onSuccess }: Dele
 
               <Flex align="center" gap={3}>
                 <Badge colorScheme="blue">
-                  {fileCount} archivo{fileCount !== 1 ? 's' : ''}
+                  {fileCount} file{fileCount !== 1 ? 's' : ''}
                 </Badge>
-                <Badge colorScheme={project?.status === 'healthy' ? 'green' : project?.status === 'inconsistent' ? 'yellow' : 'red'}>
+                <Badge colorScheme={project ? getProjectStatusColor(project.status) : 'gray'}>
                   {project?.status}
                 </Badge>
               </Flex>
 
               <Text fontSize="sm" color="gray.500" fontStyle="italic">
-                Ubicación: {project?.path}
+                Location: {project?.path}
               </Text>
             </VStack>
 
@@ -125,13 +115,13 @@ export function DeleteProjectModal({ isOpen, onClose, project, onSuccess }: Dele
               <AlertIcon />
               <VStack align="start" spacing={1}>
                 <AlertDescription fontSize="sm">
-                  • Se eliminará el directorio del proyecto del sistema de archivos
+                  • The project directory will be removed from the filesystem
                   <br />
-                  • Se eliminarán todos los archivos contenidos (STL, 3MF, G-code, etc.)
+                  • All contained files will be deleted (STL, 3MF, G-code, etc.)
                   <br />
-                  • Se removerán todos los registros de la base de datos
+                  • All database records will be removed
                   <br />
-                  • <strong>Esta operación NO se puede deshacer</strong>
+                  • <strong>This operation CANNOT be undone</strong>
                 </AlertDescription>
               </VStack>
             </Alert>
@@ -145,15 +135,15 @@ export function DeleteProjectModal({ isOpen, onClose, project, onSuccess }: Dele
             onClick={handleClose}
             isDisabled={isLoading}
           >
-            Cancelar
+            Cancel
           </Button>
           <Button
             colorScheme="red"
             onClick={handleDelete}
             isLoading={isLoading}
-            loadingText="Borrando..."
+            loadingText="Deleting..."
           >
-            Borrar Proyecto Permanentemente
+            Delete Project Permanently
           </Button>
         </ModalFooter>
       </ModalContent>

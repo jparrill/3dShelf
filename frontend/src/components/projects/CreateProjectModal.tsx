@@ -29,6 +29,7 @@ import { useState, useRef } from 'react'
 import { FiUpload, FiFile, FiX } from 'react-icons/fi'
 import { projectsApi } from '@/lib/api'
 import { Project } from '@/types/project'
+import { showSuccessToast, showErrorToast, showWarningToast } from '@/utils/toast'
 
 interface CreateProjectModalProps {
   isOpen: boolean
@@ -68,13 +69,7 @@ export function CreateProjectModal({ isOpen, onClose, onProjectCreated }: Create
           id: Math.random().toString(36).substr(2, 9)
         })
       } else {
-        toast({
-          title: 'Invalid file type',
-          description: `File "${file.name}" is not a supported file type`,
-          status: 'warning',
-          duration: 3000,
-          isClosable: true,
-        })
+        showWarningToast(toast, 'Invalid file type', `File "${file.name}" is not a supported file type`)
       }
     }
 
@@ -98,13 +93,7 @@ export function CreateProjectModal({ isOpen, onClose, onProjectCreated }: Create
 
   const handleSubmit = async () => {
     if (!name.trim()) {
-      toast({
-        title: 'Validation Error',
-        description: 'Project name is required',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      })
+      showErrorToast(toast, 'Validation Error', 'Project name is required')
       return
     }
 
@@ -114,13 +103,7 @@ export function CreateProjectModal({ isOpen, onClose, onProjectCreated }: Create
       // Step 1: Create the project
       const project = await projectsApi.createProject(name.trim(), description.trim())
 
-      toast({
-        title: 'Project created',
-        description: `Project "${project.name}" has been created successfully`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
+      showSuccessToast(toast, 'Project created', `Project "${project.name}" has been created successfully`)
 
       // Step 2: Upload files if any
       if (files.length > 0) {
@@ -135,31 +118,13 @@ export function CreateProjectModal({ isOpen, onClose, onProjectCreated }: Create
           setUploadProgress(100)
           setUploadStatus('complete')
 
-          toast({
-            title: 'Files uploaded',
-            description: `${uploadResult.uploaded_count} file(s) uploaded successfully`,
-            status: 'success',
-            duration: 3000,
-            isClosable: true,
-          })
+          showSuccessToast(toast, 'Files uploaded', `${uploadResult.uploaded_count} file(s) uploaded successfully`)
 
           if (uploadResult.errors && uploadResult.errors.length > 0) {
-            toast({
-              title: 'Some files failed to upload',
-              description: uploadResult.errors.join(', '),
-              status: 'warning',
-              duration: 5000,
-              isClosable: true,
-            })
+            showWarningToast(toast, 'Some files failed to upload', uploadResult.errors.join(', '))
           }
         } catch (uploadError) {
-          toast({
-            title: 'File upload failed',
-            description: 'Failed to upload files to the project',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          })
+          showErrorToast(toast, 'File upload failed', 'Failed to upload files to the project')
         }
       }
 
@@ -169,13 +134,7 @@ export function CreateProjectModal({ isOpen, onClose, onProjectCreated }: Create
 
     } catch (error) {
       console.error('Error creating project:', error)
-      toast({
-        title: 'Failed to create project',
-        description: error instanceof Error ? error.message : 'An unexpected error occurred',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
+      showErrorToast(toast, 'Failed to create project', error instanceof Error ? error.message : 'An unexpected error occurred')
     } finally {
       setIsCreating(false)
     }

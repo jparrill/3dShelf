@@ -1,3 +1,6 @@
+# Test results (root level)
+test-results/
+
 # Backend
 backend/printvault-backend
 backend/dshelf-backend
