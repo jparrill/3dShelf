@@ -17,7 +17,7 @@ const config = defineConfig({
   reporter: [
     ['list'],
     ['json', { outputFile: 'playwright-report.json' }],
-    ['html', { outputFolder: 'playwright-report' }],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['junit', { outputFile: 'playwright-results.xml' }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
