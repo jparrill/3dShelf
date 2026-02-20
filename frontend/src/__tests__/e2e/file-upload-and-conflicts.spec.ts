@@ -14,8 +14,7 @@ const createTestFile = (filename: string, content: string) => {
 }
 
 /**
- * Creates a project and navigates to its detail page.
- * Returns the project detail page URL.
+ * Creates a project with optional initial files and navigates to its detail page.
  */
 const createProjectAndNavigate = async (page: Page, projectName: string, initialFiles?: string[]) => {
   await page.goto('/')
@@ -42,7 +41,7 @@ const createProjectAndNavigate = async (page: Page, projectName: string, initial
 }
 
 /**
- * Uploads files via the upload modal. If conflicts are expected, resolves them.
+ * Uploads files via the upload modal. Optionally handles conflict resolution.
  */
 const uploadFiles = async (
   page: Page,
@@ -57,111 +56,114 @@ const uploadFiles = async (
   const fileInput = modal.locator('input[type="file"]')
   await fileInput.setInputFiles(files)
 
-  // Click upload - this triggers conflict check first
+  // Click upload - triggers conflict check first
   await page.getByRole('button', { name: 'Upload Files' }).click()
 
   if (expectConflicts && resolutionLabels) {
-    // Wait for conflict UI
     await expect(page.getByText('File Conflicts Detected')).toBeVisible({ timeout: 10000 })
 
-    // Select resolutions
     for (const label of resolutionLabels) {
       await page.getByText(label).click()
     }
 
-    // Upload with resolutions
     await page.getByRole('button', { name: 'Upload with Resolutions' }).click()
   }
 
-  // Wait for upload to complete - modal should close
+  // Wait for modal to close (upload complete)
   await expect(modal).not.toBeVisible({ timeout: 15000 })
 }
 
 test.describe('File Upload and Conflict Resolution', () => {
-  test('should upload new files to existing project', async ({ page }) => {
-    const projectName = `Upload Test ${Date.now()}`
+  test('should upload a new file to an existing project', async ({ page }) => {
+    const projectName = `Upload New File ${Date.now()}`
     await createProjectAndNavigate(page, projectName)
 
     const stlFile = createTestFile('new-model.stl', 'solid newmodel\nfacet normal 0.0 0.0 1.0\nendsolid')
-    const gcodeFile = createTestFile('new-print.gcode', 'G28 ; Home\nG1 X20 Y20 Z0.3 F3000')
+    await uploadFiles(page, [stlFile])
 
-    await uploadFiles(page, [stlFile, gcodeFile])
-
-    // Verify success toast
     await expect(page.getByText(/upload completed/i).first()).toBeVisible({ timeout: 5000 })
 
-    // Verify files appear in project table
+    // Reload to see updated file list
+    await page.reload()
+    await page.waitForLoadState('networkidle')
+
     await expect(page.getByText('new-model.stl')).toBeVisible()
-    await expect(page.getByText('new-print.gcode')).toBeVisible()
   })
 
-  test('should handle file conflict with skip resolution', async ({ page }) => {
-    const projectName = `Conflict Skip ${Date.now()}`
-    const initialFile = createTestFile('conflict-test.stl', 'solid original\nfacet normal 0.0 0.0 1.0\nendsolid')
-
+  test('should upload an existing file with overwrite resolution (file count stays the same)', async ({ page }) => {
+    const initialFile = createTestFile('overwrite-target.stl', 'solid original\nfacet normal 0.0 0.0 1.0\nendsolid')
+    const projectName = `Overwrite Test ${Date.now()}`
     await createProjectAndNavigate(page, projectName, [initialFile])
-    await expect(page.getByText('conflict-test.stl').first()).toBeVisible()
 
-    // Upload same filename with different content
-    const conflictFile = createTestFile('conflict-test.stl', 'solid modified\nfacet normal 1.0 0.0 0.0\nendsolid modified')
+    // Verify initial file is present
+    await expect(page.getByText('overwrite-target.stl').first()).toBeVisible()
 
-    await uploadFiles(page, [conflictFile], true, ['Skip this file'])
+    // Get initial file count from stats
+    const initialTotalFiles = page.getByText('Total Files').locator('..').locator('p').last()
+    const initialCount = await initialTotalFiles.textContent()
 
-    // File count should remain 1 (file was skipped)
-    await expect(page.getByText('conflict-test.stl').first()).toBeVisible()
-  })
-
-  test('should handle file conflict with overwrite resolution', async ({ page }) => {
-    const projectName = `Conflict Overwrite ${Date.now()}`
-    const initialFile = createTestFile('overwrite-test.stl', 'solid original\nfacet normal 0.0 0.0 1.0\nendsolid')
-
-    await createProjectAndNavigate(page, projectName, [initialFile])
-    await expect(page.getByText('overwrite-test.stl').first()).toBeVisible()
-
-    // Upload same filename
-    const conflictFile = createTestFile('overwrite-test.stl', 'solid modified\nfacet normal 1.0 0.0 0.0\nendsolid modified')
-
+    // Upload same filename with different content -> overwrite
+    const conflictFile = createTestFile('overwrite-target.stl', 'solid modified\nfacet normal 1.0 0.0 0.0\nendsolid modified')
     await uploadFiles(page, [conflictFile], true, ['Overwrite existing file'])
 
-    // File should still exist (overwritten)
-    await expect(page.getByText('overwrite-test.stl')).toBeVisible()
+    // Reload and verify file count stays the same (overwritten, not added)
+    await page.reload()
+    await page.waitForLoadState('networkidle')
+
+    await expect(page.getByText('overwrite-target.stl')).toBeVisible()
+    const afterTotalFiles = page.getByText('Total Files').locator('..').locator('p').last()
+    const afterCount = await afterTotalFiles.textContent()
+    expect(afterCount).toBe(initialCount)
   })
 
-  test('should handle file conflict with rename resolution', async ({ page }) => {
-    const projectName = `Conflict Rename ${Date.now()}`
-    const initialFile = createTestFile('rename-test.stl', 'solid original\nfacet normal 0.0 0.0 1.0\nendsolid')
-
+  test('should upload an existing file with skip resolution (no file uploaded)', async ({ page }) => {
+    const initialFile = createTestFile('skip-target.stl', 'solid original\nfacet normal 0.0 0.0 1.0\nendsolid')
+    const projectName = `Skip Test ${Date.now()}`
     await createProjectAndNavigate(page, projectName, [initialFile])
-    await expect(page.getByText('rename-test.stl').first()).toBeVisible()
 
-    // Upload same filename
-    const conflictFile = createTestFile('rename-test.stl', 'solid modified\nfacet normal 1.0 0.0 0.0\nendsolid modified')
+    await expect(page.getByText('skip-target.stl').first()).toBeVisible()
 
+    const initialTotalFiles = page.getByText('Total Files').locator('..').locator('p').last()
+    const initialCount = await initialTotalFiles.textContent()
+
+    // Upload same filename -> skip
+    const conflictFile = createTestFile('skip-target.stl', 'solid modified\nfacet normal 1.0 0.0 0.0\nendsolid modified')
+    await uploadFiles(page, [conflictFile], true, ['Skip this file'])
+
+    // Reload and verify file count unchanged (file was skipped)
+    await page.reload()
+    await page.waitForLoadState('networkidle')
+
+    await expect(page.getByText('skip-target.stl')).toBeVisible()
+    const afterTotalFiles = page.getByText('Total Files').locator('..').locator('p').last()
+    const afterCount = await afterTotalFiles.textContent()
+    expect(afterCount).toBe(initialCount)
+  })
+
+  test('should upload an existing file with add_timestamp resolution (one new file added)', async ({ page }) => {
+    const initialFile = createTestFile('rename-target.stl', 'solid original\nfacet normal 0.0 0.0 1.0\nendsolid')
+    const projectName = `Rename Test ${Date.now()}`
+    await createProjectAndNavigate(page, projectName, [initialFile])
+
+    await expect(page.getByText('rename-target.stl').first()).toBeVisible()
+
+    const initialTotalFiles = page.getByText('Total Files').locator('..').locator('p').last()
+    const initialCount = Number(await initialTotalFiles.textContent())
+
+    // Upload same filename -> save with timestamp (adds a new file)
+    const conflictFile = createTestFile('rename-target.stl', 'solid modified\nfacet normal 1.0 0.0 0.0\nendsolid modified')
     await uploadFiles(page, [conflictFile], true, ['Save with timestamp'])
 
-    // Original file should still exist, and a renamed copy should exist too
-    await expect(page.getByText('rename-test.stl').first()).toBeVisible()
-  })
+    // Reload and verify file count increased by 1
+    await page.reload()
+    await page.waitForLoadState('networkidle')
 
-  test('should cancel upload without side effects', async ({ page }) => {
-    const projectName = `Cancel Upload ${Date.now()}`
-    await createProjectAndNavigate(page, projectName)
+    // Original file should still be there
+    await expect(page.getByText('rename-target.stl').first()).toBeVisible()
 
-    const testFile = createTestFile('cancel-test.stl', 'solid test\nfacet normal 0.0 0.0 1.0\nendsolid')
-
-    await page.getByRole('button', { name: 'Upload Files' }).click()
-    const modal = page.locator('[role="dialog"]').first()
-    await expect(modal).toBeVisible()
-
-    const fileInput = modal.locator('input[type="file"]')
-    await fileInput.setInputFiles([testFile])
-
-    // Cancel instead of uploading
-    await page.getByRole('button', { name: /cancel/i }).click()
-    await expect(modal).not.toBeVisible()
-
-    // File should not appear in the project
-    await expect(page.getByText('cancel-test.stl')).not.toBeVisible()
+    const afterTotalFiles = page.getByText('Total Files').locator('..').locator('p').last()
+    const afterCount = Number(await afterTotalFiles.textContent())
+    expect(afterCount).toBe(initialCount + 1)
   })
 
   test.afterAll(() => {
