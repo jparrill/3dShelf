@@ -1,298 +1,107 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Project Details Page', () => {
-  test.beforeEach(async ({ page }) => {
-    // Navigate to homepage first
+  let projectName: string
+  let projectUrl: string
+
+  test.beforeAll(async ({ browser }) => {
+    const page = await browser.newPage()
+    projectName = `Details Test ${Date.now()}`
+
     await page.goto('/')
+    await page.waitForLoadState('networkidle')
+
+    // Create a project to test against
+    await page.getByRole('button', { name: 'Create Project' }).click()
+    const modal = page.locator('[role="dialog"]').first()
+    await expect(modal).toBeVisible()
+
+    await page.getByPlaceholder('Enter project name').fill(projectName)
+    await page.getByRole('button', { name: 'Create Project' }).click()
+    await expect(modal).not.toBeVisible({ timeout: 10000 })
+
+    // Navigate to the created project
+    await page.getByRole('heading', { name: projectName }).click()
+    await page.waitForLoadState('networkidle')
+
+    projectUrl = page.url()
+    await page.close()
+  })
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto(projectUrl)
     await page.waitForLoadState('networkidle')
   })
 
-  test('should navigate to project details from homepage', async ({ page }) => {
-    // Look for project cards
-    const projectCard = page.locator('.project-card, [data-testid="project-card"], [role="button"]').first()
-
-    const hasProjects = await projectCard.isVisible()
-
-    if (hasProjects) {
-      // Click on first project
-      await projectCard.click()
-      await page.waitForLoadState('networkidle')
-
-      // Should be on project details page
-      await expect(page).toHaveURL(/\/projects\/\d+/)
-    } else {
-      // Skip this test if no projects are available
-      test.skip(true, 'No projects available for navigation test')
-    }
+  test('should display project name and status badge', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: projectName })).toBeVisible()
+    await expect(page.locator('.chakra-badge').first()).toBeVisible()
   })
 
-  test('should display project information correctly', async ({ page }) => {
-    // Try to navigate directly to a known project (if any exist)
-    // Or skip if we can't guarantee project exists
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      // Check if we're on a valid project page (not 404)
-      const pageTitle = await page.title()
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Page loaded successfully, check for project content
-        await expect(page.locator('h1, h2, h3').first()).toBeVisible()
-
-        // Should have some project information
-        const hasContent = await page.locator('text=/project|file|description/i').isVisible()
-        expect(hasContent).toBeTruthy()
-      }
-    } catch (error) {
-      // If we can't access project details, skip
-      test.skip(true, 'Project details page not accessible')
-    }
+  test('should display project path', async ({ page }) => {
+    await expect(page.getByText('Project Path')).toBeVisible()
   })
 
-  test('should display project files if available', async ({ page }) => {
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Look for file listings or file-related content
-        const hasFiles = await page.locator('text=/files|\.stl|\.gcode|\.jpg|no files/i').isVisible()
-        expect(hasFiles).toBeTruthy()
-      }
-    } catch (error) {
-      test.skip(true, 'Project files section not available')
-    }
+  test('should display project statistics', async ({ page }) => {
+    await expect(page.getByText('Total Files')).toBeVisible()
+    await expect(page.getByText('Total Size')).toBeVisible()
+    await expect(page.getByText('Last Scanned')).toBeVisible()
   })
 
-  test('should show project statistics', async ({ page }) => {
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Look for statistics-related content
-        const hasStats = await page.locator('text=/\d+\s*(files?|MB|KB|bytes)/i').isVisible()
-        expect(hasStats).toBeTruthy()
-      }
-    } catch (error) {
-      test.skip(true, 'Project statistics not available')
-    }
+  test('should display files tab with table', async ({ page }) => {
+    await expect(page.getByRole('tab', { name: 'Files' })).toBeVisible()
+    await expect(page.getByText('Name', { exact: true })).toBeVisible()
+    await expect(page.getByText('Type', { exact: true })).toBeVisible()
+    await expect(page.getByText('Size', { exact: true })).toBeVisible()
   })
 
-  test('should handle project README content', async ({ page }) => {
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Look for README content or indication
-        const hasReadme = await page.locator('text=/readme|description|# |## /i').isVisible()
-
-        if (hasReadme) {
-          // Should display README content properly
-          await expect(page.locator('[data-testid="readme"], .readme-content, .markdown-content').first()).toBeVisible()
-        }
-      }
-    } catch (error) {
-      test.skip(true, 'README content not available')
-    }
+  test('should have action buttons', async ({ page }) => {
+    await expect(page.getByRole('button', { name: 'Download Project' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Upload Files' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Sync Project' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Back to Projects' })).toBeVisible()
   })
 
-  test('should provide navigation back to homepage', async ({ page }) => {
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
+  test('should navigate back to homepage', async ({ page }) => {
+    await page.getByRole('button', { name: 'Back to Projects' }).click()
+    await page.waitForLoadState('networkidle')
 
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
+    await expect(page).toHaveURL('/')
+    await expect(page.getByText('3DShelf')).toBeVisible()
+  })
 
-      if (!has404) {
-        // Look for navigation back to home
-        const homeLink = page.locator('text=3DShelf, a[href="/"], button:has-text("Back")').first()
+  test('should sync project', async ({ page }) => {
+    const syncButton = page.getByRole('button', { name: 'Sync Project' })
+    await syncButton.click()
 
-        if (await homeLink.isVisible()) {
-          await homeLink.click()
-          await page.waitForLoadState('networkidle')
+    await expect(page.getByText('Syncing...')).toBeVisible()
+    await expect(syncButton).toBeEnabled({ timeout: 15000 })
+  })
 
-          // Should be back on homepage
-          await expect(page).toHaveURL('/')
-          await expect(page.locator('text=3DShelf')).toBeVisible()
-        }
-      }
-    } catch (error) {
-      test.skip(true, 'Navigation not available')
-    }
+  test('should open and close upload modal', async ({ page }) => {
+    await page.getByRole('button', { name: 'Upload Files' }).click()
+
+    const modal = page.locator('[role="dialog"]')
+    await expect(modal).toBeVisible()
+    await expect(page.getByText('Upload Files')).toBeVisible()
+
+    await page.getByRole('button', { name: /cancel/i }).click()
+    await expect(modal).not.toBeVisible()
   })
 
   test('should handle non-existent project gracefully', async ({ page }) => {
-    // Try to access a project that definitely doesn't exist
     await page.goto('/projects/99999')
     await page.waitForLoadState('networkidle')
 
-    // Should show 404 or appropriate error message
-    const errorIndicators = [
-      page.locator('text=/404/i').first(),
-      page.locator('text=/not found/i').first(),
-      page.locator('text=/project not found/i').first(),
-      page.locator('text=/error/i').first(),
-      page.getByRole('alert').first(),
-      page.locator('[data-status="error"]').first()
-    ]
-
-    let errorFound = false
-    for (const indicator of errorIndicators) {
-      try {
-        await expect(indicator).toBeVisible({ timeout: 2000 })
-        errorFound = true
-        break
-      } catch {
-        // Continue to next indicator
-      }
-    }
-
-    // If no specific error found, check page doesn't show normal project content
-    if (!errorFound) {
-      const normalContent = page.getByText('Project Details')
-      const hasNormalContent = await normalContent.isVisible()
-      expect(hasNormalContent).toBeFalsy()
-    } else {
-      expect(errorFound).toBeTruthy()
-    }
+    const hasError = await page.getByText(/failed to load|error|not found/i).first().isVisible()
+    expect(hasError).toBeTruthy()
   })
 
-  test('should be responsive on mobile devices', async ({ page }) => {
-    // Set mobile viewport
+  test('should be responsive on mobile viewport', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
+    await page.goto(projectUrl)
+    await page.waitForLoadState('networkidle')
 
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Check that content is still accessible on mobile
-        await expect(page.locator('h1, h2, h3').first()).toBeVisible()
-
-        // Content should be responsive
-        const content = page.locator('main, [role="main"], .content').first()
-        await expect(content).toBeVisible()
-      }
-    } catch (error) {
-      test.skip(true, 'Mobile responsiveness test not possible')
-    }
-  })
-
-  test('should handle loading states appropriately', async ({ page }) => {
-    try {
-      // Navigate to project page
-      await page.goto('/projects/1')
-
-      // Check if loading indicator appears briefly
-      const loadingExists = await page.locator('text=/loading|loading\.\.\./i').isVisible()
-
-      if (loadingExists) {
-        // Wait for loading to disappear
-        await expect(page.locator('text=/loading/i')).toBeHidden({ timeout: 10000 })
-      }
-
-      // Content should be loaded
-      await page.waitForLoadState('networkidle')
-
-    } catch (error) {
-      test.skip(true, 'Loading states test not applicable')
-    }
-  })
-
-  test('should handle API errors gracefully', async ({ page }) => {
-    // Intercept project API calls and make them fail
-    await page.route('/api/projects/*', route => route.abort())
-
-    await page.goto('/projects/1')
-    await page.waitForTimeout(2000)
-
-    // Should show error state - check for multiple possible error indicators
-    const errorIndicators = [
-      page.locator('text=/error/i').first(),
-      page.locator('text=/failed/i').first(),
-      page.locator('text=/unable to load/i').first(),
-      page.locator('text=/not found/i').first(),
-      page.locator('[data-status="error"]').first(),
-      page.locator('.chakra-alert').first(),
-      page.getByRole('alert').first()
-    ]
-
-    // Check if any error indicator is visible
-    let errorFound = false
-    for (const indicator of errorIndicators) {
-      try {
-        await expect(indicator).toBeVisible({ timeout: 1000 })
-        errorFound = true
-        break
-      } catch {
-        // Continue to next indicator
-      }
-    }
-
-    // If no specific error found, at least check the page doesn't show normal content
-    if (!errorFound) {
-      // Page should not show normal project content when there's an error
-      await expect(page.getByText('Project Details')).not.toBeVisible({ timeout: 2000 })
-    }
-  })
-
-  test('should display file type icons and information', async ({ page }) => {
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Look for file type indicators (emojis or icons)
-        const hasFileTypes = await page.locator('text=/🗿|📦|⚙️|📐|📄/').isVisible()
-
-        if (hasFileTypes) {
-          // Should display file type information
-          await expect(page.locator('[data-testid="file-types"], .file-types').first()).toBeVisible()
-        }
-      }
-    } catch (error) {
-      test.skip(true, 'File type display test not applicable')
-    }
-  })
-
-  test('should have proper accessibility features', async ({ page }) => {
-    try {
-      await page.goto('/projects/1')
-      await page.waitForLoadState('networkidle')
-
-      const has404 = await page.locator('text=/404|not found/i').isVisible()
-
-      if (!has404) {
-        // Check for proper heading hierarchy
-        await expect(page.locator('h1').first()).toBeVisible()
-
-        // Check for proper content structure
-        const mainContent = page.locator('main, [role="main"]').first()
-        if (await mainContent.isVisible()) {
-          await expect(mainContent).toBeVisible()
-        }
-
-        // Test keyboard navigation
-        await page.keyboard.press('Tab')
-        const focusedElement = page.locator(':focus')
-        await expect(focusedElement).toBeVisible()
-      }
-    } catch (error) {
-      test.skip(true, 'Accessibility test not applicable')
-    }
+    await expect(page.getByRole('heading', { name: projectName })).toBeVisible()
   })
 })
