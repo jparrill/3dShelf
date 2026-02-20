@@ -12,6 +12,7 @@ import {
 import { useState } from 'react'
 import { FiSearch, FiRefreshCw, FiFolder, FiPlus } from 'react-icons/fi'
 import { projectsApi } from '@/lib/api'
+import { showSuccessToast, showErrorToast } from '@/utils/toast'
 
 interface HeaderProps {
   onSearch: (query: string) => void
@@ -28,22 +29,10 @@ export function Header({ onSearch, onScanComplete, onCreateProject }: HeaderProp
     setIsScanning(true)
     try {
       const result = await projectsApi.scanProjects()
-      toast({
-        title: 'Scan completed',
-        description: `Found ${result.project_count} projects`,
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
+      showSuccessToast(toast, 'Scan completed', `Found ${result.project_count} projects`)
       onScanComplete()
     } catch (error) {
-      toast({
-        title: 'Scan failed',
-        description: 'Failed to scan filesystem for projects',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
+      showErrorToast(toast, 'Scan failed', 'Failed to scan filesystem for projects')
     } finally {
       setIsScanning(false)
     }

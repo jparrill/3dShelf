@@ -64,7 +64,7 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    expect(screen.queryByText('Renombrar Proyecto')).not.toBeInTheDocument()
+    expect(screen.queryByText('Rename Project')).not.toBeInTheDocument()
   })
 
   it('renders modal when open', () => {
@@ -77,13 +77,13 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    expect(screen.getByText('Renombrar Proyecto')).toBeInTheDocument()
-    expect(screen.getByText('Está renombrando el proyecto:')).toBeInTheDocument()
+    expect(screen.getByText('Rename Project')).toBeInTheDocument()
+    expect(screen.getByText('Renaming project:')).toBeInTheDocument()
     expect(screen.getByText('Original Project')).toBeInTheDocument()
 
     // Use placeholder text to find inputs
-    expect(screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Descripción del proyecto (opcional)')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Enter the new project name')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Project description (optional)')).toBeInTheDocument()
   })
 
   it('populates form fields with project data when opened', async () => {
@@ -116,15 +116,15 @@ describe('RenameProjectModal', () => {
     )
 
     await waitFor(() => {
-      const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
-      const descriptionInput = screen.getByPlaceholderText('Descripción del proyecto (opcional)')
+      const nameInput = screen.getByPlaceholderText('Enter the new project name')
+      const descriptionInput = screen.getByPlaceholderText('Project description (optional)')
 
       expect(nameInput).toBeInTheDocument()
       expect(descriptionInput).toBeInTheDocument()
     })
 
-    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
-    const descriptionInput = screen.getByPlaceholderText('Descripción del proyecto (opcional)')
+    const nameInput = screen.getByPlaceholderText('Enter the new project name')
+    const descriptionInput = screen.getByPlaceholderText('Project description (optional)')
 
     await user.clear(nameInput)
     await user.type(nameInput, 'New Project Name')
@@ -147,12 +147,12 @@ describe('RenameProjectModal', () => {
     )
 
     await waitFor(() => {
-      const submitButton = screen.getByText('Renombrar')
+      const submitButton = screen.getByText('Rename')
       expect(submitButton).toBeInTheDocument()
     })
 
-    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
-    const submitButton = screen.getByText('Renombrar')
+    const nameInput = screen.getByPlaceholderText('Enter the new project name')
+    const submitButton = screen.getByText('Rename')
 
     await user.clear(nameInput)
 
@@ -175,12 +175,12 @@ describe('RenameProjectModal', () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByText('Renombrar')).toBeInTheDocument()
+      expect(screen.getByText('Rename')).toBeInTheDocument()
     })
 
-    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
-    const descriptionInput = screen.getByPlaceholderText('Descripción del proyecto (opcional)')
-    const submitButton = screen.getByText('Renombrar')
+    const nameInput = screen.getByPlaceholderText('Enter the new project name')
+    const descriptionInput = screen.getByPlaceholderText('Project description (optional)')
+    const submitButton = screen.getByText('Rename')
 
     await user.clear(nameInput)
     await user.type(nameInput, 'New Project Name')
@@ -197,8 +197,8 @@ describe('RenameProjectModal', () => {
         'New description'
       )
       expect(mockToast).toHaveBeenCalledWith({
-        title: 'Proyecto actualizado',
-        description: 'El proyecto "Original Project" ha sido renombrado a "New Project Name"',
+        title: 'Project updated',
+        description: 'Project "Original Project" has been renamed to "New Project Name"',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -228,11 +228,11 @@ describe('RenameProjectModal', () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByText('Renombrar')).toBeInTheDocument()
+      expect(screen.getByText('Rename')).toBeInTheDocument()
     })
 
-    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
-    const submitButton = screen.getByText('Renombrar')
+    const nameInput = screen.getByPlaceholderText('Enter the new project name')
+    const submitButton = screen.getByText('Rename')
 
     await user.clear(nameInput)
     await user.type(nameInput, 'Duplicate Name')
@@ -241,7 +241,7 @@ describe('RenameProjectModal', () => {
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: 'Error al actualizar proyecto',
+        title: 'Failed to update project',
         description: 'Project name already exists',
         status: 'error',
         duration: 5000,
@@ -262,7 +262,7 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const cancelButton = screen.getByText('Cancelar')
+    const cancelButton = screen.getByText('Cancel')
     await user.click(cancelButton)
 
     expect(mockOnClose).toHaveBeenCalled()
@@ -279,10 +279,10 @@ describe('RenameProjectModal', () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('Enter the new project name')).toBeInTheDocument()
     })
 
-    const nameInput = screen.getByPlaceholderText('Ingrese el nuevo nombre del proyecto')
+    const nameInput = screen.getByPlaceholderText('Enter the new project name')
     await user.clear(nameInput)
     await user.type(nameInput, 'Modified Name')
 
@@ -328,10 +328,10 @@ describe('RenameProjectModal', () => {
       />
     )
 
-    const submitButton = screen.getByText('Renombrar')
+    const submitButton = screen.getByText('Rename')
     await user.click(submitButton)
 
-    expect(screen.getByText('Renombrando...')).toBeInTheDocument()
+    expect(screen.getByText('Renaming...')).toBeInTheDocument()
     expect(submitButton).toBeDisabled()
 
     // Resolve the promise to end loading state

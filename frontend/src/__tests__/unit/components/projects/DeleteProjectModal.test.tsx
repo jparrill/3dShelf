@@ -87,7 +87,7 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    expect(screen.queryByText('Borrar Proyecto')).not.toBeInTheDocument()
+    expect(screen.queryByText('Delete Project')).not.toBeInTheDocument()
   })
 
   it('renders modal with project information when open', () => {
@@ -100,12 +100,12 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    expect(screen.getByText('Borrar Proyecto')).toBeInTheDocument()
+    expect(screen.getByText('Delete Project')).toBeInTheDocument()
     expect(screen.getByText('Test Project')).toBeInTheDocument()
     expect(screen.getByText('Test description')).toBeInTheDocument()
-    expect(screen.getByText('2 archivos')).toBeInTheDocument()
+    expect(screen.getByText('2 files')).toBeInTheDocument()
     expect(screen.getByText('healthy')).toBeInTheDocument()
-    expect(screen.getByText('Ubicación: /test/path')).toBeInTheDocument()
+    expect(screen.getByText('Location: /test/path')).toBeInTheDocument()
   })
 
   it('shows warning messages about irreversible action', () => {
@@ -118,12 +118,11 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    expect(screen.getByText('¡Esta acción es irreversible!')).toBeInTheDocument()
-    // Use partial text matching for multiline content
-    expect(screen.getByText(/Se eliminará el directorio del proyecto/)).toBeInTheDocument()
-    expect(screen.getByText(/Se eliminarán todos los archivos/)).toBeInTheDocument()
-    expect(screen.getByText(/Se removerán todos los registros/)).toBeInTheDocument()
-    expect(screen.getByText(/Esta operación NO se puede deshacer/)).toBeInTheDocument()
+    expect(screen.getByText('This action is irreversible!')).toBeInTheDocument()
+    expect(screen.getByText(/The project directory will be removed/)).toBeInTheDocument()
+    expect(screen.getByText(/All contained files will be deleted/)).toBeInTheDocument()
+    expect(screen.getByText(/All database records will be removed/)).toBeInTheDocument()
+    expect(screen.getByText(/This operation CANNOT be undone/)).toBeInTheDocument()
   })
 
   it('shows correct file count', () => {
@@ -141,7 +140,7 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    expect(screen.getByText('1 archivo')).toBeInTheDocument()
+    expect(screen.getByText('1 file')).toBeInTheDocument()
   })
 
   it('handles project with no files', () => {
@@ -159,7 +158,7 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    expect(screen.getByText('0 archivos')).toBeInTheDocument()
+    expect(screen.getByText('0 files')).toBeInTheDocument()
   })
 
   it('deletes project successfully', async () => {
@@ -177,14 +176,14 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    const deleteButton = screen.getByText('Borrar Proyecto Permanentemente')
+    const deleteButton = screen.getByText('Delete Project Permanently')
     await user.click(deleteButton)
 
     await waitFor(() => {
       expect(mockProjectsApi.deleteProject).toHaveBeenCalledWith(1)
       expect(mockToast).toHaveBeenCalledWith({
-        title: 'Proyecto borrado',
-        description: 'El proyecto "Test Project" y todos sus archivos han sido eliminados permanentemente',
+        title: 'Project deleted',
+        description: 'Project "Test Project" and all its files have been permanently deleted',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -213,12 +212,12 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    const deleteButton = screen.getByText('Borrar Proyecto Permanentemente')
+    const deleteButton = screen.getByText('Delete Project Permanently')
     await user.click(deleteButton)
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: 'Error al borrar proyecto',
+        title: 'Failed to delete project',
         description: 'Failed to delete project',
         status: 'error',
         duration: 5000,
@@ -239,7 +238,7 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    const cancelButton = screen.getByText('Cancelar')
+    const cancelButton = screen.getByText('Cancel')
     await user.click(cancelButton)
 
     expect(mockOnClose).toHaveBeenCalled()
@@ -261,10 +260,10 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    const deleteButton = screen.getByText('Borrar Proyecto Permanentemente')
+    const deleteButton = screen.getByText('Delete Project Permanently')
     await user.click(deleteButton)
 
-    expect(screen.getByText('Borrando...')).toBeInTheDocument()
+    expect(screen.getByText('Deleting...')).toBeInTheDocument()
     expect(deleteButton).toBeDisabled()
 
     // Resolve the promise to end loading state
@@ -290,7 +289,7 @@ describe('DeleteProjectModal', () => {
       />
     )
 
-    const deleteButton = screen.getByText('Borrar Proyecto Permanentemente')
+    const deleteButton = screen.getByText('Delete Project Permanently')
     await user.click(deleteButton)
 
     const closeButton = screen.getByRole('button', { name: /close/i })
@@ -314,6 +313,6 @@ describe('DeleteProjectModal', () => {
     )
 
     // Should still render the modal structure without crashing
-    expect(screen.getByText('Borrar Proyecto')).toBeInTheDocument()
+    expect(screen.getByText('Delete Project')).toBeInTheDocument()
   })
 })

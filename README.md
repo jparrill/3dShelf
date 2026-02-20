@@ -73,12 +73,14 @@ Set the following environment variables or update the `.env` file:
 ## Project Structure
 
 ```
-printvault/
+3dshelf/
 ├── backend/           # Go backend API
 ├── frontend/          # React frontend
+├── scripts/           # Development and testing scripts
+├── docs/              # Additional documentation
 ├── docker-compose.yml # Docker orchestration
-├── Makefile          # Build and run commands
-└── README.md         # This file
+├── Makefile           # Build and run commands
+└── README.md          # This file
 ```
 
 ## API Documentation
